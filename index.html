@@ -5,10 +5,12 @@
     <title>Live Football Signage</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
     <style>
+        :root { --primary: #3b82f6; --accent: #ff2a4d; --bg: #07090f; --card: #141c2f; }
         * { box-sizing: border-box; }
+        
         body {
-            margin: 0; padding: 30px 50px;
-            background: radial-gradient(circle at 50% 0%, #1c2841 0%, #07090f 100%);
+            margin: 0; padding: 40px 60px;
+            background: radial-gradient(circle at 50% 0%, #1c2841 0%, var(--bg) 100%);
             color: #ffffff; font-family: 'Inter', sans-serif;
             width: 1920px; height: 1080px; overflow: hidden;
             display: flex; flex-direction: column;
@@ -17,188 +19,149 @@
         header {
             display: flex; justify-content: space-between; align-items: center;
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-            padding-bottom: 15px; margin-bottom: 25px; height: 80px;
+            padding-bottom: 20px; margin-bottom: 20px;
         }
-        .brand-text { font-size: 40px; font-weight: 900; text-transform: uppercase; }
-        .brand-text span { color: #ff2a4d; }
-        .clock-text { font-size: 32px; font-weight: 300; color: #cbd5e1; }
+        .brand { font-size: 54px; font-weight: 900; text-transform: uppercase; }
+        .brand span { color: var(--accent); }
+        .clock { font-size: 42px; font-weight: 300; color: #94a3b8; }
 
-        /* --- SECTIONS --- */
-        .section-header {
-            font-size: 22px; font-weight: 900; text-transform: uppercase;
-            letter-spacing: 3px; color: #3b82f6; margin-bottom: 20px;
+        .section-title {
+            font-size: 26px; font-weight: 900; text-transform: uppercase;
+            letter-spacing: 5px; color: var(--primary); margin: 25px 0 15px 0;
             display: flex; align-items: center;
         }
-        .section-header::after {
-            content: ""; flex: 1; height: 1px; background: rgba(59, 130, 246, 0.3); margin-left: 20px;
-        }
+        .section-title::after { content: ""; flex: 1; height: 2px; background: rgba(59,130,246,0.2); margin-left: 20px; }
 
-        #results-area, #upcoming-area {
-            display: flex; flex-wrap: wrap; margin-bottom: 30px;
-        }
+        .container { display: flex; flex-wrap: wrap; gap: 25px; width: 100%; }
 
-        /* --- CARDS --- */
-        .match-card {
-            background: linear-gradient(145deg, #141c2f 0%, #0d1323 100%);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            border-radius: 20px; padding: 20px;
-            margin-right: 20px; margin-bottom: 20px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        .card {
+            background: linear-gradient(145deg, #1a243a 0%, var(--card) 100%);
+            border: 1px solid rgba(255,255,255,0.05);
+            border-radius: 24px; padding: 25px;
             display: flex; flex-direction: column; justify-content: space-between;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
         }
 
-        /* Result Cards (Last 3) */
-        .result-card { width: 440px; height: 240px; border-top: 4px solid #94a3b8; }
-        
-        /* Upcoming Cards */
-        .upcoming-card { width: 340px; height: 280px; border-top: 4px solid #3b82f6; }
+        .res-card { width: 560px; height: 320px; border-top: 6px solid #64748b; }
+        .up-card { width: 420px; height: 260px; border-top: 6px solid var(--primary); }
+        .live-card { border-top: 6px solid var(--accent) !important; box-shadow: 0 0 30px rgba(255, 42, 77, 0.2); }
 
-        /* Live Cards */
-        .live-card { border-top: 4px solid #ff2a4d; box-shadow: 0 0 30px rgba(255, 42, 77, 0.2); }
+        .meta { display: flex; justify-content: space-between; font-size: 16px; font-weight: 700; color: #94a3b8; margin-bottom: 10px; }
+        .live-label { color: var(--accent); font-weight: 900; animation: blink 1.5s infinite; }
 
-        .m-header {
-            display: flex; justify-content: space-between; font-size: 14px;
-            font-weight: 700; color: #94a3b8; text-transform: uppercase; margin-bottom: 10px;
-        }
+        .content { display: flex; align-items: center; justify-content: space-between; flex: 1; }
+        .team { width: 38%; text-align: center; }
+        .team img { width: 100px; height: 100px; object-fit: contain; margin-bottom: 12px; }
+        .team-name { font-size: 22px; font-weight: 800; color: #f8fafc; line-height: 1.1; }
 
-        .m-content { display: flex; align-items: center; justify-content: space-between; flex-grow: 1; }
+        .score-box { background: rgba(0,0,0,0.5); padding: 15px; border-radius: 15px; min-width: 130px; text-align: center; border: 1px solid rgba(255,255,255,0.1); }
+        .score-txt { font-size: 64px; font-weight: 900; letter-spacing: 2px; }
+        .time-txt { font-size: 32px; font-weight: 900; color: var(--primary); }
+        .date-txt { font-size: 16px; color: #64748b; margin-top: 5px; }
 
-        .team { width: 35%; text-align: center; }
-        .team img { width: 60px; height: 60px; object-fit: contain; margin-bottom: 8px; }
-        .team-name { font-size: 16px; font-weight: 700; color: #f8fafc; display: block; line-height: 1.2; }
-
-        .score-box {
-            background: rgba(0, 0, 0, 0.4); border-radius: 12px;
-            padding: 10px; min-width: 100px; text-align: center;
-        }
-        .score-val { font-size: 36px; font-weight: 900; }
-        .match-time { font-size: 18px; font-weight: 900; color: #3b82f6; }
-        .match-date { font-size: 12px; color: #94a3b8; margin-top: 5px; }
-
-        .live-tag { color: #ff2a4d; font-weight: 900; animation: blink 1.5s infinite; }
-        @keyframes blink { 0% { opacity: 1; } 50% { opacity: 0.4; } 100% { opacity: 1; } }
+        @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
+        .empty { width: 100%; text-align: center; padding: 40px; color: #475569; font-size: 22px; font-style: italic; }
     </style>
 </head>
 <body>
 
     <header>
-        <div class="brand-text">LIVE<span>SCORES</span></div>
-        <div id="clock" class="clock-text">00:00:00</div>
+        <div class="brand">LIVE<span>SCORES</span></div>
+        <div id="clock" class="clock">00:00:00</div>
     </header>
 
-    <div class="section-header">Recent Results</div>
-    <div id="results-area"></div>
+    <div class="section-title">Recent Results</div>
+    <div id="results" class="container"></div>
 
-    <div class="section-header">Upcoming Fixtures</div>
-    <div id="upcoming-area"></div>
+    <div class="section-title">Upcoming Fixtures</div>
+    <div id="upcoming" class="container"></div>
 
     <script>
         function updateClock() {
             var now = new Date();
-            document.getElementById('clock').innerText = now.toLocaleTimeString('en-GB', { hour12: false });
+            document.getElementById('clock').innerText = now.toLocaleTimeString('en-GB');
         }
-        setInterval(updateClock, 1000);
-        updateClock();
+        setInterval(updateClock, 1000); updateClock();
 
-        function fetchAll() {
+        function loadData() {
             var xhr = new XMLHttpRequest();
             xhr.open("GET", "/.netlify/functions/get-scores", true);
             xhr.onreadystatechange = function () {
                 if (xhr.readyState === 4 && xhr.status === 200) {
-                    var json = JSON.parse(xhr.responseText);
-                    processData(json.data || []);
+                    process(JSON.parse(xhr.responseText));
                 }
             };
             xhr.send();
         }
 
-        function processData(allMatches) {
-            var results = [];
-            var upcoming = [];
-            var live = [];
-
-            allMatches.forEach(function(m) {
-                // Determine State
-                var state = m.state ? m.state.code : "NS";
-                if (["LIVE", "INPLAY", "1ST_HALF", "2ND_HALF", "HT"].indexOf(state) > -1) {
-                    live.push(m);
-                } else if (["FT", "AET", "FT_PEN"].indexOf(state) > -1) {
-                    results.push(m);
-                } else if (state === "NS") {
-                    upcoming.push(m);
-                }
+        function process(allData) {
+            // YOUR PLAN LEAGUE IDs
+            var myLeagues = [271, 1659, 501, 513];
+            
+            // Filter only your leagues
+            var filtered = allData.filter(function(m) {
+                return myLeagues.indexOf(m.league_id) !== -1;
             });
 
-            // Sort Results: Newest first, take last 3
-            results.sort((a, b) => new Date(b.starting_at) - new Date(a.starting_at));
-            
+            var live = [], results = [], upcoming = [];
+
+            filtered.forEach(function(m) {
+                var c = m.state ? m.state.code : "NS";
+                if (["LIVE","HT","1ST_HALF","2ND_HALF"].indexOf(c) > -1) live.push(m);
+                else if (["FT","AET","FT_PEN"].indexOf(c) > -1) results.push(m);
+                else if (c === "NS") upcoming.push(m);
+            });
+
+            // Sort Results: Newest first
+            results.sort(function(a,b) { return new Date(b.starting_at) - new Date(a.starting_at); });
+            // Sort Upcoming: Soonest first
+            upcoming.sort(function(a,b) { return new Date(a.starting_at) - new Date(b.starting_at); });
+
             render(live, results.slice(0, 3), upcoming.slice(0, 8));
         }
 
         function render(live, results, upcoming) {
-            var resArea = document.getElementById('results-area');
-            var upArea = document.getElementById('upcoming-area');
+            var resDiv = document.getElementById('results');
+            var upDiv = document.getElementById('upcoming');
             var placeholder = "https://cdn.sportmonks.com/images/soccer/placeholder.png";
 
-            // Helper to get participants
-            function getTeams(m) {
-                var home = { name: "Home", logo: placeholder }, away = { name: "Away", logo: placeholder };
-                if (m.participants) {
-                    m.participants.forEach(p => {
-                        if (p.meta.location === 'home') home = { name: p.name, logo: p.image_path };
-                        if (p.meta.location === 'away') away = { name: p.name, logo: p.image_path };
-                    });
+            function buildCard(m, type) {
+                var home = m.participants.filter(p => p.meta.location === 'home')[0];
+                var away = m.participants.filter(p => p.meta.location === 'away')[0];
+                var isLive = type === 'live';
+                
+                var scoreHtml = "";
+                if (type === 'upcoming') {
+                    var d = new Date(m.starting_at);
+                    scoreHtml = '<div class="time-txt">'+d.getHours()+':'+(d.getMinutes()<10?'0':'')+d.getMinutes()+'</div>' +
+                                '<div class="date-txt">'+d.toLocaleDateString('en-GB',{day:'2-digit',month:'short'})+'</div>';
+                } else {
+                    var hG = m.scores.filter(s => s.participant_id === home.id && s.description === "CURRENT")[0]?.score.goals ?? 0;
+                    var aG = m.scores.filter(s => s.participant_id === away.id && s.description === "CURRENT")[0]?.score.goals ?? 0;
+                    scoreHtml = '<div class="score-txt">'+hG+'-'+aG+'</div>';
                 }
-                return { home, away };
+
+                return '<div class="card '+(type === 'upcoming' ? 'up-card' : 'res-card')+' '+(isLive ? 'live-card' : '')+'">' +
+                    '<div class="meta"><div>'+m.league.name+'</div><div class="'+(isLive?'live-label':'')+'">'+(isLive?'LIVE':(type==='upcoming'?'':'FINAL'))+'</div></div>' +
+                    '<div class="content">' +
+                        '<div class="team"><img src="'+home.image_path+'" onerror="this.src=\''+placeholder+'\'"><div class="team-name">'+home.name+'</div></div>' +
+                        '<div class="score-box">'+scoreHtml+'</div>' +
+                        '<div class="team"><img src="'+away.image_path+'" onerror="this.src=\''+placeholder+'\'"><div class="team-name">'+away.name+'</div></div>' +
+                    '</div></div>';
             }
 
-            // Render Results & Live
-            var resHtml = "";
-            [...live, ...results].forEach(m => {
-                var teams = getTeams(m);
-                var isLive = live.indexOf(m) > -1;
-                var hG = m.scores ? m.scores.filter(s => s.description === "CURRENT").find(s => s.participant_id === m.participants.find(p => p.meta.location === 'home').id)?.score.goals || 0 : 0;
-                var aG = m.scores ? m.scores.filter(s => s.description === "CURRENT").find(s => s.participant_id === m.participants.find(p => p.meta.location === 'away').id)?.score.goals || 0 : 0;
+            var rHtml = "";
+            live.forEach(m => rHtml += buildCard(m, 'live'));
+            results.forEach(m => rHtml += buildCard(m, 'result'));
+            resDiv.innerHTML = rHtml || '<div class="empty">No recent results found for your leagues.</div>';
 
-                resHtml += `<div class="match-card result-card ${isLive ? 'live-card' : ''}">
-                    <div class="m-header">
-                        <div>${m.league.name}</div>
-                        <div class="${isLive ? 'live-tag' : ''}">${isLive ? 'LIVE ' + m.state.name : 'FINAL'}</div>
-                    </div>
-                    <div class="m-content">
-                        <div class="team"><img src="${teams.home.logo}"><span class="team-name">${teams.home.name}</span></div>
-                        <div class="score-box"><div class="score-val">${hG} - ${aG}</div></div>
-                        <div class="team"><img src="${teams.away.logo}"><span class="team-name">${teams.away.name}</span></div>
-                    </div>
-                </div>`;
-            });
-            resArea.innerHTML = resHtml || "<div style='opacity:0.5'>No recent results.</div>";
-
-            // Render Upcoming
-            var upHtml = "";
-            upcoming.forEach(m => {
-                var teams = getTeams(m);
-                var startDate = new Date(m.starting_at);
-                var timeStr = startDate.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' });
-                var dateStr = startDate.toLocaleDateString('en-GB', { day: '2-digit', month: 'short' });
-
-                upHtml += `<div class="match-card upcoming-card">
-                    <div class="m-header"><div>${m.league.name}</div></div>
-                    <div class="m-content">
-                        <div class="team"><img src="${teams.home.logo}"><span class="team-name">${teams.home.name}</span></div>
-                        <div class="score-box">
-                            <div class="match-time">${timeStr}</div>
-                            <div class="match-date">${dateStr}</div>
-                        </div>
-                        <div class="team"><img src="${teams.away.logo}"><span class="team-name">${teams.away.name}</span></div>
-                    </div>
-                </div>`;
-            });
-            upArea.innerHTML = upHtml || "<div style='opacity:0.5'>No upcoming matches scheduled.</div>";
+            var uHtml = "";
+            upcoming.forEach(m => uHtml += buildCard(m, 'upcoming'));
+            upDiv.innerHTML = uHtml || '<div class="empty">No upcoming matches scheduled.</div>';
         }
 
-        fetchAll();
-        setInterval(fetchAll, 60000); // 1 minute refresh is enough for fixtures
+        loadData();
+        setInterval(loadData, 60000);
     </script>
 </body>
 </html>
