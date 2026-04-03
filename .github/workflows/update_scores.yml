@@ -1,22 +1,32 @@
 name: Update SuperLiga Scores
 on:
   schedule:
-    - cron: '*/10 * * * *' # Rulează la fiecare 10 min
-  workflow_dispatch: # Adaugă butonul de "Run Manual"
+    - cron: '*/10 * * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write # Aceasta este linia magică pentru eroarea 128
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4 # Am trecut la v4 pentru Node 24
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+
       - name: Fetch Data
         env:
           RAPIDAPI_KEY: ${{ secrets.RAPIDAPI_KEY }}
         run: node .github/scripts/fetch_scores.mjs
+
       - name: Commit and Push
         run: |
           git config --global user.name "ScoreBot"
           git config --global user.email "bot@github.com"
           git add data/superliga.json
           git commit -m "Update scores [skip ci]" || exit 0
-          git push
+          git push origin main
