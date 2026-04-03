@@ -1,13 +1,8 @@
 name: Update SuperLiga Scores
 on:
   schedule:
-    - cron: '0,30 * * * *' # Every 30 minutes
+    - cron: '*/15 * * * *'
   workflow_dispatch:
-    inputs:
-      force-update:
-        description: "Force update scores"
-        required: false
-        default: "false"
 
 permissions:
   contents: write
@@ -19,9 +14,9 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v4
         with:
-          persist-credentials: true # Important for push
+          token: ${{ secrets.GITHUB_TOKEN }} # Folosește cheia internă GitHub
 
-      - name: Setup Node.js 20 (LTS)
+      - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '20'
@@ -29,27 +24,18 @@ jobs:
       - name: Fetch Data
         env:
           RAPIDAPI_KEY: ${{ secrets.RAPIDAPI_KEY }}
+        run: node .github/scripts/fetch_scores.mjs
+
+      - name: Commit and Push
         run: |
-          if [ -z "${{ secrets.RAPIDAPI_KEY }}" ]; then
-            echo "RAPIDAPI_KEY is required!"
-            exit 1
-          fi
-
-          if [ ! -f .github/scripts/fetch_scores.mjs ]; then
-            echo "Script .github/scripts/fetch_scores.mjs is missing!"
-            exit 1
-          fi
-
-          node .github/scripts/fetch_scores.mjs
-
-      - name: Commit and Push Changes
-        run: |
-          git config --global user.name "ScoreBot"
-          git config --global user.email "bot@github.com"
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          
           git add data/superliga.json
           
-          git diff --exit-code && echo "No changes detected." || (
-            git pull origin main --rebase
+          if git diff --cached --quiet; then
+            echo "Nicio schimbare detectată."
+          else
             git commit -m "Update scores [skip ci]"
-            git push origin main || (sleep 5 && git push origin main)
-          )
+            git push origin main # Verifică dacă branch-ul tău se numește 'main'
+          fi
