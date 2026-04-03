@@ -5,7 +5,7 @@
     <title>Live Football Signage</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
     <style>
-        /* --- CORE STABILITY --- */
+        /* --- CORE STABILITY & THEME --- */
         * { box-sizing: border-box; }
         
         body {
@@ -13,8 +13,7 @@
             padding: 40px 60px;
             background: radial-gradient(circle at 50% 0%, #1c2841 0%, #07090f 100%);
             color: #ffffff;
-            /* Using Inter with a robust fallback stack for Tizen */
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            font-family: 'Inter', Arial, sans-serif;
             width: 1920px;
             height: 1080px;
             overflow: hidden;
@@ -22,7 +21,6 @@
             flex-direction: column;
         }
 
-        /* --- HEADER --- */
         header {
             width: 100%;
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
@@ -48,21 +46,22 @@
 
         .clock-text {
             font-size: 40px;
-            font-weight: 400;
+            font-weight: 300;
             color: #cbd5e1;
-            letter-spacing: 1px;
         }
 
-        /* --- FLEX GRID --- */
+        /* --- SCOREBOARD GRID --- */
         #scoreboard {
             display: flex;
             flex-wrap: wrap;
-            justify-content: space-between;
+            justify-content: flex-start;
             align-content: flex-start;
+            flex-grow: 1;
         }
 
         .match-card {
-            width: 31%; /* Fits 3 per row on 16:9 */
+            width: 31%; 
+            margin-right: 2.3%;
             height: 380px;
             margin-bottom: 35px;
             background: linear-gradient(145deg, #141c2f 0%, #0d1323 100%);
@@ -76,15 +75,17 @@
             justify-content: space-between;
         }
 
+        /* Remove margin from every 3rd card */
+        .match-card:nth-child(3n) { margin-right: 0; }
+
         .match-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            font-size: 20px;
+            font-size: 18px;
             color: #94a3b8;
             font-weight: 700;
             text-transform: uppercase;
-            letter-spacing: 1px;
         }
 
         .live-badge {
@@ -96,7 +97,6 @@
             font-weight: 900;
         }
 
-        /* --- CONTENT --- */
         .match-content {
             display: flex;
             align-items: center;
@@ -118,16 +118,14 @@
         }
 
         .team-name {
-            font-size: 24px;
+            font-size: 22px;
             font-weight: 700;
             color: #f8fafc;
-            display: block;
-            line-height: 1.2;
         }
 
-        /* --- SCORE PILL --- */
+        /* --- BULLETPROOF SCORE PILL --- */
         .score-pill {
-            width: 170px;
+            width: 160px;
             height: 90px;
             background: rgba(0, 0, 0, 0.5);
             border-radius: 18px;
@@ -135,22 +133,33 @@
             align-items: center;
             justify-content: center;
             border: 1px solid rgba(255,255,255,0.1);
-            box-shadow: inset 0 0 20px rgba(0,0,0,0.8);
         }
 
         .score-digit {
             flex: 1;
             text-align: center;
-            font-size: 60px;
+            font-size: 55px;
             font-weight: 900;
-            color: #ffffff;
         }
 
         .score-dash {
-            font-size: 30px;
-            font-weight: 300;
+            font-size: 25px;
             opacity: 0.4;
         }
+
+        /* --- STANDBY / ERROR STATE --- */
+        .standby-container {
+            width: 100%;
+            text-align: center;
+            padding-top: 150px;
+            opacity: 0.7;
+        }
+
+        .standby-icon { font-size: 100px; margin-bottom: 30px; }
+        .standby-title { font-size: 40px; font-weight: 900; text-transform: uppercase; letter-spacing: 5px; color: #3b82f6; }
+        .standby-subtitle { font-size: 22px; color: #94a3b8; margin-top: 15px; }
+
+        .error-text { color: #ff2a4d; font-weight: bold; }
     </style>
 </head>
 <body>
@@ -163,9 +172,7 @@
     <div id="scoreboard"></div>
 
     <script>
-        var API_URL = "/.netlify/functions/get-scores";
-        var USE_MOCK_DATA = false; // Still using Mock Data for layout testing
-
+        // 1. CLOCK (Manual String Builder for Tizen Stability)
         function updateClock() {
             var now = new Date();
             var h = ("0" + now.getHours()).slice(-2);
@@ -176,6 +183,67 @@
         setInterval(updateClock, 1000);
         updateClock();
 
+        // 2. FETCH FROM NETLIFY PROXY
+        function fetchMatches() {
+            var xhr = new XMLHttpRequest();
+            xhr.open("GET", "/.netlify/functions/get-scores", true);
+            
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === 4) {
+                    if (xhr.status === 200) {
+                        try {
+                            var json = JSON.parse(xhr.responseText);
+                            if (!json.data || json.data.length === 0) {
+                                showStandby();
+                            } else {
+                                renderMatches(parseData(json.data));
+                            }
+                        } catch (e) {
+                            showError("Data Parsing Error");
+                        }
+                    } else {
+                        showError("Connection Error (HTTP " + xhr.status + ")");
+                    }
+                }
+            };
+            xhr.send();
+        }
+
+        // 3. PARSE SPORTMONKS DATA
+        function parseData(matchesArray) {
+            var parsed = [];
+            var limit = Math.min(matchesArray.length, 6);
+
+            for (var i = 0; i < limit; i++) {
+                var m = matchesArray[i];
+                var home = { name: "Home", logo: "" }, away = { name: "Away", logo: "" };
+                
+                if (m.participants) {
+                    for (var j = 0; j < m.participants.length; j++) {
+                        var p = m.participants[j];
+                        if (p.meta && p.meta.location === 'home') home = { name: p.name, logo: p.image_path };
+                        if (p.meta && p.meta.location === 'away') away = { name: p.name, logo: p.image_path };
+                    }
+                }
+
+                var hS = 0, aS = 0;
+                if (m.scores && m.scores.length >= 2) {
+                    hS = m.scores[0].score.goals || 0;
+                    aS = m.scores[1].score.goals || 0;
+                }
+
+                parsed.push({
+                    league: (m.league && m.league.name) ? m.league.name : "Live Match",
+                    minute: (m.state && m.state.name) ? m.state.name : "LIVE",
+                    home: home,
+                    away: away,
+                    score: hS + " - " + aS
+                });
+            }
+            return parsed;
+        }
+
+        // 4. RENDER MATCH CARDS
         function renderMatches(matches) {
             var board = document.getElementById('scoreboard');
             var html = "";
@@ -184,53 +252,41 @@
             for (var i = 0; i < matches.length; i++) {
                 var m = matches[i];
                 var scoreParts = m.score.split(' - ');
-                var hS = scoreParts[0] || "0";
-                var aS = scoreParts[1] || "0";
 
                 html += '<div class="match-card">';
-                html += '  <div class="match-header">';
-                html += '    <div>' + m.league + '</div>';
-                html += '    <div class="live-badge">' + m.minute + '\'</div>';
-                html += '  </div>';
+                html += '  <div class="match-header"><div>' + m.league + '</div><div class="live-badge">' + m.minute + '\'</div></div>';
                 html += '  <div class="match-content">';
-                
-                // HOME
-                html += '    <div class="team-box">';
-                html += '      <img src="' + m.home.logo + '" onerror="this.src=\''+placeholder+'\'">';
-                html += '      <span class="team-name">' + m.home.name + '</span>';
-                html += '    </div>';
-                
-                // SCORE
-                html += '    <div class="score-pill">';
-                html += '      <div class="score-digit">' + hS + '</div>';
-                html += '      <div class="score-dash">-</div>';
-                html += '      <div class="score-digit">' + aS + '</div>';
-                html += '    </div>';
-                
-                // AWAY
-                html += '    <div class="team-box">';
-                html += '      <img src="' + m.away.logo + '" onerror="this.src=\''+placeholder+'\'">';
-                html += '      <span class="team-name">' + m.away.name + '</span>';
-                html += '    </div>';
-                
+                html += '    <div class="team-box"><img src="' + m.home.logo + '" onerror="this.src=\''+placeholder+'\'"><span class="team-name">' + m.home.name + '</span></div>';
+                html += '    <div class="score-pill"><div class="score-digit">' + scoreParts[0] + '</div><div class="score-dash">-</div><div class="score-digit">' + scoreParts[1] + '</div></div>';
+                html += '    <div class="team-box"><img src="' + m.away.logo + '" onerror="this.src=\''+placeholder+'\'"><span class="team-name">' + m.away.name + '</span></div>';
                 html += '  </div>';
                 html += '</div>';
             }
             board.innerHTML = html;
         }
 
-        function getMockData() {
-            return [
-                { league: 'Scottish Premiership', minute: '68', score: '1 - 1', home: { name: 'Celtic', logo: 'https://cdn.sportmonks.com/images/soccer/teams/21/53.png' }, away: { name: 'Rangers', logo: 'https://cdn.sportmonks.com/images/soccer/teams/31/63.png' } },
-                { league: 'Danish Superliga', minute: '45', score: '2 - 0', home: { name: 'FC Copenhagen', logo: 'https://cdn.sportmonks.com/images/soccer/teams/6/86.png' }, away: { name: 'FC Midtjylland', logo: 'https://cdn.sportmonks.com/images/soccer/teams/29/93.png' } },
-                { league: 'Scottish Premiership', minute: 'HT', score: '0 - 0', home: { name: 'Aberdeen', logo: 'https://cdn.sportmonks.com/images/soccer/teams/19/275.png' }, away: { name: 'Hibernian', logo: 'https://cdn.sportmonks.com/images/soccer/teams/20/308.png' } },
-                { league: 'Danish Superliga', minute: '82', score: '3 - 1', home: { name: 'Brøndby IF', logo: 'https://cdn.sportmonks.com/images/soccer/teams/13/85.png' }, away: { name: 'FC Nordsjælland', logo: 'https://cdn.sportmonks.com/images/soccer/teams/28/316.png' } },
-                { league: 'Scottish Premiership', minute: '12', score: '0 - 1', home: { name: 'Hearts', logo: 'https://cdn.sportmonks.com/images/soccer/teams/12/412.png' }, away: { name: 'Motherwell', logo: 'https://cdn.sportmonks.com/images/soccer/teams/22/310.png' } },
-                { league: 'Danish Superliga', minute: '55', score: '0 - 0', home: { name: 'AGF', logo: 'https://cdn.sportmonks.com/images/soccer/teams/15/239.png' }, away: { name: 'Silkeborg', logo: 'https://cdn.sportmonks.com/images/soccer/teams/20/244.png' } }
-            ];
+        // 5. STANDBY & ERROR DISPLAYS
+        function showStandby() {
+            document.getElementById('scoreboard').innerHTML = 
+                '<div class="standby-container">' +
+                '  <div class="standby-icon">📡</div>' +
+                '  <div class="standby-title">Live Feed Active</div>' +
+                '  <div class="standby-subtitle">Awaiting kickoff for Scottish & Danish Leagues</div>' +
+                '</div>';
         }
 
-        renderMatches(getMockData());
+        function showError(msg) {
+            document.getElementById('scoreboard').innerHTML = 
+                '<div class="standby-container">' +
+                '  <div class="standby-icon">⚠️</div>' +
+                '  <div class="standby-title error-text">System Alert</div>' +
+                '  <div class="standby-subtitle">' + msg + '</div>' +
+                '</div>';
+        }
+
+        // START
+        fetchMatches();
+        setInterval(fetchMatches, 30000); // Refresh every 30 seconds
     </script>
 </body>
 </html>
