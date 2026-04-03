@@ -6,61 +6,43 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
     <style>
         :root { --primary: #3b82f6; --accent: #ff2a4d; --bg: #07090f; --card: #141c2f; }
-        * { box-sizing: border-box; }
+        * { box-sizing: border-box; font-family: 'Inter', sans-serif; }
         
         body {
-            margin: 0; padding: 40px 60px;
-            background: radial-gradient(circle at 50% 0%, #1c2841 0%, var(--bg) 100%);
-            color: #ffffff; font-family: 'Inter', sans-serif;
-            width: 1920px; height: 1080px; overflow: hidden;
-            display: flex; flex-direction: column;
+            margin: 0; padding: 40px; background: radial-gradient(circle at 50% 0%, #1c2841 0%, var(--bg) 100%);
+            color: #fff; width: 1920px; height: 1080px; overflow: hidden; display: flex; flex-direction: column;
         }
 
-        header {
-            display: flex; justify-content: space-between; align-items: center;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-            padding-bottom: 20px; margin-bottom: 20px;
-        }
-        .brand { font-size: 54px; font-weight: 900; text-transform: uppercase; }
+        header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 20px; margin-bottom: 20px; }
+        .brand { font-size: 50px; font-weight: 900; text-transform: uppercase; }
         .brand span { color: var(--accent); }
-        .clock { font-size: 42px; font-weight: 300; color: #94a3b8; }
+        .clock { font-size: 40px; font-weight: 300; color: #94a3b8; }
 
-        .section-title {
-            font-size: 26px; font-weight: 900; text-transform: uppercase;
-            letter-spacing: 5px; color: var(--primary); margin: 25px 0 15px 0;
-            display: flex; align-items: center;
-        }
+        .section-title { font-size: 24px; font-weight: 900; text-transform: uppercase; letter-spacing: 4px; color: var(--primary); margin: 20px 0 10px 0; display: flex; align-items: center; }
         .section-title::after { content: ""; flex: 1; height: 2px; background: rgba(59,130,246,0.2); margin-left: 20px; }
 
-        .container { display: flex; flex-wrap: wrap; gap: 25px; width: 100%; }
+        .container { display: flex; flex-wrap: wrap; gap: 20px; width: 100%; }
 
-        .card {
-            background: linear-gradient(145deg, #1a243a 0%, var(--card) 100%);
-            border: 1px solid rgba(255,255,255,0.05);
-            border-radius: 24px; padding: 25px;
-            display: flex; flex-direction: column; justify-content: space-between;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
-        }
+        .card { background: linear-gradient(145deg, #1a243a 0%, var(--card) 100%); border: 1px solid rgba(255,255,255,0.05); border-radius: 20px; padding: 20px; display: flex; flex-direction: column; box-shadow: 0 15px 30px rgba(0,0,0,0.5); }
+        .res-card { width: 440px; height: 260px; border-top: 5px solid #64748b; }
+        .up-card { width: 345px; height: 220px; border-top: 5px solid var(--primary); }
+        .live-card { border-top-color: var(--accent) !important; box-shadow: 0 0 25px rgba(255, 42, 77, 0.2); }
 
-        .res-card { width: 560px; height: 320px; border-top: 6px solid #64748b; }
-        .up-card { width: 420px; height: 260px; border-top: 6px solid var(--primary); }
-        .live-card { border-top: 6px solid var(--accent) !important; box-shadow: 0 0 30px rgba(255, 42, 77, 0.2); }
-
-        .meta { display: flex; justify-content: space-between; font-size: 16px; font-weight: 700; color: #94a3b8; margin-bottom: 10px; }
-        .live-label { color: var(--accent); font-weight: 900; animation: blink 1.5s infinite; }
+        .meta { display: flex; justify-content: space-between; font-size: 13px; font-weight: 700; color: #94a3b8; text-transform: uppercase; margin-bottom: 15px; }
+        .live-label { color: var(--accent); animation: blink 1.5s infinite; }
 
         .content { display: flex; align-items: center; justify-content: space-between; flex: 1; }
-        .team { width: 38%; text-align: center; }
-        .team img { width: 100px; height: 100px; object-fit: contain; margin-bottom: 12px; }
-        .team-name { font-size: 22px; font-weight: 800; color: #f8fafc; line-height: 1.1; }
+        .team { width: 35%; text-align: center; }
+        .team img { width: 80px; height: 80px; object-fit: contain; margin-bottom: 10px; }
+        .team-name { font-size: 18px; font-weight: 800; line-height: 1.1; }
 
-        .score-box { background: rgba(0,0,0,0.5); padding: 15px; border-radius: 15px; min-width: 130px; text-align: center; border: 1px solid rgba(255,255,255,0.1); }
-        .score-txt { font-size: 64px; font-weight: 900; letter-spacing: 2px; }
-        .time-txt { font-size: 32px; font-weight: 900; color: var(--primary); }
-        .date-txt { font-size: 16px; color: #64748b; margin-top: 5px; }
+        .score-box { background: rgba(0,0,0,0.4); padding: 12px; border-radius: 12px; min-width: 100px; text-align: center; border: 1px solid rgba(255,255,255,0.05); }
+        .score-txt { font-size: 48px; font-weight: 900; letter-spacing: 2px; }
+        .time-txt { font-size: 28px; font-weight: 900; color: var(--primary); }
+        .date-txt { font-size: 14px; color: #64748b; margin-top: 3px; }
 
         @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
-        .empty { width: 100%; text-align: center; padding: 40px; color: #475569; font-size: 22px; font-style: italic; }
+        .empty { width: 100%; text-align: center; padding: 40px; color: #475569; font-size: 20px; font-style: italic; }
     </style>
 </head>
 <body>
@@ -70,7 +52,7 @@
         <div id="clock" class="clock">00:00:00</div>
     </header>
 
-    <div class="section-title">Recent Results</div>
+    <div class="section-title">Recent Results & Live</div>
     <div id="results" class="container"></div>
 
     <div class="section-title">Upcoming Fixtures</div>
@@ -94,74 +76,66 @@
             xhr.send();
         }
 
-        function process(allData) {
-            // YOUR PLAN LEAGUE IDs
-            var myLeagues = [271, 1659, 501, 513];
-            
-            // Filter only your leagues
-            var filtered = allData.filter(function(m) {
-                return myLeagues.indexOf(m.league_id) !== -1;
-            });
-
+        function process(data) {
             var live = [], results = [], upcoming = [];
 
-            filtered.forEach(function(m) {
-                var c = m.state ? m.state.code : "NS";
-                if (["LIVE","HT","1ST_HALF","2ND_HALF"].indexOf(c) > -1) live.push(m);
-                else if (["FT","AET","FT_PEN"].indexOf(c) > -1) results.push(m);
-                else if (c === "NS") upcoming.push(m);
+            data.forEach(function(m) {
+                var s = m.state ? m.state.state : "NS";
+                if (["LIVE","HT","1ST_HALF","2ND_HALF"].indexOf(s) > -1) live.push(m);
+                else if (["FT","AET","FT_PEN"].indexOf(s) > -1) results.push(m);
+                else if (s === "NS") upcoming.push(m);
             });
 
-            // Sort Results: Newest first
-            results.sort(function(a,b) { return new Date(b.starting_at) - new Date(a.starting_at); });
-            // Sort Upcoming: Soonest first
-            upcoming.sort(function(a,b) { return new Date(a.starting_at) - new Date(b.starting_at); });
+            // Sort: Results newest first, Upcoming soonest first
+            results.sort((a,b) => new Date(b.starting_at) - new Date(a.starting_at));
+            upcoming.sort((a,b) => new Date(a.starting_at) - new Date(b.starting_at));
 
-            render(live, results.slice(0, 3), upcoming.slice(0, 8));
+            render(live, results.slice(0, 4), upcoming.slice(0, 8));
         }
 
         function render(live, results, upcoming) {
             var resDiv = document.getElementById('results');
             var upDiv = document.getElementById('upcoming');
-            var placeholder = "https://cdn.sportmonks.com/images/soccer/placeholder.png";
+            var logoPlh = "https://cdn.sportmonks.com/images/soccer/placeholder.png";
 
-            function buildCard(m, type) {
-                var home = m.participants.filter(p => p.meta.location === 'home')[0];
-                var away = m.participants.filter(p => p.meta.location === 'away')[0];
-                var isLive = type === 'live';
+            function createCard(m, isUpcoming) {
+                var home = m.participants.find(p => p.meta.location === 'home');
+                var away = m.participants.find(p => p.meta.location === 'away');
+                var isLive = ["LIVE","HT","1ST_HALF","2ND_HALF"].includes(m.state.state);
                 
-                var scoreHtml = "";
-                if (type === 'upcoming') {
+                var scoreContent = "";
+                if (isUpcoming) {
                     var d = new Date(m.starting_at);
-                    scoreHtml = '<div class="time-txt">'+d.getHours()+':'+(d.getMinutes()<10?'0':'')+d.getMinutes()+'</div>' +
-                                '<div class="date-txt">'+d.toLocaleDateString('en-GB',{day:'2-digit',month:'short'})+'</div>';
+                    scoreContent = `<div class="time-txt">${d.getHours()}:${(d.getMinutes()<10?'0':'')+d.getMinutes()}</div>
+                                    <div class="date-txt">${d.toLocaleDateString('en-GB',{day:'2-digit',month:'short'})}</div>`;
                 } else {
-                    var hG = m.scores.filter(s => s.participant_id === home.id && s.description === "CURRENT")[0]?.score.goals ?? 0;
-                    var aG = m.scores.filter(s => s.participant_id === away.id && s.description === "CURRENT")[0]?.score.goals ?? 0;
-                    scoreHtml = '<div class="score-txt">'+hG+'-'+aG+'</div>';
+                    // Extract scores by looking for the "CURRENT" description in the JSON
+                    var hS = m.scores.find(s => s.participant_id === home.id && s.description === "CURRENT")?.score.goals ?? 0;
+                    var aS = m.scores.find(s => s.participant_id === away.id && s.description === "CURRENT")?.score.goals ?? 0;
+                    scoreContent = `<div class="score-txt">${hS}-${aS}</div>`;
                 }
 
-                return '<div class="card '+(type === 'upcoming' ? 'up-card' : 'res-card')+' '+(isLive ? 'live-card' : '')+'">' +
-                    '<div class="meta"><div>'+m.league.name+'</div><div class="'+(isLive?'live-label':'')+'">'+(isLive?'LIVE':(type==='upcoming'?'':'FINAL'))+'</div></div>' +
-                    '<div class="content">' +
-                        '<div class="team"><img src="'+home.image_path+'" onerror="this.src=\''+placeholder+'\'"><div class="team-name">'+home.name+'</div></div>' +
-                        '<div class="score-box">'+scoreHtml+'</div>' +
-                        '<div class="team"><img src="'+away.image_path+'" onerror="this.src=\''+placeholder+'\'"><div class="team-name">'+away.name+'</div></div>' +
-                    '</div></div>';
+                return `<div class="card ${isUpcoming ? 'up-card' : 'res-card'} ${isLive ? 'live-card' : ''}">
+                    <div class="meta"><div>${m.league.name}</div><div class="${isLive?'live-label':''}">${isLive?'LIVE':(isUpcoming?'':'FINAL')}</div></div>
+                    <div class="content">
+                        <div class="team"><img src="${home.image_path}" onerror="this.src='${logoPlh}'"><div class="team-name">${home.name}</div></div>
+                        <div class="score-box">${scoreContent}</div>
+                        <div class="team"><img src="${away.image_path}" onerror="this.src='${logoPlh}'"><div class="team-name">${away.name}</div></div>
+                    </div></div>`;
             }
 
             var rHtml = "";
-            live.forEach(m => rHtml += buildCard(m, 'live'));
-            results.forEach(m => rHtml += buildCard(m, 'result'));
-            resDiv.innerHTML = rHtml || '<div class="empty">No recent results found for your leagues.</div>';
+            live.forEach(m => rHtml += createCard(m, false));
+            results.forEach(m => rHtml += createCard(m, false));
+            resDiv.innerHTML = rHtml || '<div class="empty">No recent results found.</div>';
 
             var uHtml = "";
-            upcoming.forEach(m => uHtml += buildCard(m, 'upcoming'));
-            upDiv.innerHTML = uHtml || '<div class="empty">No upcoming matches scheduled.</div>';
+            upcoming.forEach(m => uHtml += createCard(m, true));
+            upDiv.innerHTML = uHtml || '<div class="empty">No upcoming matches.</div>';
         }
 
         loadData();
-        setInterval(loadData, 60000);
+        setInterval(loadData, 300000); // 5 minute refresh to save Netlify credits
     </script>
 </body>
 </html>
