@@ -2,18 +2,21 @@ name: Update SuperLiga Scores
 on:
   schedule:
     - cron: '*/10 * * * *'
-  workflow_dispatch: # Adaugă butonul de pornire manuală
+  workflow_dispatch:
 
 permissions:
-  contents: write # REPARĂ EROAREA 128 - Permite bot-ului să scrie datele
+  contents: write
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4 # Update la v4 pentru Node 24
-      
-      - name: Setup Node.js
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: true # Important pentru push
+
+      - name: Setup Node.js 24
         uses: actions/setup-node@v4
         with:
           node-version: '24'
@@ -23,10 +26,15 @@ jobs:
           RAPIDAPI_KEY: ${{ secrets.RAPIDAPI_KEY }}
         run: node .github/scripts/fetch_scores.mjs
 
-      - name: Commit and Push
+      - name: Commit and Push Changes
         run: |
           git config --global user.name "ScoreBot"
           git config --global user.email "bot@github.com"
           git add data/superliga.json
-          git commit -m "Update scores [skip ci]" || exit 0
-          git push origin main
+          # Verificăm dacă sunt schimbări înainte de commit pentru a evita erori
+          if git diff --staged --quiet; then
+            echo "Nicio schimbare detectată."
+          else
+            git commit -m "Update scores [skip ci]"
+            git push origin main
+          fi
