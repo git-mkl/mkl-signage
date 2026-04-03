@@ -1,19 +1,18 @@
 name: Update SuperLiga Scores
 on:
   schedule:
-    - cron: '*/10 * * * *' # Rulează la fiecare 10 minute
-  workflow_dispatch: # Permite rularea manuală din GitHub
-
+    - cron: '*/10 * * * *'
+  workflow_dispatch:
 jobs:
-  build:
+  update:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - name: Fetch Data
+      - name: Run Script
         env:
           RAPIDAPI_KEY: ${{ secrets.RAPIDAPI_KEY }}
         run: node .github/scripts/fetch_scores.mjs
-      - name: Commit and Push
+      - name: Push Changes
         run: |
           git config --global user.name "ScoreBot"
           git config --global user.email "bot@github.com"
