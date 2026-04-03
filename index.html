@@ -2,119 +2,149 @@
 <html lang="ro">
 <head>
     <meta charset="UTF-8">
-    <title>SuperLiga România LIVE</title>
+    <title>SuperLiga România - LIVE Hub</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
     <style>
         * { box-sizing: border-box; }
         body {
-            margin: 0; padding: 40px;
-            background: radial-gradient(circle at 50% 0%, #1e293b 0%, #020617 100%);
-            color: #ffffff; font-family: 'Inter', Arial, sans-serif;
-            width: 1920px; height: 1080px; overflow: hidden;
-        }
-        header {
-            display: flex; justify-content: space-between; align-items: center;
-            border-bottom: 2px solid #c5a059; padding-bottom: 15px; margin-bottom: 40px;
-        }
-        .brand { font-size: 48px; font-weight: 900; color: #c5a059; text-transform: uppercase; }
-        .clock { font-size: 38px; font-weight: 300; color: #94a3b8; }
-
-        .container { width: 100%; text-align: center; }
-
-        .card {
-            display: inline-block; width: 900px; height: 500px;
-            background: #141c2f; border-radius: 40px; padding: 50px;
-            box-shadow: 0 40px 100px rgba(0,0,0,0.8);
-            border-top: 12px solid #ff2a4d; vertical-align: middle;
+            margin: 0; padding: 0; background: #020617; color: #fff;
+            font-family: 'Inter', sans-serif; width: 1920px; height: 1080px;
+            display: flex; overflow: hidden;
         }
 
-        .meta { display: flex; justify-content: space-between; font-size: 22px; font-weight: 700; color: #c5a059; margin-bottom: 40px; }
-        .status { color: #ff2a4d; font-weight: 900; text-transform: uppercase; letter-spacing: 2px; }
-        .live-pulse { animation: blink 1.2s infinite; }
+        /* --- SIDEBAR RANKINGS (20%) --- */
+        .sidebar { width: 20%; height: 100%; background: #0f172a; border-left: 2px solid #c5a059; padding: 20px; order: 2; }
+        .sidebar h2 { color: #c5a059; font-size: 18px; text-transform: uppercase; margin-bottom: 20px; letter-spacing: 2px; }
+        .rank-table { width: 100%; border-collapse: collapse; }
+        .rank-table td { padding: 12px 5px; border-bottom: 1px solid rgba(255,255,255,0.05); font-size: 16px; }
+        .pts-col { font-weight: 900; text-align: right; color: #c5a059; }
 
-        .content { display: flex; align-items: center; justify-content: space-between; height: 250px; }
-        .team { width: 35%; text-align: center; }
-        .team img { width: 180px; height: 180px; object-fit: contain; margin-bottom: 20px; }
-        .team-name { font-size: 36px; font-weight: 800; color: #fff; line-height: 1.1; }
+        /* --- MAIN CONTENT (80%) --- */
+        .main { width: 80%; height: 100%; padding: 25px; display: flex; flex-direction: column; order: 1; }
 
-        .score-pill { 
-            background: #000; width: 240px; height: 140px; border-radius: 30px; 
-            display: flex; align-items: center; justify-content: center; 
-            border: 2px solid rgba(197, 160, 89, 0.5); 
+        /* Top Section: Last Results */
+        .top-section { display: flex; gap: 20px; height: 140px; margin-bottom: 20px; }
+        .last-card { flex: 1; background: #1e293b; border-radius: 20px; padding: 15px; border-top: 4px solid #94a3b8; }
+        .last-card.active-team { border-top-color: #3b82f6; background: #26344d; }
+        .last-card h4 { margin: 0; font-size: 12px; color: #94a3b8; text-transform: uppercase; }
+        .last-result-text { font-size: 18px; font-weight: 800; margin-top: 10px; }
+
+        /* Hero Section */
+        .hero {
+            flex: 1; background: linear-gradient(145deg, #1e293b 0%, #0f172a 100%);
+            border-radius: 35px; border: 1px solid rgba(197, 160, 89, 0.4);
+            padding: 40px; display: flex; flex-direction: column; justify-content: center;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.5); position: relative;
         }
-        .score-val { font-size: 100px; font-weight: 900; flex: 1; text-align: center; }
+        .hero-status { position: absolute; top: 30px; left: 40px; color: #ff2a4d; font-weight: 900; letter-spacing: 2px; animation: pulse 1.5s infinite; }
+        .hero-main { display: flex; align-items: center; justify-content: space-between; }
+        .hero-team { width: 30%; text-align: center; }
+        .hero-team img { width: 160px; height: 160px; object-fit: contain; }
+        .hero-team h1 { font-size: 40px; margin: 15px 0 5px 0; }
+        .hero-rank { color: #94a3b8; font-size: 18px; font-weight: 700; }
+        .hero-score { font-size: 110px; font-weight: 900; background: #000; padding: 10px 45px; border-radius: 25px; border: 2px solid #c5a059; }
+        .hero-venue { text-align: center; margin-top: 35px; color: #94a3b8; font-size: 18px; }
 
-        @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
-        .empty { font-size: 32px; margin-top: 200px; opacity: 0.6; line-height: 1.6; }
+        /* Bottom Section: Upcoming */
+        .bottom-section { display: flex; gap: 20px; height: 150px; margin-top: 25px; }
+        .up-card { flex: 1; background: rgba(30, 41, 59, 0.5); border-radius: 18px; padding: 15px; text-align: center; border-bottom: 4px solid #c5a059; }
+        .up-card span { font-size: 12px; color: #c5a059; font-weight: 800; }
+        .up-card p { margin: 8px 0 0 0; font-size: 16px; font-weight: 800; }
+
+        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
     </style>
 </head>
 <body>
 
-    <header>
-        <div class="brand">SuperLiga <span>România</span></div>
-        <div id="clock" class="clock">00:00:00</div>
-    </header>
+    <div class="main">
+        <div class="top-section">
+            <div id="home-last" class="last-card active-team">
+                <h4 id="h-last-title">Ultimul rezultat (Gazde)</h4>
+                <div id="h-last-score" class="last-result-text">--</div>
+            </div>
+            <div id="away-last" class="last-card active-team">
+                <h4 id="a-last-title">Ultimul rezultat (Oaspeți)</h4>
+                <div id="a-last-score" class="last-result-text">--</div>
+            </div>
+        </div>
 
-    <div id="display" class="container">
-        <div class="empty">Se scanează SuperLiga... <br> Pregătim meciul FC Botoșani vs FCSB</div>
+        <div class="hero">
+            <div id="status" class="hero-status">NOT STARTED</div>
+            <div class="hero-main">
+                <div class="hero-team">
+                    <img id="h-logo" src="">
+                    <h1 id="h-name">--</h1>
+                    <div id="h-rank" class="hero-rank">Loc --</div>
+                </div>
+                <div id="score" class="hero-score">0-0</div>
+                <div class="hero-team">
+                    <img id="a-logo" src="">
+                    <h1 id="a-name">--</h1>
+                    <div id="a-rank" class="hero-rank">Loc --</div>
+                </div>
+            </div>
+            <div id="venue" class="hero-venue">Stadionul Municipal</div>
+        </div>
+
+        <div id="upcoming-row" class="bottom-section"></div>
+    </div>
+
+    <div class="sidebar">
+        <h2>Clasament</h2>
+        <table class="rank-table"><tbody id="rank-body"></tbody></table>
     </div>
 
     <script>
-        function updateClock() {
-            var now = new Date();
-            var h = ("0" + now.getHours()).slice(-2);
-            var m = ("0" + now.getMinutes()).slice(-2);
-            var s = ("0" + now.getSeconds()).slice(-2);
-            document.getElementById('clock').innerText = h + ":" + m + ":" + s;
-        }
-        setInterval(updateClock, 1000); updateClock();
-
-        function loadData() {
+        function load() {
             var xhr = new XMLHttpRequest();
-            xhr.open("GET", "/.netlify/functions/get-romania?t=" + new Date().getTime(), true);
+            xhr.open("GET", "/.netlify/functions/get-superliga-full?t=" + new Date().getTime(), true);
             xhr.onreadystatechange = function() {
-                if (xhr.readyState === 4 && xhr.status === 200) {
-                    render(JSON.parse(xhr.responseText));
-                }
+                if (xhr.readyState === 4 && xhr.status === 200) { render(JSON.parse(xhr.responseText)); }
             };
             xhr.send();
         }
 
-        function render(events) {
-            var board = document.getElementById('display');
-            if (!events || events.length === 0) {
-                board.innerHTML = '<div class="empty">Niciun meci LIVE momentan.<br><small>Reveniți la 20:30 pentru Botoșani vs FCSB</small></div>';
-                return;
+        function render(data) {
+            var m = data.main;
+            
+            // Sidebar
+            var rHtml = "";
+            for (var i = 0; i < data.standings.length; i++) {
+                var s = data.standings[i];
+                rHtml += '<tr><td>' + s.position + '</td><td>' + s.team.shortName + '</td><td class="pts-col">' + s.points + '</td></tr>';
+                // Update Ranks in Hero
+                if (s.team.id === m.homeTeam.id) document.getElementById('h-rank').innerText = "Locul " + s.position;
+                if (s.team.id === m.awayTeam.id) document.getElementById('a-rank').innerText = "Locul " + s.position;
             }
+            document.getElementById('rank-body').innerHTML = rHtml;
 
-            var html = "";
-            for (var i = 0; i < events.length; i++) {
-                var e = events[i];
-                // 'inprogress' is the type for live games in SportAPI
-                var isLive = (e.status && e.status.type === "inprogress");
-                var statusText = e.status ? e.status.description : "NS";
-                
-                // Score mapping from your JSON
-                var hS = (e.homeScore && e.homeScore.display !== undefined) ? e.homeScore.display : "0";
-                var aS = (e.awayScore && e.awayScore.display !== undefined) ? e.awayScore.display : "0";
+            // Hero Match
+            document.getElementById('h-logo').src = "https://api.sofascore.app/api/v1/team/" + m.homeTeam.id + "/image";
+            document.getElementById('a-logo').src = "https://api.sofascore.app/api/v1/team/" + m.awayTeam.id + "/image";
+            document.getElementById('h-name').innerText = m.homeTeam.shortName;
+            document.getElementById('a-name').innerText = m.awayTeam.shortName;
+            document.getElementById('score').innerText = (m.homeScore.display||0) + "-" + (m.awayScore.display||0);
+            document.getElementById('status').innerText = m.status.description;
+            document.getElementById('venue').innerText = "SuperLiga România";
 
-                // High-res logo format
-                var hLogo = "https://api.sofascore.app/api/v1/team/" + e.homeTeam.id + "/image";
-                var aLogo = "https://api.sofascore.app/api/v1/team/" + e.awayTeam.id + "/image";
+            // Last Results (Top Cards)
+            var hl = data.hLast;
+            document.getElementById('h-last-score').innerText = hl.homeTeam.shortName + " " + hl.homeScore.display + " - " + hl.awayScore.display + " " + hl.awayTeam.shortName;
+            
+            var al = data.aLast;
+            document.getElementById('a-last-score').innerText = al.homeTeam.shortName + " " + al.homeScore.display + " - " + al.awayScore.display + " " + al.awayTeam.shortName;
 
-                html += '<div class="card">' +
-                    '<div class="meta"><div>' + e.tournament.name + '</div><div class="status ' + (isLive ? 'live-pulse' : '') + '">' + statusText + '</div></div>' +
-                    '<div class="content">' +
-                        '<div class="team"><img src="' + hLogo + '"><div class="team-name">' + e.homeTeam.name + '</div></div>' +
-                        '<div class="score-pill"><div class="score-val">' + hS + '</div><div style="opacity:0.2;font-size:40px">-</div><div class="score-val">' + aS + '</div></div>' +
-                        '<div class="team"><img src="' + aLogo + '"><div class="team-name">' + e.awayTeam.name + '</div></div>' +
-                    '</div></div>';
+            // Upcoming Matches
+            var uHtml = "";
+            for (var k = 0; k < data.upcoming.length; k++) {
+                var u = data.upcoming[k];
+                uHtml += '<div class="up-card"><span>' + u.status.description + '</span><p>' + u.homeTeam.shortName + ' vs ' + u.awayTeam.shortName + '</p></div>';
             }
-            board.innerHTML = html;
+            document.getElementById('upcoming-row').innerHTML = uHtml || '<div class="up-card"><p>Sfârșit Etapă</p></div>';
         }
 
-        loadData();
-        setInterval(loadData, 120000); 
+        load();
+        setInterval(load, 600000); // 10 minute refresh to conserve RapidAPI credits
     </script>
 </body>
 </html>
