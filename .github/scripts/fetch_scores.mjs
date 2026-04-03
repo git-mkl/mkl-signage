@@ -2,77 +2,72 @@ import fs from 'fs';
 
 async function fetchData() {
     const API_KEY = process.env.RAPIDAPI_KEY;
-    const HOST = "sportapi7.p.rapidapi.com";
-    const headers = { "X-RapidAPI-Host": HOST, "X-RapidAPI-Key": API_KEY };
+    const HOST = 'free-api-live-football-data.p.rapidapi.com'; // HOST-ul NOU
+    const headers = {
+        'x-rapidapi-host': HOST,
+        'x-rapidapi-key': API_KEY,
+        'Content-Type': 'application/json'
+    };
 
     try {
         if (!fs.existsSync('data')) fs.mkdirSync('data', { recursive: true });
 
-        console.log("Pas 1: Căutăm ID-ul pentru SuperLiga România...");
+        console.log("Pas 1: Identificăm ID-ul SuperLigii în noul API...");
         
-        // Luăm toate categoriile (țările)
-        const catRes = await fetch(`https://${HOST}/api/v1/sport/football/categories`, { headers });
-        const catJson = await catRes.json();
-        const romaniaCat = catJson.categories.find(c => c.name === "Romania");
-
-        if (!romaniaCat) throw new Error("Nu am găsit categoria 'Romania' în API.");
-        console.log(`Categorie găsită: Romania (ID: ${romaniaCat.id})`);
-
-        // Luăm toate turneele din România
-        const tourRes = await fetch(`https://${HOST}/api/v1/category/${romaniaCat.id}/unique-tournaments`, { headers });
-        const tourJson = await tourRes.json();
+        // În acest API, SuperLiga România are de obicei ID-ul 301 sau similar
+        // Dar îl căutăm dinamic pentru siguranță
+        const leagueRes = await fetch(`https://${HOST}/football-get-all-leagues`, { headers });
+        const leagueJson = await leagueRes.json();
         
-        // Căutăm "Superliga" sau "Liga I"
-        const superliga = tourJson.groups[0].uniqueTournaments.find(t => 
-            t.name.includes("Superliga") || t.name.includes("Liga I")
-        );
+        // Căutăm în lista de ligi
+        const leagues = leagueJson.response || leagueJson.data || [];
+        const romania = leagues.find(l => l.league_name === "Romania - Liga I" || l.league_name === "Superliga");
+        
+        // Dacă nu îl găsim dinamic, folosim un fallback (ID-ul probabil în acest API)
+        const LEAGUE_ID = romania ? romania.league_id : "301"; 
 
-        if (!superliga) throw new Error("Nu am găsit 'Superliga' în lista de turnee din România.");
-        const TOURNAMENT_ID = superliga.id;
-        console.log(`Turneu găsit: ${superliga.name} (ID: ${TOURNAMENT_ID})`);
+        console.log(`Utilizăm League ID: ${LEAGUE_ID}`);
 
-        // Pas 2: Luăm cel mai recent sezon
-        const seasonRes = await fetch(`https://${HOST}/api/v1/unique-tournament/${TOURNAMENT_ID}/seasons`, { headers });
-        const seasonJson = await seasonRes.json();
-        const currentSeasonId = seasonJson.seasons[0].id;
-        console.log(`Sezon activ: ${seasonJson.seasons[0].name} (ID: ${currentSeasonId})`);
-
-        // Pas 3: Luăm Clasamentul
-        const stdRes = await fetch(`https://${HOST}/api/v1/unique-tournament/${TOURNAMENT_ID}/season/${currentSeasonId}/standings/total`, { headers });
+        // 2. Luăm Clasamentul
+        const stdRes = await fetch(`https://${HOST}/football-get-league-standings?leagueid=${LEAGUE_ID}`, { headers });
         const stdJson = await stdRes.json();
-        const standings = stdJson.standings[0].rows;
+        const rawStandings = stdJson.response?.standings || [];
 
-        // Pas 4: Luăm evenimentele următoare
-        const nextRes = await fetch(`https://${HOST}/api/v1/unique-tournament/${TOURNAMENT_ID}/season/${currentSeasonId}/events/next/0`, { headers });
-        const nextJson = await nextRes.json();
-        const allNext = nextJson.events || [];
+        // 3. Luăm Meciurile de azi/următoare
+        const matchRes = await fetch(`https://${HOST}/football-get-matches-by-league?leagueid=${LEAGUE_ID}`, { headers });
+        const matchJson = await matchRes.json();
+        const matches = matchJson.response?.matches || [];
 
-        let main = allNext.find(m => m.status.type === "inprogress") || allNext[0];
-        let hLast = null, aLast = null;
-
-        if (main) {
-            // Pas 5: Rezultate anterioare pentru Hero Card
-            const hRes = await fetch(`https://${HOST}/api/v1/team/${main.homeTeam.id}/events/last/1`, { headers });
-            const hJ = await hRes.json(); hLast = hJ.events?.[0] || null;
-
-            const aRes = await fetch(`https://${HOST}/api/v1/team/${main.awayTeam.id}/events/last/1`, { headers });
-            const aJ = await aRes.json(); aLast = aJ.events?.[0] || null;
-        }
+        // Mapăm datele pe formatul cerut de index.html
+        const mainMatch = matches.find(m => m.status === "LIVE") || matches[0];
 
         const finalData = {
-            main,
-            standings,
-            hLast,
-            aLast,
-            upcoming: allNext.filter(m => m.id !== main.id).slice(0, 3),
+            main: mainMatch ? {
+                homeTeam: { name: mainMatch.home_team_name, id: mainMatch.home_team_id, shortName: mainMatch.home_team_name },
+                awayTeam: { name: mainMatch.away_team_name, id: mainMatch.away_team_id, shortName: mainMatch.away_team_name },
+                homeScore: { display: mainMatch.home_score || 0 },
+                awayScore: { display: mainMatch.away_score || 0 },
+                status: { description: mainMatch.status, type: mainMatch.status === "LIVE" ? "inprogress" : "notstarted" },
+                startTimestamp: Math.floor(new Date(mainMatch.date).getTime() / 1000)
+            } : null,
+            standings: rawStandings.map(s => ({
+                position: s.position,
+                team: { shortName: s.team_name, id: s.team_id },
+                points: s.points
+            })),
+            upcoming: matches.slice(1, 4).map(m => ({
+                homeTeam: { shortName: m.home_team_name },
+                awayTeam: { shortName: m.away_team_name },
+                startTimestamp: Math.floor(new Date(m.date).getTime() / 1000)
+            })),
             updatedAt: new Date().toISOString()
         };
 
         fs.writeFileSync('data/superliga.json', JSON.stringify(finalData));
-        console.log("Date salvate cu succes pentru SuperLiga România!");
+        console.log("Date salvate cu succes din noul API!");
 
     } catch (e) {
-        console.error("EROARE:", e.message);
+        console.error("Eroare API nou:", e.message);
         fs.writeFileSync('data/superliga.json', JSON.stringify({ error: e.message }));
     }
 }
