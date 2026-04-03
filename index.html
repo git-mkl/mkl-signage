@@ -5,42 +5,40 @@
     <title>Live Football Signage</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
     <style>
-        :root { --primary: #3b82f6; --accent: #ff2a4d; --bg: #07090f; --card: #141c2f; }
-        * { box-sizing: border-box; font-family: 'Inter', sans-serif; }
-        
+        /* --- STYLES (No changes needed here, CSS is usually safe) --- */
+        * { box-sizing: border-box; }
         body {
-            margin: 0; padding: 40px; background: radial-gradient(circle at 50% 0%, #1c2841 0%, var(--bg) 100%);
-            color: #fff; width: 1920px; height: 1080px; overflow: hidden; display: flex; flex-direction: column;
+            margin: 0; padding: 40px;
+            background: radial-gradient(circle at 50% 0%, #1c2841 0%, #07090f 100%);
+            color: #ffffff; font-family: 'Inter', Arial, sans-serif;
+            width: 1920px; height: 1080px; overflow: hidden;
+            display: flex; flex-direction: column;
         }
-
-        header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 20px; margin-bottom: 20px; }
+        header {
+            display: flex; justify-content: space-between; align-items: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding-bottom: 20px; margin-bottom: 20px;
+        }
         .brand { font-size: 50px; font-weight: 900; text-transform: uppercase; }
-        .brand span { color: var(--accent); }
+        .brand span { color: #ff2a4d; }
         .clock { font-size: 40px; font-weight: 300; color: #94a3b8; }
-
-        .section-title { font-size: 24px; font-weight: 900; text-transform: uppercase; letter-spacing: 4px; color: var(--primary); margin: 20px 0 10px 0; display: flex; align-items: center; }
+        .section-title { font-size: 24px; font-weight: 900; text-transform: uppercase; letter-spacing: 4px; color: #3b82f6; margin: 20px 0 10px 0; display: flex; align-items: center; }
         .section-title::after { content: ""; flex: 1; height: 2px; background: rgba(59,130,246,0.2); margin-left: 20px; }
-
         .container { display: flex; flex-wrap: wrap; gap: 20px; width: 100%; }
-
-        .card { background: linear-gradient(145deg, #1a243a 0%, var(--card) 100%); border: 1px solid rgba(255,255,255,0.05); border-radius: 20px; padding: 20px; display: flex; flex-direction: column; box-shadow: 0 15px 30px rgba(0,0,0,0.5); }
+        .card { background: linear-gradient(145deg, #1a243a 0%, #141c2f 100%); border: 1px solid rgba(255,255,255,0.05); border-radius: 20px; padding: 20px; display: flex; flex-direction: column; box-shadow: 0 15px 30px rgba(0,0,0,0.5); }
         .res-card { width: 440px; height: 260px; border-top: 5px solid #64748b; }
-        .up-card { width: 345px; height: 220px; border-top: 5px solid var(--primary); }
-        .live-card { border-top-color: var(--accent) !important; box-shadow: 0 0 25px rgba(255, 42, 77, 0.2); }
-
+        .up-card { width: 345px; height: 220px; border-top: 5px solid #3b82f6; }
+        .live-card { border-top-color: #ff2a4d !important; box-shadow: 0 0 25px rgba(255, 42, 77, 0.2); }
         .meta { display: flex; justify-content: space-between; font-size: 13px; font-weight: 700; color: #94a3b8; text-transform: uppercase; margin-bottom: 15px; }
-        .live-label { color: var(--accent); animation: blink 1.5s infinite; }
-
+        .live-label { color: #ff2a4d; animation: blink 1.5s infinite; }
         .content { display: flex; align-items: center; justify-content: space-between; flex: 1; }
         .team { width: 35%; text-align: center; }
         .team img { width: 80px; height: 80px; object-fit: contain; margin-bottom: 10px; }
         .team-name { font-size: 18px; font-weight: 800; line-height: 1.1; }
-
         .score-box { background: rgba(0,0,0,0.4); padding: 12px; border-radius: 12px; min-width: 100px; text-align: center; border: 1px solid rgba(255,255,255,0.05); }
         .score-txt { font-size: 48px; font-weight: 900; letter-spacing: 2px; }
-        .time-txt { font-size: 28px; font-weight: 900; color: var(--primary); }
+        .time-txt { font-size: 28px; font-weight: 900; color: #3b82f6; }
         .date-txt { font-size: 14px; color: #64748b; margin-top: 3px; }
-
         @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
         .empty { width: 100%; text-align: center; padding: 40px; color: #475569; font-size: 20px; font-style: italic; }
     </style>
@@ -59,15 +57,22 @@
     <div id="upcoming" class="container"></div>
 
     <script>
+        // LEGACY CLOCK
         function updateClock() {
             var now = new Date();
-            document.getElementById('clock').innerText = now.toLocaleTimeString('en-GB');
+            var h = ("0" + now.getHours()).slice(-2);
+            var m = ("0" + now.getMinutes()).slice(-2);
+            var s = ("0" + now.getSeconds()).slice(-2);
+            document.getElementById('clock').innerText = h + ":" + m + ":" + s;
         }
         setInterval(updateClock, 1000); updateClock();
 
         function loadData() {
             var xhr = new XMLHttpRequest();
-            xhr.open("GET", "/.netlify/functions/get-scores", true);
+            // Use ABSOLUTE URL to help the TV find the path
+            var apiUrl = "https://mkl-signage.netlify.app/.netlify/functions/get-scores?t=" + new Date().getTime();
+            
+            xhr.open("GET", apiUrl, true);
             xhr.onreadystatechange = function () {
                 if (xhr.readyState === 4 && xhr.status === 200) {
                     process(JSON.parse(xhr.responseText));
@@ -79,16 +84,18 @@
         function process(data) {
             var live = [], results = [], upcoming = [];
 
-            data.forEach(function(m) {
-                var s = m.state ? m.state.state : "NS";
-                if (["LIVE","HT","1ST_HALF","2ND_HALF"].indexOf(s) > -1) live.push(m);
-                else if (["FT","AET","FT_PEN"].indexOf(s) > -1) results.push(m);
-                else if (s === "NS") upcoming.push(m);
-            });
+            for (var i = 0; i < data.length; i++) {
+                var m = data[i];
+                var s = (m.state && m.state.state) ? m.state.state : "NS";
+                if (["LIVE","HT","1ST_HALF","2ND_HALF"].indexOf(s) > -1) { live.push(m); }
+                else if (["FT","AET","FT_PEN"].indexOf(s) > -1) { results.push(m); }
+                else if (s === "NS") { upcoming.push(m); }
+            }
 
-            // Sort: Results newest first, Upcoming soonest first
-            results.sort((a,b) => new Date(b.starting_at) - new Date(a.starting_at));
-            upcoming.sort((a,b) => new Date(a.starting_at) - new Date(b.starting_at));
+            // Results: newest first
+            results.sort(function(a, b) { return new Date(b.starting_at) - new Date(a.starting_at); });
+            // Upcoming: soonest first
+            upcoming.sort(function(a, b) { return new Date(a.starting_at) - new Date(b.starting_at); });
 
             render(live, results.slice(0, 4), upcoming.slice(0, 8));
         }
@@ -99,43 +106,51 @@
             var logoPlh = "https://cdn.sportmonks.com/images/soccer/placeholder.png";
 
             function createCard(m, isUpcoming) {
-                var home = m.participants.find(p => p.meta.location === 'home');
-                var away = m.participants.find(p => p.meta.location === 'away');
-                var isLive = ["LIVE","HT","1ST_HALF","2ND_HALF"].includes(m.state.state);
-                
-                var scoreContent = "";
-                if (isUpcoming) {
-                    var d = new Date(m.starting_at);
-                    scoreContent = `<div class="time-txt">${d.getHours()}:${(d.getMinutes()<10?'0':'')+d.getMinutes()}</div>
-                                    <div class="date-txt">${d.toLocaleDateString('en-GB',{day:'2-digit',month:'short'})}</div>`;
-                } else {
-                    // Extract scores by looking for the "CURRENT" description in the JSON
-                    var hS = m.scores.find(s => s.participant_id === home.id && s.description === "CURRENT")?.score.goals ?? 0;
-                    var aS = m.scores.find(s => s.participant_id === away.id && s.description === "CURRENT")?.score.goals ?? 0;
-                    scoreContent = `<div class="score-txt">${hS}-${aS}</div>`;
+                var home, away;
+                for (var i = 0; i < m.participants.length; i++) {
+                    if (m.participants[i].meta.location === 'home') home = m.participants[i];
+                    if (m.participants[i].meta.location === 'away') away = m.participants[i];
                 }
 
-                return `<div class="card ${isUpcoming ? 'up-card' : 'res-card'} ${isLive ? 'live-card' : ''}">
-                    <div class="meta"><div>${m.league.name}</div><div class="${isLive?'live-label':''}">${isLive?'LIVE':(isUpcoming?'':'FINAL')}</div></div>
-                    <div class="content">
-                        <div class="team"><img src="${home.image_path}" onerror="this.src='${logoPlh}'"><div class="team-name">${home.name}</div></div>
-                        <div class="score-box">${scoreContent}</div>
-                        <div class="team"><img src="${away.image_path}" onerror="this.src='${logoPlh}'"><div class="team-name">${away.name}</div></div>
-                    </div></div>`;
+                var isLive = ["LIVE","HT","1ST_HALF","2ND_HALF"].indexOf(m.state.state) > -1;
+                var scoreContent = "";
+
+                if (isUpcoming) {
+                    var d = new Date(m.starting_at.replace(/-/g, "/")); // Fix for Tizen Date parsing
+                    var timeStr = d.getHours() + ":" + (d.getMinutes() < 10 ? '0' : '') + d.getMinutes();
+                    var dateStr = d.getDate() + " " + d.toLocaleString('en-GB', { month: 'short' });
+                    scoreContent = '<div class="time-txt">' + timeStr + '</div><div class="date-txt">' + dateStr + '</div>';
+                } else {
+                    var hG = 0, aG = 0;
+                    for (var j = 0; j < m.scores.length; j++) {
+                        if (m.scores[j].participant_id === home.id && m.scores[j].description === "CURRENT") hG = m.scores[j].score.goals;
+                        if (m.scores[j].participant_id === away.id && m.scores[j].description === "CURRENT") aG = m.scores[j].score.goals;
+                    }
+                    scoreContent = '<div class="score-txt">' + hG + '-' + aG + '</div>';
+                }
+
+                var html = '<div class="card ' + (isUpcoming ? 'up-card' : 'res-card') + ' ' + (isLive ? 'live-card' : '') + '">' +
+                    '<div class="meta"><div>' + m.league.name + '</div><div class="' + (isLive ? 'live-label' : '') + '">' + (isLive ? 'LIVE' : (isUpcoming ? '' : 'FINAL')) + '</div></div>' +
+                    '<div class="content">' +
+                        '<div class="team"><img src="' + home.image_path + '" onerror="this.src=\'' + logoPlh + '\'"><div class="team-name">' + home.name + '</div></div>' +
+                        '<div class="score-box">' + scoreContent + '</div>' +
+                        '<div class="team"><img src="' + away.image_path + '" onerror="this.src=\'' + logoPlh + '\'"><div class="team-name">' + away.name + '</div></div>' +
+                    '</div></div>';
+                return html;
             }
 
             var rHtml = "";
-            live.forEach(m => rHtml += createCard(m, false));
-            results.forEach(m => rHtml += createCard(m, false));
+            for (var k = 0; k < live.length; k++) { rHtml += createCard(live[k], false); }
+            for (var l = 0; l < results.length; l++) { rHtml += createCard(results[l], false); }
             resDiv.innerHTML = rHtml || '<div class="empty">No recent results found.</div>';
 
             var uHtml = "";
-            upcoming.forEach(m => uHtml += createCard(m, true));
+            for (var n = 0; n < upcoming.length; n++) { uHtml += createCard(upcoming[n], true); }
             upDiv.innerHTML = uHtml || '<div class="empty">No upcoming matches.</div>';
         }
 
         loadData();
-        setInterval(loadData, 300000); // 5 minute refresh to save Netlify credits
+        setInterval(loadData, 300000); 
     </script>
 </body>
 </html>
