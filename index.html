@@ -92,19 +92,20 @@
     </div>
 
     <script>
-function load() {
-    // Citim fișierul JSON generat de GitHub Action
-    var xhr = new XMLHttpRequest();
-    xhr.open("GET", "data/superliga.json?t=" + new Date().getTime(), true);
-    xhr.onreadystatechange = function() {
-        if (xhr.readyState === 4 && xhr.status === 200) {
-            var events = JSON.parse(xhr.responseText);
-            // Reutilizează funcția render(events) de mai devreme
-            render({ main: events[0], standings: [], upcoming: events.slice(1) });
-        }
-    };
-    xhr.send();
-}
+    function load() {
+        var xhr = new XMLHttpRequest();
+        // Citim fișierul static generat de GitHub
+        xhr.open("GET", "data/superliga.json?t=" + new Date().getTime(), true);
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                render(JSON.parse(xhr.responseText));
+            }
+        };
+        xhr.send();
+    }
+    load();
+    setInterval(load, 60000); // TV-ul verifică fișierul la fiecare minut
+</script>
 
         function render(data) {
             var m = data.main;
