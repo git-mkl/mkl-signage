@@ -1,17 +1,42 @@
+name: Update SuperLiga Scores
+on:
+  schedule:
+    - cron: '*/15 * * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Fetch Data
+        env:
+          RAPIDAPI_KEY: ${{ secrets.RAPIDAPI_KEY }}
+        run: node .github/scripts/fetch_scores.mjs
+
       - name: Commit and Push
         run: |
           git config --global user.name "github-actions[bot]"
-          git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
           
-          # Verificăm dacă fișierul a fost creat de script
-          if [ -f data/superliga.json ]; then
-            git add data/superliga.json
-            if git diff --cached --quiet; then
-              echo "Nicio schimbare de conținut."
-            else
-              git commit -m "Update scores [skip ci]"
-              git push origin main
-            fi
+          # Creăm fișierul dacă scriptul a eșuat, ca să nu dea eroare git add
+          mkdir -p data
+          touch data/superliga.json
+          
+          git add data/superliga.json
+          if git diff --cached --quiet; then
+            echo "Nicio schimbare."
           else
-            echo "Fișierul superliga.json nu a fost găsit. Sărim peste commit."
+            git commit -m "Update scores [skip ci]"
+            git push origin main
           fi
