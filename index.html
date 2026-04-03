@@ -1,60 +1,213 @@
-function render(data) {
-    if (data.error) {
-        document.getElementById('match-info').innerText = "Eroare API: " + data.error;
-        return;
-    }
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <title>SuperLiga România - Match Center</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+        * { box-sizing: border-box; }
+        body {
+            margin: 0; padding: 0; background: #020617; color: #ffffff;
+            font-family: 'Inter', sans-serif; width: 1920px; height: 1080px;
+            display: flex; overflow: hidden;
+        }
 
-    var m = data.main;
-    var std = data.standings;
+        /* --- SIDEBAR DREAPTA (20%) --- */
+        .sidebar {
+            width: 20%; height: 100%; background: #0f172a;
+            border-left: 2px solid #c5a059; padding: 25px;
+            display: flex; flex-direction: column;
+        }
+        .sidebar h2 { 
+            color: #c5a059; font-size: 22px; text-transform: uppercase; 
+            margin: 0 0 20px 0; border-bottom: 1px solid rgba(197, 160, 89, 0.3); 
+            padding-bottom: 15px; letter-spacing: 2px;
+        }
+        .rank-table { width: 100%; border-collapse: collapse; }
+        .rank-table td { padding: 12px 5px; border-bottom: 1px solid rgba(255,255,255,0.05); font-size: 18px; }
+        .pos-col { color: #c5a059; font-weight: 900; width: 40px; }
+        .pts-col { font-weight: 900; text-align: right; color: #fff; }
 
-    // 1. Sidebar (Clasament)
-    var sHtml = "";
-    for (var i = 0; i < std.length; i++) {
-        sHtml += '<tr><td class="pos-col">' + std[i].position + '</td><td>' + std[i].team.shortName + '</td><td class="pts-col">' + std[i].points + '</td></tr>';
-        if (std[i].team.id === m.homeTeam.id) document.getElementById('h-rank').innerText = "Locul " + std[i].position;
-        if (std[i].team.id === m.awayTeam.id) document.getElementById('a-rank').innerText = "Locul " + std[i].position;
-    }
-    document.getElementById('standings-body').innerHTML = sHtml;
+        /* --- ZONA PRINCIPALĂ (80%) --- */
+        .main { width: 80%; height: 100%; padding: 40px; display: flex; flex-direction: column; }
 
-    // 2. Hero Card
-    document.getElementById('h-logo').src = "https://api.sofascore.app/api/v1/team/" + m.homeTeam.id + "/image";
-    document.getElementById('a-logo').src = "https://api.sofascore.app/api/v1/team/" + m.awayTeam.id + "/image";
-    document.getElementById('h-name').innerText = m.homeTeam.shortName;
-    document.getElementById('a-name').innerText = m.awayTeam.shortName;
-    
-    // Verificăm dacă e LIVE sau programat
-    if (m.status.type === "inprogress") {
-        document.getElementById('score').innerText = (m.homeScore.display || 0) + "-" + (m.awayScore.display || 0);
-        document.getElementById('status').className = "status-badge"; // Pulsează roșu
-    } else {
-        var startTime = new Date(m.startTimestamp * 1000).toLocaleTimeString('ro-RO', {hour:'2-digit', minute:'2-digit'});
-        document.getElementById('score').innerText = startTime; // Arătăm ora în loc de scor
-        document.getElementById('status').className = ""; // Fără animație de puls
-        document.getElementById('status').style.background = "#334155";
-    }
-    document.getElementById('status').innerText = m.status.description;
+        /* SUS: Ultimele Rezultate (Top 2 Cards) */
+        .top-row { display: flex; gap: 30px; height: 160px; margin-bottom: 30px; }
+        .last-card { 
+            flex: 1; background: #1e293b; border-radius: 25px; padding: 20px; 
+            border-top: 6px solid #94a3b8; box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+        .last-card h4 { margin: 0; font-size: 14px; color: #94a3b8; text-transform: uppercase; letter-spacing: 1px; }
+        .last-res-content { display: flex; justify-content: space-between; align-items: center; margin-top: 20px; font-size: 24px; font-weight: 800; }
+        .highlight { color: #3b82f6; text-shadow: 0 0 10px rgba(59, 130, 246, 0.5); }
 
-    var startDate = new Date(m.startTimestamp * 1000);
-    document.getElementById('match-info').innerText = startDate.toLocaleDateString('ro-RO', {day:'2-digit', month:'long'}) + " | SuperLiga România";
+        /* MIJLOC: Hero Card (Meciul Principal) */
+        .hero {
+            flex: 1; background: radial-gradient(circle at top left, #1e293b 0%, #0f172a 100%);
+            border-radius: 40px; border: 1px solid rgba(197, 160, 89, 0.4);
+            padding: 50px; position: relative; display: flex; flex-direction: column; justify-content: center;
+            box-shadow: 0 40px 100px rgba(0,0,0,0.6);
+        }
+        .status-badge { 
+            position: absolute; top: 40px; left: 50px; background: #334155; 
+            padding: 8px 20px; border-radius: 50px; font-weight: 900; font-size: 18px;
+            letter-spacing: 2px;
+        }
+        .live-pulse { background: #ff2a4d !important; animation: pulse 1.5s infinite; }
+        
+        .hero-main { display: flex; align-items: center; justify-content: space-between; }
+        .hero-team { width: 33%; text-align: center; }
+        .hero-team img { width: 200px; height: 200px; object-fit: contain; margin-bottom: 20px; filter: drop-shadow(0 15px 30px rgba(0,0,0,0.5)); }
+        .hero-team h1 { font-size: 48px; margin: 0; font-weight: 900; }
+        .hero-rank { font-size: 20px; color: #c5a059; font-weight: 700; margin-top: 10px; }
+        
+        .score-box { font-size: 110px; font-weight: 900; background: #000; padding: 15px 50px; border-radius: 30px; border: 3px solid #c5a059; line-height: 1; }
 
-    // 3. Top Cards (Rezultate Etapa Trecută)
-    function formatLast(match, currentId) {
-        if (!match) return "Nu există date";
-        var h = match.homeTeam; var a = match.awayTeam;
-        var hName = (h.id === currentId) ? '<span class="highlight">'+h.shortName+'</span>' : h.shortName;
-        var aName = (a.id === currentId) ? '<span class="highlight">'+a.shortName+'</span>' : a.shortName;
-        return '<span>'+hName+'</span> <span>'+match.homeScore.display+'-'+match.awayScore.display+'</span> <span>'+aName+'</span>';
-    }
-    document.getElementById('h-last-display').innerHTML = formatLast(data.hLast, m.homeTeam.id);
-    document.getElementById('a-last-display').innerHTML = formatLast(data.aLast, m.awayTeam.id);
+        .hero-footer { text-align: center; margin-top: 50px; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 30px; }
+        .match-info-text { font-size: 24px; color: #94a3b8; font-weight: 500; }
 
-    // 4. Bottom Row (Următoarele 3 meciuri)
-    var uHtml = "";
-    for (var k = 0; k < data.upcoming.length; k++) {
-        var u = data.upcoming[k];
-        var uD = new Date(u.startTimestamp * 1000);
-        var uTime = uD.toLocaleDateString('ro-RO', {day:'2-digit', month:'short'}) + " " + uD.toLocaleTimeString('ro-RO', {hour:'2-digit', minute:'2-digit'});
-        uHtml += '<div class="up-card"><div class="time">'+uTime+'</div><div class="teams">'+u.homeTeam.shortName+' vs '+u.awayTeam.shortName+'</div></div>';
-    }
-    document.getElementById('upcoming-list').innerHTML = uHtml;
-}
+        /* JOS: Următoarele meciuri (Bottom 3 Cards) */
+        .bottom-row { display: flex; gap: 25px; height: 160px; margin-top: 40px; }
+        .up-card { 
+            flex: 1; background: rgba(30, 41, 59, 0.6); border-radius: 20px; 
+            padding: 20px; text-align: center; border-bottom: 5px solid #c5a059;
+        }
+        .up-card .time { font-size: 14px; color: #c5a059; font-weight: 900; text-transform: uppercase; }
+        .up-card .teams { font-size: 22px; font-weight: 800; margin-top: 15px; }
+
+        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
+    </style>
+</head>
+<body>
+
+    <div class="main">
+        <div class="top-row">
+            <div class="last-card">
+                <h4 id="h-last-title">Ultimul Rezultat - Gazde</h4>
+                <div class="last-res-content" id="h-last-display">--</div>
+            </div>
+            <div class="last-card">
+                <h4 id="a-last-title">Ultimul Rezultat - Oaspeți</h4>
+                <div class="last-res-content" id="a-last-display">--</div>
+            </div>
+        </div>
+
+        <div class="hero">
+            <div id="status" class="status-badge">SCANNIG</div>
+            <div class="hero-main">
+                <div class="hero-team">
+                    <img id="h-logo" src="">
+                    <h1 id="h-name">--</h1>
+                    <div id="h-rank" class="hero-rank">Loc --</div>
+                </div>
+                <div class="hero-score">
+                    <div class="score-box" id="score">--:--</div>
+                </div>
+                <div class="hero-team">
+                    <img id="a-logo" src="">
+                    <h1 id="a-name">--</h1>
+                    <div id="a-rank" class="hero-rank">Loc --</div>
+                </div>
+            </div>
+            <div class="hero-footer">
+                <div class="match-info-text" id="match-info">Se încarcă datele din SuperLiga...</div>
+            </div>
+        </div>
+
+        <div class="bottom-row" id="upcoming-list"></div>
+    </div>
+
+    <div class="sidebar">
+        <h2>Clasament SuperLiga</h2>
+        <table class="rank-table">
+            <tbody id="standings-body"></tbody>
+        </table>
+    </div>
+
+    <script>
+        function loadData() {
+            var xhr = new XMLHttpRequest();
+            // Citim JSON-ul generat de GitHub Action
+            xhr.open("GET", "data/superliga.json?t=" + new Date().getTime(), true);
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    render(JSON.parse(xhr.responseText));
+                }
+            };
+            xhr.send();
+        }
+
+        function render(data) {
+            if (!data || !data.main) {
+                document.getElementById('match-info').innerText = "Nu sunt meciuri programate momentan.";
+                return;
+            }
+
+            var m = data.main;
+            var std = data.standings;
+
+            // 1. SIDEBAR (Clasament)
+            var sHtml = "";
+            for (var i = 0; i < std.length; i++) {
+                var s = std[i];
+                sHtml += '<tr><td class="pos-col">' + s.position + '</td><td>' + s.team.shortName + '</td><td class="pts-col">' + s.points + '</td></tr>';
+                
+                // Actualizăm locul în clasament pentru echipele din Hero
+                if (s.team.id === m.homeTeam.id) document.getElementById('h-rank').innerText = "Locul " + s.position;
+                if (s.team.id === m.awayTeam.id) document.getElementById('a-rank').innerText = "Locul " + s.position;
+            }
+            document.getElementById('standings-body').innerHTML = sHtml;
+
+            // 2. HERO CARD
+            document.getElementById('h-logo').src = "https://api.sofascore.app/api/v1/team/" + m.homeTeam.id + "/image";
+            document.getElementById('a-logo').src = "https://api.sofascore.app/api/v1/team/" + m.awayTeam.id + "/image";
+            document.getElementById('h-name').innerText = m.homeTeam.shortName;
+            document.getElementById('a-name').innerText = m.awayTeam.shortName;
+            
+            // Logica Scorul sau Ora
+            var statusBadge = document.getElementById('status');
+            if (m.status.type === "inprogress") {
+                document.getElementById('score').innerText = (m.homeScore.display || 0) + "-" + (m.awayScore.display || 0);
+                statusBadge.innerText = "LIVE";
+                statusBadge.className = "status-badge live-pulse";
+            } else {
+                var time = new Date(m.startTimestamp * 1000).toLocaleTimeString('ro-RO', {hour:'2-digit', minute:'2-digit'});
+                document.getElementById('score').innerText = time;
+                statusBadge.innerText = m.status.description;
+                statusBadge.className = "status-badge";
+            }
+
+            var d = new Date(m.startTimestamp * 1000);
+            var dateStr = d.toLocaleDateString('ro-RO', { day: '2-digit', month: 'long' });
+            document.getElementById('match-info').innerText = dateStr + " | SuperLiga România";
+
+            // 3. TOP CARDS (Ultimul Rezultat)
+            function formatLast(match, currentTeamId) {
+                if (!match) return "<span>Fără date</span>";
+                var home = match.homeTeam;
+                var away = match.awayTeam;
+                var hName = (home.id === currentTeamId) ? '<span class="highlight">' + home.shortName + '</span>' : home.shortName;
+                var aName = (away.id === currentTeamId) ? '<span class="highlight">' + away.shortName + '</span>' : away.shortName;
+                return '<span>' + hName + '</span> <span>' + match.homeScore.display + '-' + match.awayScore.display + '</span> <span>' + aName + '</span>';
+            }
+            document.getElementById('h-last-display').innerHTML = formatLast(data.hLast, m.homeTeam.id);
+            document.getElementById('a-last-display').innerHTML = formatLast(data.aLast, m.awayTeam.id);
+
+            // 4. BOTTOM CARDS (Următoarele 3 meciuri)
+            var uHtml = "";
+            for (var k = 0; k < data.upcoming.length; k++) {
+                var u = data.upcoming[k];
+                var uDate = new Date(u.startTimestamp * 1000);
+                var uTimeStr = uDate.toLocaleDateString('ro-RO', {day:'2-digit', month:'short'}) + " " + uDate.toLocaleTimeString('ro-RO', {hour:'2-digit', minute:'2-digit'});
+                uHtml += '<div class="up-card"><div class="time">' + uTimeStr + '</div><div class="teams">' + u.homeTeam.shortName + ' vs ' + u.awayTeam.shortName + '</div></div>';
+            }
+            document.getElementById('upcoming-list').innerHTML = uHtml || '<div class="up-card">Final de etapă</div>';
+        }
+
+        // Pornim aplicația
+        loadData();
+        // TV-ul verifică JSON-ul o dată pe minut pentru a vedea dacă Robotul a actualizat scorul
+        setInterval(loadData, 60000);
+    </script>
+</body>
+</html>
