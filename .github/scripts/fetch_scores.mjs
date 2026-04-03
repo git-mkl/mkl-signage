@@ -3,48 +3,56 @@ import fs from 'fs';
 async function fetchData() {
     const API_KEY = process.env.RAPIDAPI_KEY;
     const HOST = "sportapi7.p.rapidapi.com";
-    
-    // Luăm data de ieri și de azi pentru a fi siguri că prindem rezultatul FCSB
-    const today = new Date().toISOString().split('T')[0];
     const headers = { "X-RapidAPI-Host": HOST, "X-RapidAPI-Key": API_KEY };
+    
+    // ID-uri SuperLiga România
+    const TOURNAMENT_ID = 37;
+    const SEASON_ID = 63656; // Sezonul 24/25 sau 25/26
 
     try {
-        // CREĂM FOLDERUL DATA (Dacă nu există)
-        if (!fs.existsSync('data')) {
-            fs.mkdirSync('data', { recursive: true });
-        }
+        if (!fs.existsSync('data')) fs.mkdirSync('data', { recursive: true });
 
-        const schRes = await fetch(`https://${HOST}/api/v1/sport/football/scheduled-events/${today}`, { headers });
-        const schJson = await schRes.json();
-        const romania = (schJson.events || []).filter(m => m.category && m.category.name === "Romania");
+        // 1. Luăm CLASAMENTUL (mereu necesar pentru sidebar)
+        const stdRes = await fetch(`https://${HOST}/api/v1/unique-tournament/${TOURNAMENT_ID}/season/${SEASON_ID}/standings/total`, { headers });
+        const stdJson = await stdRes.json();
+        const standings = stdJson.standings[0].rows;
 
-        // Dacă nu găsește meciuri azi, creăm un fișier de siguranță ca să nu dea eroare bot-ul
-        if (romania.length === 0) {
-            console.log("Niciun meci găsit pentru data de azi.");
-            fs.writeFileSync('data/superliga.json', JSON.stringify({ info: "No matches today", standings: [], upcoming: [] }));
+        // 2. Luăm TOATE meciurile următoare din sezon
+        const nextRes = await fetch(`https://${HOST}/api/v1/unique-tournament/${TOURNAMENT_ID}/season/${SEASON_ID}/events/next/0`, { headers });
+        const nextJson = await nextRes.json();
+        const allNextEvents = nextJson.events || [];
+
+        // 3. Identificăm meciul principal (Cel LIVE sau următorul cel mai apropiat)
+        let main = allNextEvents.find(m => m.status.type === "inprogress") || allNextEvents[0];
+
+        if (!main) {
+            console.log("Nu s-au găsit meciuri viitoare.");
             return;
         }
 
-        const main = romania.find(m => m.status.type === "inprogress") || romania[0];
-        
-        // Luăm clasamentul
-        const stdRes = await fetch(`https://${HOST}/api/v1/unique-tournament/${main.tournament.uniqueTournament.id}/season/${main.season.id}/standings/total`, { headers });
-        const stdJson = await stdRes.json();
+        // 4. Luăm ultimele rezultate pentru echipele din HERO (Etapa trecută)
+        const hLastRes = await fetch(`https://${HOST}/api/v1/team/${main.homeTeam.id}/events/last/1`, { headers });
+        const hLastJson = await hLastRes.json();
+        const aLastRes = await fetch(`https://${HOST}/api/v1/team/${main.awayTeam.id}/events/last/1`, { headers });
+        const aLastJson = await aLastRes.json();
 
+        // 5. Pregătim datele finale
         const finalData = {
             main: main,
-            standings: stdJson.standings[0].rows,
-            upcoming: romania.filter(m => m.id !== main.id).slice(0, 3),
+            standings: standings,
+            hLast: hLastJson.events[0] || null,
+            aLast: aLastJson.events[0] || null,
+            upcoming: allNextEvents.filter(m => m.id !== main.id).slice(0, 3), // Următoarele 3 după Hero
             updatedAt: new Date().toISOString()
         };
 
         fs.writeFileSync('data/superliga.json', JSON.stringify(finalData));
-        console.log("Date salvate cu succes în data/superliga.json");
+        console.log("Date actualizate cu succes pentru: " + main.homeTeam.shortName + " vs " + main.awayTeam.shortName);
 
     } catch (e) {
-        console.error("Eroare la procesare:", e.message);
-        // Salvăm eroarea în fișier ca să nu crape procesul de Git
-        fs.writeFileSync('data/superliga.json', JSON.stringify({ error: e.message }));
+        console.error("Eroare:", e.message);
+        // Salvăm eroarea dar păstrăm structura ca să nu crape HTML-ul
+        fs.writeFileSync('data/superliga.json', JSON.stringify({ error: e.message, standings: [] }));
     }
 }
 
