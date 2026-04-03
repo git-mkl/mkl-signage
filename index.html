@@ -2,55 +2,66 @@
 <html lang="ro">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=1920, user-scalable=no">
-    <title>SuperLiga Match Center</title>
+    <title>SuperLiga Romania - Live Center</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
     <style>
         * { box-sizing: border-box; }
         body { margin: 0; padding: 0; background: #020617; color: #ffffff; font-family: 'Inter', sans-serif; width: 1920px; height: 1080px; display: flex; overflow: hidden; }
+        
+        /* Sidebar */
         .sidebar { width: 20%; height: 100%; background: #0f172a; border-left: 2px solid #c5a059; padding: 25px; }
         .sidebar h2 { color: #c5a059; font-size: 22px; text-transform: uppercase; border-bottom: 1px solid rgba(197, 160, 89, 0.3); padding-bottom: 15px; }
         .rank-table { width: 100%; border-collapse: collapse; }
         .rank-table td { padding: 12px 5px; border-bottom: 1px solid rgba(255,255,255,0.05); font-size: 18px; }
         .pos-col { color: #c5a059; font-weight: 900; width: 40px; }
         .pts-col { font-weight: 900; text-align: right; }
+
+        /* Main Area */
         .main { width: 80%; height: 100%; padding: 40px; display: flex; flex-direction: column; }
         .top-row { display: flex; gap: 30px; height: 160px; margin-bottom: 30px; }
         .last-card { flex: 1; background: #1e293b; border-radius: 25px; padding: 20px; border-top: 6px solid #94a3b8; }
+        .last-card h4 { margin: 0; font-size: 14px; color: #94a3b8; text-transform: uppercase; }
         .last-res-content { display: flex; justify-content: space-between; align-items: center; margin-top: 20px; font-size: 24px; font-weight: 800; }
         .highlight { color: #3b82f6; text-shadow: 0 0 10px rgba(59, 130, 246, 0.5); }
+
+        /* Hero */
         .hero { flex: 1; background: radial-gradient(circle at top left, #1e293b 0%, #0f172a 100%); border-radius: 40px; border: 1px solid rgba(197, 160, 89, 0.4); padding: 50px; position: relative; display: flex; flex-direction: column; justify-content: center; }
-        .status-badge { position: absolute; top: 40px; left: 50px; background: #334155; padding: 8px 20px; border-radius: 50px; font-weight: 900; font-size: 18px; }
+        .status-badge { position: absolute; top: 40px; left: 50px; background: #334155; padding: 8px 20px; border-radius: 50px; font-weight: 900; font-size: 18px; text-transform: uppercase; }
         .live-pulse { background: #ff2a4d !important; animation: pulse 1.5s infinite; }
         .hero-main { display: flex; align-items: center; justify-content: space-between; }
         .hero-team { width: 33%; text-align: center; }
         .hero-team img { width: 180px; height: 180px; object-fit: contain; margin-bottom: 20px; }
-        .hero-team h1 { font-size: 44px; margin: 0; font-weight: 900; }
-        .score-box { font-size: 100px; font-weight: 900; background: #000; padding: 15px 40px; border-radius: 30px; border: 3px solid #c5a059; }
+        .hero-team h1 { font-size: 48px; margin: 0; font-weight: 900; }
+        .score-box { font-size: 100px; font-weight: 900; background: #000; padding: 20px 50px; border-radius: 30px; border: 3px solid #c5a059; min-width: 300px; text-align: center; }
+
+        /* Bottom Row */
         .bottom-row { display: flex; gap: 25px; height: 160px; margin-top: 40px; }
         .up-card { flex: 1; background: rgba(30, 41, 59, 0.6); border-radius: 20px; padding: 20px; text-align: center; border-bottom: 5px solid #c5a059; }
+        .up-card .time { font-size: 14px; color: #c5a059; font-weight: 900; }
+        .up-card .teams { font-size: 20px; font-weight: 800; margin-top: 12px; }
+
         @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
     </style>
 </head>
 <body>
     <div class="main">
         <div class="top-row">
-            <div class="last-card"><h4>Ultimul Rezultat - Gazde</h4><div class="last-res-content" id="h-last">--</div></div>
-            <div class="last-card"><h4>Ultimul Rezultat - Oaspeți</h4><div class="last-res-content" id="a-last">--</div></div>
+            <div class="last-card"><h4>Etapa Trecută: Gazde</h4><div class="last-res-content" id="h-last">--</div></div>
+            <div class="last-card"><h4>Etapa Trecută: Oaspeți</h4><div class="last-res-content" id="a-last">--</div></div>
         </div>
         <div class="hero">
             <div id="status" class="status-badge">STANDBY</div>
             <div class="hero-main">
-                <div class="hero-team"><img id="h-logo" src=""><h1 id="h-name">--</h1><div id="h-rank" style="color:#c5a059"></div></div>
+                <div class="hero-team"><img id="h-logo" src=""><h1 id="h-name">--</h1><div id="h-rank" style="color:#c5a059; font-weight:700"></div></div>
                 <div class="hero-score"><div class="score-box" id="score">--:--</div></div>
-                <div class="hero-team"><img id="a-logo" src=""><h1 id="a-name">--</h1><div id="a-rank" style="color:#c5a059"></div></div>
+                <div class="hero-team"><img id="a-logo" src=""><h1 id="a-name">--</h1><div id="a-rank" style="color:#c5a059; font-weight:700"></div></div>
             </div>
-            <div style="text-align:center; margin-top:40px; color:#94a3b8; font-size:22px;" id="match-info">Se încarcă datele...</div>
+            <div style="text-align:center; margin-top:40px; color:#94a3b8; font-size:24px;" id="match-info">Sincronizare program...</div>
         </div>
         <div class="bottom-row" id="upcoming"></div>
     </div>
     <div class="sidebar">
-        <h2>Clasament Live</h2>
+        <h2 id="side-title">Clasament Live</h2>
         <table class="rank-table"><tbody id="st-body"></tbody></table>
     </div>
 
@@ -60,8 +71,7 @@
             xhr.open("GET", "data/superliga.json?t=" + new Date().getTime(), true);
             xhr.onreadystatechange = function() {
                 if (xhr.readyState === 4 && xhr.status === 200) {
-                    var data = JSON.parse(xhr.responseText);
-                    render(data);
+                    render(JSON.parse(xhr.responseText));
                 }
             };
             xhr.send();
@@ -70,8 +80,8 @@
         function render(data) {
             var m = data.main;
             if(!m) return;
-            
-            // Sidebar
+
+            // 1. Sidebar (Clasament)
             var sHtml = "";
             data.standings.forEach(function(s) {
                 sHtml += '<tr><td class="pos-col">'+s.position+'</td><td>'+s.team.shortName+'</td><td class="pts-col">'+s.points+'</td></tr>';
@@ -80,40 +90,45 @@
             });
             document.getElementById('st-body').innerHTML = sHtml;
 
-            // Hero
+            // 2. Hero Card
             document.getElementById('h-logo').src = "https://api.sofascore.app/api/v1/team/"+m.homeTeam.id+"/image";
             document.getElementById('a-logo').src = "https://api.sofascore.app/api/v1/team/"+m.awayTeam.id+"/image";
             document.getElementById('h-name').innerText = m.homeTeam.shortName;
             document.getElementById('a-name').innerText = m.awayTeam.shortName;
-            
+
             var st = document.getElementById('status');
+            var sc = document.getElementById('score');
             if(m.status.type === "inprogress") {
-                document.getElementById('score').innerText = (m.homeScore.display||0) + "-" + (m.awayScore.display||0);
+                sc.innerText = (m.homeScore.display||0) + " - " + (m.awayScore.display||0);
                 st.innerText = "LIVE"; st.className = "status-badge live-pulse";
             } else {
-                document.getElementById('score').innerText = new Date(m.startTimestamp*1000).toLocaleTimeString('ro-RO', {hour:'2-digit', minute:'2-digit'});
+                var d = new Date(m.startTimestamp * 1000);
+                sc.innerText = d.toLocaleTimeString('ro-RO', {hour:'2-digit', minute:'2-digit'});
                 st.innerText = m.status.description; st.className = "status-badge";
             }
-            document.getElementById('match-info').innerText = new Date(m.startTimestamp*1000).toLocaleDateString('ro-RO', {day:'2-digit', month:'long'}) + " | SuperLiga";
+            document.getElementById('match-info').innerText = new Date(m.startTimestamp*1000).toLocaleDateString('ro-RO', {day:'2-digit', month:'long'}) + " | SuperLiga România";
 
-            // Last Results
-            function fmt(match, id) {
-                if(!match) return "Fără date";
-                return '<span>'+(match.homeTeam.id===id?'<b class="highlight">'+match.homeTeam.shortName+'</b>':match.homeTeam.shortName)+'</span>' +
-                       '<span>'+match.homeScore.display+'-'+match.awayScore.display+'</span>' +
-                       '<span>'+(match.awayTeam.id===id?'<b class="highlight">'+match.awayTeam.shortName+'</b>':match.awayTeam.shortName)+'</span>';
+            // 3. Etapa Trecută (Top Cards)
+            function fmtLast(match, id) {
+                if(!match) return "<span>Fără date</span>";
+                var h = match.homeTeam, a = match.awayTeam;
+                var hStr = h.id === id ? '<span class="highlight">'+h.shortName+'</span>' : h.shortName;
+                var aStr = a.id === id ? '<span class="highlight">'+a.shortName+'</span>' : a.shortName;
+                return '<span>'+hStr+'</span> <span>'+match.homeScore.display+'-'+match.awayScore.display+'</span> <span>'+aStr+'</span>';
             }
-            document.getElementById('h-last').innerHTML = fmt(data.hLast, m.homeTeam.id);
-            document.getElementById('a-last').innerHTML = fmt(data.aLast, m.awayTeam.id);
+            document.getElementById('h-last').innerHTML = fmtLast(data.hLast, m.homeTeam.id);
+            document.getElementById('a-last').innerHTML = fmtLast(data.aLast, m.awayTeam.id);
 
-            // Upcoming
+            // 4. Meciuri Următoare (Bottom)
             var uHtml = "";
             data.upcoming.forEach(function(u) {
-                uHtml += '<div class="up-card"><div class="time">'+new Date(u.startTimestamp*1000).toLocaleTimeString('ro-RO',{hour:'2-digit', minute:'2-digit'})+'</div>'+
+                var ud = new Date(u.startTimestamp * 1000);
+                uHtml += '<div class="up-card"><div class="time">'+ud.toLocaleDateString('ro-RO',{day:'2-digit', month:'short'}) + ' ' + ud.toLocaleTimeString('ro-RO',{hour:'2-digit', minute:'2-digit'})+'</div>'+
                          '<div class="teams">'+u.homeTeam.shortName+' - '+u.awayTeam.shortName+'</div></div>';
             });
-            document.getElementById('upcoming').innerHTML = uHtml;
+            document.getElementById('upcoming').innerHTML = uHtml || '<div class="up-card">Final de etapă</div>';
         }
+
         load(); setInterval(load, 60000);
     </script>
 </body>
