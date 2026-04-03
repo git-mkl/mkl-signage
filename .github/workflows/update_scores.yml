@@ -1,8 +1,13 @@
 name: Update SuperLiga Scores
 on:
   schedule:
-    - cron: '*/10 * * * *'
+    - cron: '0,30 * * * *' # Every 30 minutes
   workflow_dispatch:
+    inputs:
+      force-update:
+        description: "Force update scores"
+        required: false
+        default: "false"
 
 permissions:
   contents: write
@@ -14,27 +19,37 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v4
         with:
-          persist-credentials: true # Important pentru push
+          persist-credentials: true # Important for push
 
-      - name: Setup Node.js 24
+      - name: Setup Node.js 20 (LTS)
         uses: actions/setup-node@v4
         with:
-          node-version: '24'
+          node-version: '20'
 
       - name: Fetch Data
         env:
           RAPIDAPI_KEY: ${{ secrets.RAPIDAPI_KEY }}
-        run: node .github/scripts/fetch_scores.mjs
+        run: |
+          if [ -z "${{ secrets.RAPIDAPI_KEY }}" ]; then
+            echo "RAPIDAPI_KEY is required!"
+            exit 1
+          fi
+
+          if [ ! -f .github/scripts/fetch_scores.mjs ]; then
+            echo "Script .github/scripts/fetch_scores.mjs is missing!"
+            exit 1
+          fi
+
+          node .github/scripts/fetch_scores.mjs
 
       - name: Commit and Push Changes
         run: |
           git config --global user.name "ScoreBot"
           git config --global user.email "bot@github.com"
           git add data/superliga.json
-          # Verificăm dacă sunt schimbări înainte de commit pentru a evita erori
-          if git diff --staged --quiet; then
-            echo "Nicio schimbare detectată."
-          else
+          
+          git diff --exit-code && echo "No changes detected." || (
+            git pull origin main --rebase
             git commit -m "Update scores [skip ci]"
-            git push origin main
-          fi
+            git push origin main || (sleep 5 && git push origin main)
+          )
