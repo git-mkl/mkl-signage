@@ -1,36 +1,41 @@
 exports.handler = async (event, context) => {
-  const API_KEY = process.env.RAPIDAPI_KEY; 
-  const today = new Date().toISOString().split('T')[0]; 
-  const API_URL = "https://sportapi7.p.rapidapi.com/api/v1/sport/football/scheduled-events/" + today;
+  const API_KEY = process.env.RAPIDAPI_KEY;
+  const HOST = "sportapi7.p.rapidapi.com";
+  const today = new Date().toISOString().split('T')[0];
+  const headers = { "X-RapidAPI-Host": HOST, "X-RapidAPI-Key": API_KEY };
 
   try {
-    const response = await fetch(API_URL, {
-      method: "GET",
-      headers: {
-        "X-RapidAPI-Host": "sportapi7.p.rapidapi.com",
-        "X-RapidAPI-Key": '8b8b29c474mshd383ae732d8331ap1b0325jsn05f8a83f75fa'
-      }
-    });
+    // 1. Get Schedule & identify the Main Match
+    const schRes = await fetch(`https://${HOST}/api/v1/sport/football/scheduled-events/${today}`, { headers });
+    const schJson = await schRes.json();
+    const romania = (schJson.events || []).filter(m => m.category && m.category.name === "Romania");
 
-    const json = await response.json();
+    if (romania.length === 0) return { statusCode: 200, body: JSON.stringify({ error: "No matches" }) };
+
+    // Identify main match (Live first, otherwise first upcoming)
+    let main = romania.find(m => m.status.type === "inprogress") || romania[0];
     
-    // The API returns a list called 'events'
-    var allEvents = json.events || [];
-    var filtered = [];
+    // 2. Get Standings
+    const stdRes = await fetch(`https://${HOST}/api/v1/unique-tournament/${main.tournament.uniqueTournament.id}/season/${main.season.id}/standings/total`, { headers });
+    const stdJson = await stdRes.json();
 
-    for (var i = 0; i < allEvents.length; i++) {
-      // Filter for Romania matches based on the category object in your JSON
-      if (allEvents[i].category && allEvents[i].category.name === "Romania") {
-        filtered.push(allEvents[i]);
-      }
-    }
+    // 3. Get Last Results for Home and Away teams
+    const hLastRes = await fetch(`https://${HOST}/api/v1/team/${main.homeTeam.id}/events/last/1`, { headers });
+    const hLastJson = await hLastRes.json();
+
+    const aLastRes = await fetch(`https://${HOST}/api/v1/team/${main.awayTeam.id}/events/last/1`, { headers });
+    const aLastJson = await aLastRes.json();
 
     return {
       statusCode: 200,
       headers: { "Access-Control-Allow-Origin": "*", "Content-Type": "application/json" },
-      body: JSON.stringify(filtered)
+      body: JSON.stringify({
+        main: main,
+        standings: stdJson.standings[0].rows,
+        hLast: hLastJson.events[0],
+        aLast: aLastJson.events[0],
+        upcoming: romania.filter(m => m.id !== main.id).slice(0, 3)
+      })
     };
-  } catch (error) {
-    return { statusCode: 500, body: JSON.stringify({ error: error.message }) };
-  }
+  } catch (e) { return { statusCode: 500, body: JSON.stringify({ error: e.message }) }; }
 };
