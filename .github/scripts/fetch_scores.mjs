@@ -7,24 +7,23 @@ async function fetchData() {
     const headers = { "X-RapidAPI-Host": HOST, "X-RapidAPI-Key": API_KEY };
 
     try {
-        // 1. Programul zilei pentru România
+        if (!fs.existsSync('data')) fs.mkdirSync('data');
+
         const schRes = await fetch(`https://${HOST}/api/v1/sport/football/scheduled-events/${today}`, { headers });
         const schJson = await schRes.json();
         const romania = (schJson.events || []).filter(m => m.category && m.category.name === "Romania");
 
+        // DACĂ NU SUNT MECIURI, CREĂM UN FIȘIER MINIM PENTRU A EVITA EROAREA 128
         if (romania.length === 0) {
-            console.log("Niciun meci azi.");
+            console.log("Niciun meci azi. Creăm fișier gol de siguranță.");
+            fs.writeFileSync('data/superliga.json', JSON.stringify({ error: "No matches today", upcoming: [], standings: [] }));
             return;
         }
 
-        // Meciul principal (cel LIVE sau primul de azi)
         const main = romania.find(m => m.status.type === "inprogress") || romania[0];
-
-        // 2. Clasamentul
         const stdRes = await fetch(`https://${HOST}/api/v1/unique-tournament/${main.tournament.uniqueTournament.id}/season/${main.season.id}/standings/total`, { headers });
         const stdJson = await stdRes.json();
 
-        // 3. Ultimele rezultate pentru cele două echipe
         const hLastRes = await fetch(`https://${HOST}/api/v1/team/${main.homeTeam.id}/events/last/1`, { headers });
         const hLastJson = await hLastRes.json();
 
@@ -36,15 +35,15 @@ async function fetchData() {
             standings: stdJson.standings[0].rows,
             hLast: hLastJson.events[0],
             aLast: aLastJson.events[0],
-            upcoming: romania.filter(m => m.id !== main.id).slice(0, 3),
-            lastUpdate: new Date().toISOString()
+            upcoming: romania.filter(m => m.id !== main.id).slice(0, 3)
         };
 
-        if (!fs.existsSync('data')) fs.mkdirSync('data');
         fs.writeFileSync('data/superliga.json', JSON.stringify(finalData));
-        console.log("Date salvate cu succes!");
+        console.log("Date salvate!");
     } catch (e) {
         console.error("Eroare:", e.message);
+        // Chiar și la eroare, creăm un fișier ca să nu crape workflow-ul
+        fs.writeFileSync('data/superliga.json', JSON.stringify({ error: e.message }));
         process.exit(1);
     }
 }
