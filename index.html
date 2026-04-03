@@ -5,42 +5,73 @@
     <title>Live Football Signage</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
     <style>
-        /* --- STYLES (No changes needed here, CSS is usually safe) --- */
+        /* --- RESET & BASE --- */
         * { box-sizing: border-box; }
         body {
-            margin: 0; padding: 40px;
+            margin: 0; padding: 30px 40px;
+            background-color: #07090f; /* Solid fallback */
             background: radial-gradient(circle at 50% 0%, #1c2841 0%, #07090f 100%);
             color: #ffffff; font-family: 'Inter', Arial, sans-serif;
             width: 1920px; height: 1080px; overflow: hidden;
-            display: flex; flex-direction: column;
         }
+
         header {
+            width: 100%; border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding-bottom: 15px; margin-bottom: 20px; height: 80px;
             display: flex; justify-content: space-between; align-items: center;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-            padding-bottom: 20px; margin-bottom: 20px;
         }
-        .brand { font-size: 50px; font-weight: 900; text-transform: uppercase; }
+        .brand { font-size: 44px; font-weight: 900; text-transform: uppercase; }
         .brand span { color: #ff2a4d; }
-        .clock { font-size: 40px; font-weight: 300; color: #94a3b8; }
-        .section-title { font-size: 24px; font-weight: 900; text-transform: uppercase; letter-spacing: 4px; color: #3b82f6; margin: 20px 0 10px 0; display: flex; align-items: center; }
-        .section-title::after { content: ""; flex: 1; height: 2px; background: rgba(59,130,246,0.2); margin-left: 20px; }
-        .container { display: flex; flex-wrap: wrap; gap: 20px; width: 100%; }
-        .card { background: linear-gradient(145deg, #1a243a 0%, #141c2f 100%); border: 1px solid rgba(255,255,255,0.05); border-radius: 20px; padding: 20px; display: flex; flex-direction: column; box-shadow: 0 15px 30px rgba(0,0,0,0.5); }
-        .res-card { width: 440px; height: 260px; border-top: 5px solid #64748b; }
-        .up-card { width: 345px; height: 220px; border-top: 5px solid #3b82f6; }
-        .live-card { border-top-color: #ff2a4d !important; box-shadow: 0 0 25px rgba(255, 42, 77, 0.2); }
-        .meta { display: flex; justify-content: space-between; font-size: 13px; font-weight: 700; color: #94a3b8; text-transform: uppercase; margin-bottom: 15px; }
+        .clock { font-size: 36px; font-weight: 300; color: #94a3b8; }
+
+        .section-title {
+            font-size: 22px; font-weight: 900; text-transform: uppercase;
+            letter-spacing: 3px; color: #3b82f6; margin: 20px 0 15px 0;
+            display: flex; align-items: center;
+        }
+        .section-title::after { content: ""; flex: 1; height: 1px; background: rgba(59,130,246,0.3); margin-left: 20px; }
+
+        /* --- THE GRID FIX (No more Gap) --- */
+        .container { width: 100%; display: block; white-space: nowrap; }
+
+        .card {
+            display: inline-block; vertical-align: top; white-space: normal;
+            background: linear-gradient(145deg, #1a243a 0%, #141c2f 100%);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 18px; padding: 20px;
+            margin-right: 20px; margin-bottom: 20px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+        }
+
+        .res-card { width: 445px; height: 260px; border-top: 5px solid #64748b; }
+        .up-card { width: 348px; height: 230px; border-top: 5px solid #3b82f6; }
+        .live-card { border-top-color: #ff2a4d !important; box-shadow: 0 0 20px rgba(255, 42, 77, 0.2); }
+
+        .meta { display: flex; justify-content: space-between; font-size: 13px; font-weight: 700; color: #94a3b8; margin-bottom: 12px; }
         .live-label { color: #ff2a4d; animation: blink 1.5s infinite; }
-        .content { display: flex; align-items: center; justify-content: space-between; flex: 1; }
+
+        .content { display: flex; align-items: center; justify-content: space-between; height: 140px; }
         .team { width: 35%; text-align: center; }
-        .team img { width: 80px; height: 80px; object-fit: contain; margin-bottom: 10px; }
-        .team-name { font-size: 18px; font-weight: 800; line-height: 1.1; }
-        .score-box { background: rgba(0,0,0,0.4); padding: 12px; border-radius: 12px; min-width: 100px; text-align: center; border: 1px solid rgba(255,255,255,0.05); }
-        .score-txt { font-size: 48px; font-weight: 900; letter-spacing: 2px; }
+        .team img { width: 70px; height: 70px; object-fit: contain; margin-bottom: 10px; }
+        .team-name { font-size: 17px; font-weight: 800; line-height: 1.1; color: #f8fafc; }
+
+        /* --- THE SCORE PILL FIX --- */
+        .score-pill {
+            width: 120px; height: 80px; 
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 14px;
+            display: flex; align-items: center; justify-content: center;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        .score-val { flex: 1; text-align: center; font-size: 42px; font-weight: 900; }
+        .score-dash { width: 20px; text-align: center; font-size: 24px; opacity: 0.3; }
+
+        .time-box { text-align: center; width: 100px; }
         .time-txt { font-size: 28px; font-weight: 900; color: #3b82f6; }
-        .date-txt { font-size: 14px; color: #64748b; margin-top: 3px; }
+        .date-txt { font-size: 13px; color: #64748b; margin-top: 2px; }
+
         @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
-        .empty { width: 100%; text-align: center; padding: 40px; color: #475569; font-size: 20px; font-style: italic; }
+        .empty { padding: 40px; color: #475569; font-size: 20px; font-style: italic; }
     </style>
 </head>
 <body>
@@ -57,7 +88,6 @@
     <div id="upcoming" class="container"></div>
 
     <script>
-        // LEGACY CLOCK
         function updateClock() {
             var now = new Date();
             var h = ("0" + now.getHours()).slice(-2);
@@ -69,9 +99,7 @@
 
         function loadData() {
             var xhr = new XMLHttpRequest();
-            // Use ABSOLUTE URL to help the TV find the path
             var apiUrl = "https://mkl-signage.netlify.app/.netlify/functions/get-scores?t=" + new Date().getTime();
-            
             xhr.open("GET", apiUrl, true);
             xhr.onreadystatechange = function () {
                 if (xhr.readyState === 4 && xhr.status === 200) {
@@ -83,20 +111,15 @@
 
         function process(data) {
             var live = [], results = [], upcoming = [];
-
             for (var i = 0; i < data.length; i++) {
                 var m = data[i];
                 var s = (m.state && m.state.state) ? m.state.state : "NS";
-                if (["LIVE","HT","1ST_HALF","2ND_HALF"].indexOf(s) > -1) { live.push(m); }
-                else if (["FT","AET","FT_PEN"].indexOf(s) > -1) { results.push(m); }
-                else if (s === "NS") { upcoming.push(m); }
+                if (["LIVE","HT","1ST_HALF","2ND_HALF"].indexOf(s) > -1) live.push(m);
+                else if (["FT","AET","FT_PEN"].indexOf(s) > -1) results.push(m);
+                else if (s === "NS") upcoming.push(m);
             }
-
-            // Results: newest first
             results.sort(function(a, b) { return new Date(b.starting_at) - new Date(a.starting_at); });
-            // Upcoming: soonest first
             upcoming.sort(function(a, b) { return new Date(a.starting_at) - new Date(b.starting_at); });
-
             render(live, results.slice(0, 4), upcoming.slice(0, 8));
         }
 
@@ -111,32 +134,30 @@
                     if (m.participants[i].meta.location === 'home') home = m.participants[i];
                     if (m.participants[i].meta.location === 'away') away = m.participants[i];
                 }
-
                 var isLive = ["LIVE","HT","1ST_HALF","2ND_HALF"].indexOf(m.state.state) > -1;
-                var scoreContent = "";
-
+                
+                var middleContent = "";
                 if (isUpcoming) {
-                    var d = new Date(m.starting_at.replace(/-/g, "/")); // Fix for Tizen Date parsing
-                    var timeStr = d.getHours() + ":" + (d.getMinutes() < 10 ? '0' : '') + d.getMinutes();
-                    var dateStr = d.getDate() + " " + d.toLocaleString('en-GB', { month: 'short' });
-                    scoreContent = '<div class="time-txt">' + timeStr + '</div><div class="date-txt">' + dateStr + '</div>';
+                    var d = new Date(m.starting_at.replace(/-/g, "/"));
+                    var tStr = d.getHours() + ":" + (d.getMinutes() < 10 ? '0' : '') + d.getMinutes();
+                    var dStr = d.getDate() + " " + d.toLocaleString('en-GB', { month: 'short' });
+                    middleContent = '<div class="time-box"><div class="time-txt">' + tStr + '</div><div class="date-txt">' + dStr + '</div></div>';
                 } else {
                     var hG = 0, aG = 0;
                     for (var j = 0; j < m.scores.length; j++) {
                         if (m.scores[j].participant_id === home.id && m.scores[j].description === "CURRENT") hG = m.scores[j].score.goals;
                         if (m.scores[j].participant_id === away.id && m.scores[j].description === "CURRENT") aG = m.scores[j].score.goals;
                     }
-                    scoreContent = '<div class="score-txt">' + hG + '-' + aG + '</div>';
+                    middleContent = '<div class="score-pill"><div class="score-val">' + hG + '</div><div class="score-dash">-</div><div class="score-val">' + aG + '</div></div>';
                 }
 
-                var html = '<div class="card ' + (isUpcoming ? 'up-card' : 'res-card') + ' ' + (isLive ? 'live-card' : '') + '">' +
+                return '<div class="card ' + (isUpcoming ? 'up-card' : 'res-card') + ' ' + (isLive ? 'live-card' : '') + '">' +
                     '<div class="meta"><div>' + m.league.name + '</div><div class="' + (isLive ? 'live-label' : '') + '">' + (isLive ? 'LIVE' : (isUpcoming ? '' : 'FINAL')) + '</div></div>' +
                     '<div class="content">' +
                         '<div class="team"><img src="' + home.image_path + '" onerror="this.src=\'' + logoPlh + '\'"><div class="team-name">' + home.name + '</div></div>' +
-                        '<div class="score-box">' + scoreContent + '</div>' +
+                        middleContent +
                         '<div class="team"><img src="' + away.image_path + '" onerror="this.src=\'' + logoPlh + '\'"><div class="team-name">' + away.name + '</div></div>' +
                     '</div></div>';
-                return html;
             }
 
             var rHtml = "";
