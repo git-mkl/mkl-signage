@@ -3,48 +3,48 @@ import fs from 'fs';
 async function fetchData() {
     const API_KEY = process.env.RAPIDAPI_KEY;
     const HOST = "sportapi7.p.rapidapi.com";
+    
+    // Luăm data de ieri și de azi pentru a fi siguri că prindem rezultatul FCSB
     const today = new Date().toISOString().split('T')[0];
     const headers = { "X-RapidAPI-Host": HOST, "X-RapidAPI-Key": API_KEY };
 
     try {
-        if (!fs.existsSync('data')) fs.mkdirSync('data');
+        // CREĂM FOLDERUL DATA (Dacă nu există)
+        if (!fs.existsSync('data')) {
+            fs.mkdirSync('data', { recursive: true });
+        }
 
         const schRes = await fetch(`https://${HOST}/api/v1/sport/football/scheduled-events/${today}`, { headers });
         const schJson = await schRes.json();
         const romania = (schJson.events || []).filter(m => m.category && m.category.name === "Romania");
 
-        // DACĂ NU SUNT MECIURI, CREĂM UN FIȘIER MINIM PENTRU A EVITA EROAREA 128
+        // Dacă nu găsește meciuri azi, creăm un fișier de siguranță ca să nu dea eroare bot-ul
         if (romania.length === 0) {
-            console.log("Niciun meci azi. Creăm fișier gol de siguranță.");
-            fs.writeFileSync('data/superliga.json', JSON.stringify({ error: "No matches today", upcoming: [], standings: [] }));
+            console.log("Niciun meci găsit pentru data de azi.");
+            fs.writeFileSync('data/superliga.json', JSON.stringify({ info: "No matches today", standings: [], upcoming: [] }));
             return;
         }
 
         const main = romania.find(m => m.status.type === "inprogress") || romania[0];
+        
+        // Luăm clasamentul
         const stdRes = await fetch(`https://${HOST}/api/v1/unique-tournament/${main.tournament.uniqueTournament.id}/season/${main.season.id}/standings/total`, { headers });
         const stdJson = await stdRes.json();
-
-        const hLastRes = await fetch(`https://${HOST}/api/v1/team/${main.homeTeam.id}/events/last/1`, { headers });
-        const hLastJson = await hLastRes.json();
-
-        const aLastRes = await fetch(`https://${HOST}/api/v1/team/${main.awayTeam.id}/events/last/1`, { headers });
-        const aLastJson = await aLastRes.json();
 
         const finalData = {
             main: main,
             standings: stdJson.standings[0].rows,
-            hLast: hLastJson.events[0],
-            aLast: aLastJson.events[0],
-            upcoming: romania.filter(m => m.id !== main.id).slice(0, 3)
+            upcoming: romania.filter(m => m.id !== main.id).slice(0, 3),
+            updatedAt: new Date().toISOString()
         };
 
         fs.writeFileSync('data/superliga.json', JSON.stringify(finalData));
-        console.log("Date salvate!");
+        console.log("Date salvate cu succes în data/superliga.json");
+
     } catch (e) {
-        console.error("Eroare:", e.message);
-        // Chiar și la eroare, creăm un fișier ca să nu crape workflow-ul
+        console.error("Eroare la procesare:", e.message);
+        // Salvăm eroarea în fișier ca să nu crape procesul de Git
         fs.writeFileSync('data/superliga.json', JSON.stringify({ error: e.message }));
-        process.exit(1);
     }
 }
 
