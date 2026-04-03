@@ -2,16 +2,16 @@ name: Update SuperLiga Scores
 on:
   schedule:
     - cron: '*/10 * * * *'
-  workflow_dispatch:
+  workflow_dispatch: # Adaugă butonul de pornire manuală
 
 permissions:
-  contents: write # Aceasta este linia magică pentru eroarea 128
+  contents: write # REPARĂ EROAREA 128 - Permite bot-ului să scrie datele
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4 # Am trecut la v4 pentru Node 24
+      - uses: actions/checkout@v4 # Update la v4 pentru Node 24
       
       - name: Setup Node.js
         uses: actions/setup-node@v4
