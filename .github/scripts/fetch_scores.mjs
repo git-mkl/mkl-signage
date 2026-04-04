@@ -9,15 +9,25 @@ async function fetchData() {
     };
 
     const LEAGUE_ID = 283; // SuperLiga Romania
-    const CURRENT_YEAR = new Date().getFullYear();
 
     try {
-        if (!fs.existsSync('data')) fs.mkdirSync('data', { recursive: true });
+        console.log("Incepem preluarea datelor...");
 
-        // 1. LIVE MATCHES
+        // 1. Detectam sezonul curent (esențial pentru API-Football)
+        const leagueRes = await fetch(`${BASE_URL}/leagues?id=${LEAGUE_ID}`, { headers });
+        const leagueData = await leagueRes.json();
+        
+        if (!leagueData.response || leagueData.response.length === 0) {
+            throw new Error("Nu s-au gasit informatii despre SuperLiga (ID 283)");
+        }
+
+        const currentSeason = leagueData.response[0].seasons.find(s => s.current).year;
+        console.log(`Sezon detectat: ${currentSeason}`);
+
+        // 2. Meciuri LIVE
         const liveRes = await fetch(`${BASE_URL}/fixtures?league=${LEAGUE_ID}&live=all`, { headers });
-        const liveData = await liveRes.json();
-        const liveMatches = (liveData.response || []).map(m => ({
+        const liveJson = await liveRes.json();
+        const liveMatches = (liveJson.response || []).map(m => ({
             id: m.fixture.id,
             home: m.teams.home.name,
             away: m.teams.away.name,
@@ -28,7 +38,7 @@ async function fetchData() {
             logoA: m.teams.away.logo
         }));
 
-        // 2. UPCOMING (Căutăm în sezonul curent sau următor)
+        // 3. Meciuri VIITOARE (Upcoming)
         const nextRes = await fetch(`${BASE_URL}/fixtures?league=${LEAGUE_ID}&next=10`, { headers });
         const nextData = await nextRes.json();
         const upcoming = (nextData.response || []).map(m => ({
@@ -39,13 +49,13 @@ async function fetchData() {
             logoA: m.teams.away.logo
         }));
 
-        // 3. STANDINGS (Încercăm anul curent)
+        // 4. Clasament
         let standings = [];
-        const stdRes = await fetch(`${BASE_URL}/standings?league=${LEAGUE_ID}&season=${CURRENT_YEAR}`, { headers });
-        const stdData = await stdRes.json();
+        const stdRes = await fetch(`${BASE_URL}/standings?league=${LEAGUE_ID}&season=${currentSeason}`, { headers });
+        const stdJson = await stdRes.json();
         
-        if (stdData.response && stdData.response[0]) {
-            const table = stdData.response[0].league.standings[0];
+        if (stdJson.response && stdJson.response[0]) {
+            const table = stdJson.response[0].league.standings[0];
             standings = table.map(s => ({
                 pos: s.rank,
                 name: s.team.name,
@@ -62,11 +72,14 @@ async function fetchData() {
             updatedAt: new Date().toISOString()
         };
 
-        fs.writeFileSync('data/superliga.json', JSON.stringify(finalData));
-        console.log("Sync reuşit la " + finalData.updatedAt);
+        if (!fs.existsSync('data')) fs.mkdirSync('data');
+        fs.writeFileSync('data/superliga.json', JSON.stringify(finalData, null, 2));
+        console.log(`Succes! S-au gasit ${liveMatches.length} meciuri live si ${upcoming.length} viitoare.`);
 
     } catch (e) {
-        console.error("Eroare Script:", e.message);
+        console.error("ERRORE CRITICA:", e.message);
+        process.exit(1);
     }
 }
+
 fetchData();
