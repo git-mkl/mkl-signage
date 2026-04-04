@@ -2,59 +2,91 @@
 <html lang="ro">
 <head>
     <meta charset="UTF-8">
-    <title>SuperLiga Dashboard - Test Mode</title>
+    <title>SuperLiga - Rezultate și Clasament</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div class="container">
         <main>
-            <div id="hero-grid" class="hero-grid"></div>
-            <div id="upcoming-row" class="upcoming-row"></div>
+            <h2 class="section-title">Meciuri • SuperLiga</h2>
+            <div id="matches-container" class="matches-grid">
+                </div>
         </main>
-        <aside class="sidebar">
-            <h2 style="margin:0 0 20px 0; font-size:1rem; color:#8b949e">CLASAMENT (MOD TEST 2024)</h2>
-            <div id="standings-list"></div>
+
+        <aside>
+            <h2 class="section-title">Clasament</h2>
+            <div class="table-card">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Club</th>
+                            <th class="stat-cell">MJ</th>
+                            <th class="stat-cell">V</th>
+                            <th class="stat-cell">E</th>
+                            <th class="stat-cell">Î</th>
+                            <th class="stat-cell">GD</th>
+                            <th style="text-align:right">Pct</th>
+                        </tr>
+                    </thead>
+                    <tbody id="standings-body"></tbody>
+                </table>
+            </div>
         </aside>
     </div>
 
     <script>
         async function updateUI() {
-            try {
-                const res = await fetch('data/superliga.json?t=' + Date.now());
-                const data = await res.json();
+            const res = await fetch('data/superliga.json?t=' + Date.now());
+            const data = await res.json();
+
+            // Randare Meciuri (Live + Upcoming)
+            const matchesAll = [...data.liveMatches, ...data.upcoming];
+            document.getElementById('matches-container').innerHTML = matchesAll.map(m => {
+                const isLive = m.isLive;
+                const timeStr = isLive ? `<span class="live-dot">LIVE ${m.status}</span>` : m.dateStr;
                 
-                const heroGrid = document.getElementById('hero-grid');
-                let heroHtml = "";
+                return `
+                <div class="match-card">
+                    <div class="match-status">${timeStr}</div>
+                    <div class="team-row">
+                        <div class="team-info">
+                            <img src="${m.home.logo}" class="team-logo">
+                            <span class="team-name">${m.home.name}</span>
+                        </div>
+                        <span class="score">${m.home.score ?? ''}</span>
+                    </div>
+                    <div class="team-row">
+                        <div class="team-info">
+                            <img src="${m.away.logo}" class="team-logo">
+                            <span class="team-name">${m.away.name}</span>
+                        </div>
+                        <span class="score">${m.away.score ?? ''}</span>
+                    </div>
+                </div>`;
+            }).join('');
 
-                if (data.upcoming && data.upcoming.length > 0) {
-                    const m = data.upcoming[0];
-                    heroHtml = `
-                        <div class="hero-card">
-                            <div style="color:#d4af37; font-weight:bold; margin-bottom:15px;">ULTIMUL REZULTAT (ARHIVĂ)</div>
-                            <div class="hero-match-row">
-                                <div class="team"><img src="${m.logoH}" class="team-logo"><h2>${m.home}</h2></div>
-                                <div class="score-box">${m.hScore} - ${m.aScore}</div>
-                                <div class="team"><img src="${m.logoA}" class="team-logo"><h2>${m.away}</h2></div>
-                            </div>
-                        </div>`;
-                }
-                heroGrid.innerHTML = heroHtml;
-
-                document.getElementById('upcoming-row').innerHTML = data.upcoming.slice(1, 4).map(m => `
-                    <div class="u-card">
-                        <div style="font-weight:700;">${m.home} ${m.hScore}-${m.aScore} ${m.away}</div>
-                    </div>`).join('');
-
-                document.getElementById('standings-list').innerHTML = data.standings.map(s => `
-                    <div class="table-row">
-                        <span>${s.pos}</span>
-                        <div class="team-cell"><img src="${s.logo}"><span>${s.name}</span></div>
-                        <span style="text-align:center">${s.pj}</span>
-                        <span style="font-weight:bold; color:#d4af37; text-align:right">${s.pts}</span>
-                    </div>`).join('');
-            } catch (e) { console.error(e); }
+            // Randare Clasament
+            document.getElementById('standings-body').innerHTML = data.standings.map(s => `
+                <tr>
+                    <td class="rank">${s.rank}</td>
+                    <td>
+                        <div class="team-cell">
+                            <img src="${s.logo}" width="18">
+                            <span>${s.team}</span>
+                        </div>
+                    </td>
+                    <td class="stat-cell">${s.played}</td>
+                    <td class="stat-cell">${s.win}</td>
+                    <td class="stat-cell">${s.draw}</td>
+                    <td class="stat-cell">${s.lose}</td>
+                    <td class="stat-cell">${s.gd}</td>
+                    <td class="pts-cell">${s.points}</td>
+                </tr>
+            `).join('');
         }
         updateUI();
+        setInterval(updateUI, 60000);
     </script>
 </body>
 </html>
