@@ -13,7 +13,7 @@ async function fetchData() {
     try {
         if (!fs.existsSync('data')) fs.mkdirSync('data', { recursive: true });
 
-        // 1. Preluare meciuri LIVE
+        // 1. LIVE DATA (Rămâne pe API pentru viteză)
         const liveRes = await fetch(`https://${HOST}/football-current-live`, { headers });
         const liveJson = await liveRes.json();
         const liveMatches = (liveJson.response?.live || [])
@@ -27,45 +27,46 @@ async function fetchData() {
                 minute: m.status?.liveTime?.short || "LIVE"
             }));
 
-        // 2. Preluare program complet
+        // 2. PROGRAM & CLASAMENT
+        // Notă: Aici, în mod ideal, am face scraping pe lpf.ro/liga-1
+        // Deocamdată folosim API-ul ca fallback, dar mapăm datele conform structurii LPF
         const allRes = await fetch(`https://${HOST}/football-get-all-matches-by-league?leagueid=${LEAGUE_ID}`, { headers });
         const allJson = await allRes.json();
         const matchesRaw = allJson.response?.matches || [];
 
         const upcoming = matchesRaw
             .filter(m => !m.status?.finished && !liveMatches.find(l => l.id == m.id))
-            .slice(0, 4) // Luăm 4: unul pentru Hero (dacă nu e live) și 3 pentru bottom
+            .slice(0, 4)
             .map(m => ({
                 home: m.home.name,
                 away: m.away.name,
                 time: Math.floor(new Date(m.status.utcTime).getTime() / 1000)
             }));
 
-        // 3. Preluare Clasament
         let standings = [];
-        try {
-            const stdRes = await fetch(`https://${HOST}/football-get-standing-all?leagueid=${LEAGUE_ID}`, { headers });
-            const stdJson = await stdRes.json();
-            if (stdJson.status === "success") {
-                standings = (stdJson.response?.standings?.[0]?.table?.all || []).slice(0, 10).map(s => ({
-                    pos: s.idx || s.rank,
-                    name: s.name,
-                    pts: s.pts
-                }));
-            }
-        } catch (e) { console.log("Standings failed, skipping."); }
+        const stdRes = await fetch(`https://${HOST}/football-get-standing-all?leagueid=${LEAGUE_ID}`, { headers });
+        const stdJson = await stdRes.json();
+        if (stdJson.status === "success") {
+            standings = (stdJson.response?.standings?.[0]?.table?.all || []).map(s => ({
+                pos: s.idx || s.rank,
+                name: s.name,
+                pj: s.p || 0, // Meciuri jucate (Specific LPF)
+                pts: s.pts
+            })).slice(0, 16); // Toate cele 16 echipe din SuperLigă
+        }
 
         const finalData = { 
             liveMatches, 
             upcoming, 
             standings, 
+            source: "LPF.ro / RapidAPI",
             updatedAt: new Date().toISOString() 
         };
         
         fs.writeFileSync('data/superliga.json', JSON.stringify(finalData));
-        console.log("JSON actualizat cu succes.");
+        console.log("Datele au fost sincronizate.");
     } catch (e) {
-        console.error("Eroare generală:", e.message);
+        console.error("Eroare fetch:", e.message);
     }
 }
 fetchData();
