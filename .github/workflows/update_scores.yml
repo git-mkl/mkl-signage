@@ -1,8 +1,9 @@
-name: Update SuperLiga Scores
+name: SuperLiga Data Sync
+
 on:
   schedule:
-    - cron: '*/15 * * * *'
-  workflow_dispatch:
+    - cron: '*/15 * * * *' # Rulează la fiecare 15 minute
+  workflow_dispatch: # Permite rularea manuală pentru teste
 
 permissions:
   contents: write
@@ -10,33 +11,38 @@ permissions:
 jobs:
   build:
     runs-on: ubuntu-latest
+
     steps:
-      - name: Checkout
+      - name: Checkout Repository
         uses: actions/checkout@v4
 
-      - name: Setup Node
+      - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '20'
 
-      - name: Fetch Data
+      - name: Create data directory
+        run: mkdir -p data
+
+      - name: Fetch Football Data
         env:
-          RAPIDAPI_KEY: ${{ secrets.RAPIDAPI_KEY }}
+          FOOTBALL_API_KEY: ${{ secrets.FOOTBALL_API_KEY }}
         run: node .github/scripts/fetch_scores.mjs
+
+      - name: Check if data was generated
+        run: |
+          if [ -f data/superliga.json ]; then
+            echo "File exists, size: $(stat -c%s data/superliga.json) bytes"
+            cat data/superliga.json
+          else
+            echo "Error: data/superliga.json was not created!"
+            exit 1
+          fi
 
       - name: Commit and Push
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          
-          # Creăm fișierul dacă scriptul a eșuat, ca să nu dea eroare git add
-          mkdir -p data
-          touch data/superliga.json
-          
           git add data/superliga.json
-          if git diff --cached --quiet; then
-            echo "Nicio schimbare."
-          else
-            git commit -m "Update scores [skip ci]"
-            git push origin main
-          fi
+          git commit -m "Update SuperLiga scores [skip ci]" || echo "No changes to commit"
+          git push
