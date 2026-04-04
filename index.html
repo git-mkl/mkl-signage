@@ -2,6 +2,8 @@
 <html lang="ro">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SuperLiga Signage</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -12,72 +14,99 @@
                 <div class="stat-card">ETAPA TRECUTĂ: OASPEȚI <br><b>Preluare date...</b></div>
             </div>
 
-            <div id="hero-grid" class="hero-grid">
-                </div>
+            <div id="hero-grid" class="hero-grid"></div>
 
-            <div id="upcoming-row" class="upcoming-row">
-                </div>
+            <div id="upcoming-row" class="upcoming-row"></div>
         </main>
 
         <aside class="sidebar">
-            <h3>Clasament SuperLiga</h3>
+            <h3 style="margin-top:0">Clasament SuperLiga</h3>
             <div id="standings-list"></div>
         </aside>
     </div>
 
     <script>
         async function updateUI() {
-            const res = await fetch('data/superliga.json');
-            const data = await res.json();
+            try {
+                const res = await fetch('data/superliga.json');
+                const data = await res.json();
 
-            // 1. Render Hero Grid (Live sau Programat)
-            const heroGrid = document.getElementById('hero-grid');
-            let heroContent = "";
+                const heroGrid = document.getElementById('hero-grid');
+                let heroHtml = "";
 
-            if (data.liveMatches && data.liveMatches.length > 0) {
-                data.liveMatches.forEach(m => {
-                    heroContent += `
+                // Functie helper pentru logouri
+                const getLogo = (name) => `https://tse1.mm.bing.net/th?q=${encodeURIComponent(name + " logo football")}&w=100&h=100&c=7`;
+
+                // 1. Randare LIVE sau Programat in HERO
+                if (data.liveMatches && data.liveMatches.length > 0) {
+                    data.liveMatches.forEach(m => {
+                        heroHtml += `
+                            <div class="hero-card">
+                                <span class="live-badge">LIVE ${m.minute}</span>
+                                <div class="hero-match-row">
+                                    <div class="team">
+                                        <img src="${getLogo(m.home)}" class="team-logo">
+                                        <h2>${m.home}</h2>
+                                    </div>
+                                    <div class="score-box">${m.hScore} - ${m.aScore}</div>
+                                    <div class="team">
+                                        <img src="${getLogo(m.away)}" class="team-logo">
+                                        <h2>${m.away}</h2>
+                                    </div>
+                                </div>
+                            </div>`;
+                    });
+                } else if (data.upcoming && data.upcoming.length > 0) {
+                    const next = data.upcoming[0];
+                    const d = new Date(next.time * 1000);
+                    const timeStr = d.getHours() + ":" + d.getMinutes().toString().padStart(2, '0');
+
+                    heroHtml = `
                         <div class="hero-card">
-                            <span class="live-badge">${m.minute}</span>
-                            <h2>${m.home}</h2>
-                            <div class="score-box">${m.hScore} - ${m.aScore}</div>
-                            <h2>${m.away}</h2>
+                            <span class="live-badge" style="background:#30363d">URMĂTORUL MECI</span>
+                            <div class="hero-match-row">
+                                <div class="team">
+                                    <img src="${getLogo(next.home)}" class="team-logo">
+                                    <h2>${next.home}</h2>
+                                </div>
+                                <div class="time-container">
+                                    <small>ÎNCEPE LA ORA</small>
+                                    <div class="score-box scheduled-box">${timeStr}</div>
+                                    <p style="opacity:0.6">${d.toLocaleDateString('ro-RO', {day:'numeric', month:'long'})}</p>
+                                </div>
+                                <div class="team">
+                                    <img src="${getLogo(next.away)}" class="team-logo">
+                                    <h2>${next.away}</h2>
+                                </div>
+                            </div>
                         </div>`;
-                });
-            } else if (data.upcoming && data.upcoming.length > 0) {
-                const next = data.upcoming[0];
-                const d = new Date(next.time * 1000);
-                heroContent = `
-                    <div class="hero-card">
-                        <span class="live-badge" style="background:#30363d">PROGRAMAT</span>
-                        <h2>${next.home}</h2>
-                        <div class="score-box" style="font-size:1.8rem">${d.getHours()}:${d.getMinutes().toString().padStart(2,'0')}</div>
-                        <h2>${next.away}</h2>
-                        <p>${d.toLocaleDateString('ro-RO', {day:'numeric', month:'long'})}</p>
-                    </div>`;
-            }
-            heroGrid.innerHTML = heroContent;
+                }
+                heroGrid.innerHTML = heroHtml;
 
-            // 2. Render Upcoming
-            document.getElementById('upcoming-row').innerHTML = data.upcoming.slice(1).map(m => `
-                <div class="u-card">
-                    <b>${m.home} vs ${m.away}</b><br>
-                    <small>${new Date(m.time * 1000).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}</small>
-                </div>
-            `).join('');
+                // 2. Randare Upcoming (celelalte meciuri)
+                const upList = data.upcoming.slice(data.liveMatches.length > 0 ? 0 : 1, 4);
+                document.getElementById('upcoming-row').innerHTML = upList.map(m => `
+                    <div class="u-card">
+                        <small style="color:#d4af37">${new Date(m.time * 1000).toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'})}</small><br>
+                        <b>${m.home} vs ${m.away}</b>
+                    </div>
+                `).join('');
 
-            // 3. Render Standings
-            document.getElementById('standings-list').innerHTML = data.standings.map(s => `
-                <div class="table-row">
-                    <span>${s.pos}</span>
-                    <span>${s.name}</span>
-                    <b>${s.pts}</b>
-                </div>
-            `).join('');
+                // 3. Randare Clasament
+                document.getElementById('standings-list').innerHTML = data.standings.length > 0 ? 
+                    data.standings.map(s => `
+                        <div class="table-row">
+                            <span>${s.pos}</span>
+                            <span>${s.name}</span>
+                            <b>${s.pts}</b>
+                        </div>
+                    `).join('') : '<p style="opacity:0.5">Se încarcă clasamentul...</p>';
+
+            } catch (err) { console.error("UI Update Error:", err); }
         }
 
         updateUI();
-        setInterval(updateUI, 60000); // Refresh la 1 minut
+        setInterval(updateUI, 60000);
     </script>
 </body>
 </html>
