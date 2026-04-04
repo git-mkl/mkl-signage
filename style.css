@@ -1,7 +1,7 @@
 body {
     background-color: #0d1117;
     color: #e6edf3;
-    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    font-family: 'Inter', -apple-system, sans-serif;
     margin: 0; padding: 20px;
     display: flex; justify-content: center;
 }
@@ -11,10 +11,10 @@ body {
     grid-template-columns: 1fr 320px;
     gap: 25px;
     width: 100%;
-    max-width: 1300px;
+    max-width: 1400px;
 }
 
-/* Rândul de sus - Rezultate anterioare (Dummy/Static momentan) */
+/* Sectiune Top Stats */
 .top-stats {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -25,80 +25,125 @@ body {
 .stat-card {
     background: #161b22;
     padding: 15px;
-    border-radius: 10px;
+    border-radius: 12px;
     border: 1px solid #30363d;
+    font-size: 0.85rem;
 }
 
-/* Grid-ul Dinamic pentru Hero (1, 2 sau 3 meciuri) */
+/* Grid Dinamic Hero */
 .hero-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
     gap: 20px;
     margin-bottom: 25px;
 }
 
 .hero-card {
     background: linear-gradient(145deg, #1c2128, #161b22);
-    border-radius: 16px;
-    padding: 30px;
+    border-radius: 20px;
+    padding: 40px 20px;
     text-align: center;
     border: 1px solid #30363d;
-    box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+}
+
+.hero-match-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    width: 100%;
+    margin-top: 20px;
+}
+
+.team {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.team-logo {
+    width: 90px;
+    height: 90px;
+    object-fit: contain;
+    margin-bottom: 15px;
+    padding: 5px;
 }
 
 .score-box {
-    display: inline-block;
     background: #000;
     color: #fff;
-    font-size: 2.5rem;
+    font-size: 3rem;
     font-weight: 800;
-    padding: 10px 25px;
-    border-radius: 12px;
-    border: 2px solid #d4af37; /* Gold accent */
-    margin: 15px 0;
+    padding: 15px 35px;
+    border-radius: 15px;
+    border: 2px solid #d4af37;
+    min-width: 140px;
+}
+
+/* Stil specific pentru Ora de Start */
+.time-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+}
+
+.time-container small {
+    color: #d4af37;
+    font-weight: bold;
+    letter-spacing: 2px;
+    font-size: 0.75rem;
+}
+
+.scheduled-box {
+    border-color: #30363d;
+    background: #1c2128;
 }
 
 .live-badge {
     background: #da3633;
     color: white;
-    padding: 4px 10px;
-    border-radius: 6px;
-    font-size: 0.75rem;
+    padding: 5px 12px;
+    border-radius: 8px;
+    font-size: 0.8rem;
     font-weight: bold;
-    text-transform: uppercase;
 }
 
-/* Program inferioar */
+/* Upcoming Row */
 .upcoming-row {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    display: flex;
     gap: 15px;
 }
 
 .u-card {
-    background: rgba(22, 27, 34, 0.5);
-    padding: 15px;
-    border-radius: 10px;
+    flex: 1;
+    background: rgba(22, 27, 34, 0.6);
+    padding: 20px;
+    border-radius: 12px;
     text-align: center;
-    font-size: 0.9rem;
+    border: 1px solid #30363d;
 }
 
-/* Sidebar Clasament */
+/* Sidebar */
 .sidebar {
     background: #161b22;
     padding: 20px;
-    border-radius: 12px;
+    border-radius: 16px;
     border: 1px solid #30363d;
 }
 
 .table-row {
     display: grid;
     grid-template-columns: 30px 1fr 40px;
-    padding: 10px 0;
+    padding: 12px 0;
     border-bottom: 1px solid #21262d;
+    font-size: 0.95rem;
 }
 
-@media (max-width: 1000px) {
+@media (max-width: 1100px) {
     .container { grid-template-columns: 1fr; }
-    .hero-grid { grid-template-columns: 1fr; }
 }
