@@ -2,7 +2,7 @@
 <html lang="ro">
 <head>
     <meta charset="UTF-8">
-    <title>SuperLiga Dashboard V3</title>
+    <title>SuperLiga Dashboard Pro</title>
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@700;900&display=swap" rel="stylesheet">
 </head>
@@ -12,29 +12,28 @@
             <div id="hero-grid" class="hero-grid"></div>
             <div id="upcoming-row" class="upcoming-row"></div>
         </main>
-
         <aside class="sidebar">
-            <h3 style="margin:0 0 20px 0; font-size:1.1rem; color:#8b949e">CLASAMENT SUPERLIGA</h3>
+            <h2 style="margin:0 0 20px 0; font-size:1.1rem; color:#8b949e">CLASAMENT SUPERLIGA</h2>
+            <div class="table-header">
+                <span>#</span><span>ECHIPĂ</span><span style="text-align:center">PJ</span><span style="text-align:right">PCT</span>
+            </div>
             <div id="standings-list"></div>
-            <p id="meta-info" style="font-size:0.7rem; color:#444; margin-top:20px;"></p>
         </aside>
     </div>
 
     <script>
         async function updateUI() {
             try {
-                const res = await fetch('data/superliga.json?v=' + Date.now());
+                const res = await fetch('data/superliga.json?t=' + Date.now());
                 const data = await res.json();
-                
                 const heroGrid = document.getElementById('hero-grid');
+                
                 let heroHtml = "";
-
-                // 1. LIVE
-                if (data.liveMatches && data.liveMatches.length > 0) {
+                if (data.liveMatches.length > 0) {
                     data.liveMatches.forEach(m => {
                         heroHtml += `
                             <div class="hero-card">
-                                <div class="match-header" style="color:#da3633">● LIVE ${m.minute}</div>
+                                <div class="badge" style="background:#da3633">LIVE ${m.minute}</div>
                                 <div class="hero-match-row">
                                     <div class="team"><img src="${m.logoH}" class="team-logo"><h2>${m.home}</h2></div>
                                     <div class="score-box">${m.hScore} - ${m.aScore}</div>
@@ -42,21 +41,17 @@
                                 </div>
                             </div>`;
                     });
-                } 
-                // 2. PROGRAMAT
-                else if (data.upcoming && data.upcoming.length > 0) {
+                } else if (data.upcoming.length > 0) {
                     const next = data.upcoming[0];
                     const d = new Date(next.time * 1000);
                     heroHtml = `
                         <div class="hero-card">
-                            <div class="match-header" style="color:#d4af37">URMĂTORUL MECI</div>
+                            <div class="badge" style="background:#30363d">URMĂTORUL MECI</div>
                             <div class="hero-match-row">
                                 <div class="team"><img src="${next.logoH}" class="team-logo"><h2>${next.home}</h2></div>
                                 <div style="text-align:center">
-                                    <small style="display:block; margin-bottom:5px; opacity:0.5">ÎNCEPE LA ORA</small>
-                                    <div class="score-box" style="border-color:#30363d; background:#1c2128; font-size:2.5rem;">
-                                        ${d.getHours()}:${d.getMinutes().toString().padStart(2,'0')}
-                                    </div>
+                                    <small style="color:#d4af37; font-weight:900; letter-spacing:1px">ÎNCEPE LA ORA</small>
+                                    <div class="score-box" style="border-color:#30363d; background:#1c2128">${d.getHours().toString().padStart(2,'0')}:${d.getMinutes().toString().padStart(2,'0')}</div>
                                     <p style="margin-top:10px; font-weight:700">${d.toLocaleDateString('ro-RO', {day:'numeric', month:'long'})}</p>
                                 </div>
                                 <div class="team"><img src="${next.logoA}" class="team-logo"><h2>${next.away}</h2></div>
@@ -65,30 +60,22 @@
                 }
                 heroGrid.innerHTML = heroHtml;
 
-                // 3. UPCOMING FOOTER
-                const upList = data.upcoming.slice(data.liveMatches.length > 0 ? 0 : 1, 4);
-                document.getElementById('upcoming-row').innerHTML = upList.map(m => `
+                const footList = data.upcoming.slice(data.liveMatches.length > 0 ? 0 : 1, 4);
+                document.getElementById('upcoming-row').innerHTML = footList.map(m => `
                     <div class="u-card">
-                        <small style="color:#d4af37; font-weight:900">${new Date(m.time * 1000).toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'})}</small>
+                        <small style="color:#d4af37; font-weight:bold">${new Date(m.time * 1000).toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'})}</small>
                         <div style="font-weight:700; margin-top:5px; font-size:0.9rem;">${m.home} - ${m.away}</div>
-                    </div>
-                `).join('');
+                    </div>`).join('');
 
-                // 4. STANDINGS
                 document.getElementById('standings-list').innerHTML = data.standings.map(s => `
                     <div class="table-row">
                         <span style="opacity:0.5">${s.pos}</span>
                         <div class="team-cell"><img src="${s.logo}"><span>${s.name}</span></div>
-                        <span class="pj">${s.pj}</span>
+                        <span style="text-align:center; opacity:0.6">${s.pj}</span>
                         <span class="pts">${s.pts}</span>
-                    </div>
-                `).join('');
-
-                document.getElementById('meta-info').innerText = "Actualizat: " + new Date(data.updatedAt).toLocaleTimeString();
-
+                    </div>`).join('');
             } catch (e) { console.error(e); }
         }
-
         updateUI();
         setInterval(updateUI, 60000);
     </script>
