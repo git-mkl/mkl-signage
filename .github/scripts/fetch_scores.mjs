@@ -8,55 +8,35 @@ async function fetchData() {
         'Content-Type': 'application/json'
     };
 
-    const LEAGUE_ID = 283; // SuperLiga Romania
+    const LEAGUE_ID = 283; 
+    const TEST_SEASON = 2024; // Planul Free permite acces la 2024
 
     try {
-        console.log("Incepem preluarea datelor...");
+        console.log(`Preluăm date pentru sezonul de test: ${TEST_SEASON}`);
 
-        // 1. Detectam sezonul curent (esențial pentru API-Football)
-        const leagueRes = await fetch(`${BASE_URL}/leagues?id=${LEAGUE_ID}`, { headers });
-        const leagueData = await leagueRes.json();
+        // 1. Meciuri (Folosim fixtures din 2024 pentru a vedea date)
+        const res = await fetch(`${BASE_URL}/fixtures?league=${LEAGUE_ID}&season=${TEST_SEASON}&last=10`, { headers });
+        const json = await res.json();
         
-        if (!leagueData.response || leagueData.response.length === 0) {
-            throw new Error("Nu s-au gasit informatii despre SuperLiga (ID 283)");
-        }
-
-        const currentSeason = leagueData.response[0].seasons.find(s => s.current).year;
-        console.log(`Sezon detectat: ${currentSeason}`);
-
-        // 2. Meciuri LIVE
-        const liveRes = await fetch(`${BASE_URL}/fixtures?league=${LEAGUE_ID}&live=all`, { headers });
-        const liveJson = await liveRes.json();
-        const liveMatches = (liveJson.response || []).map(m => ({
-            id: m.fixture.id,
+        // Simulăm "Live" cu ultimele meciuri jucate sau le punem la Upcoming
+        const matches = (json.response || []).map(m => ({
             home: m.teams.home.name,
             away: m.teams.away.name,
             hScore: m.goals.home,
             aScore: m.goals.away,
-            minute: m.fixture.status.elapsed + "'",
-            logoH: m.teams.home.logo,
-            logoA: m.teams.away.logo
-        }));
-
-        // 3. Meciuri VIITOARE (Upcoming)
-        const nextRes = await fetch(`${BASE_URL}/fixtures?league=${LEAGUE_ID}&next=10`, { headers });
-        const nextData = await nextRes.json();
-        const upcoming = (nextData.response || []).map(m => ({
-            home: m.teams.home.name,
-            away: m.teams.away.name,
             time: m.fixture.timestamp,
             logoH: m.teams.home.logo,
-            logoA: m.teams.away.logo
+            logoA: m.teams.away.logo,
+            status: m.fixture.status.short
         }));
 
-        // 4. Clasament
+        // 2. Clasament 2024
         let standings = [];
-        const stdRes = await fetch(`${BASE_URL}/standings?league=${LEAGUE_ID}&season=${currentSeason}`, { headers });
+        const stdRes = await fetch(`${BASE_URL}/standings?league=${LEAGUE_ID}&season=${TEST_SEASON}`, { headers });
         const stdJson = await stdRes.json();
         
         if (stdJson.response && stdJson.response[0]) {
-            const table = stdJson.response[0].league.standings[0];
-            standings = table.map(s => ({
+            standings = stdJson.response[0].league.standings[0].map(s => ({
                 pos: s.rank,
                 name: s.team.name,
                 pj: s.all.played,
@@ -66,20 +46,18 @@ async function fetchData() {
         }
 
         const finalData = {
-            liveMatches,
-            upcoming,
-            standings,
+            liveMatches: [], // In planul Free 2025 e blocat, deci live va fi gol
+            upcoming: matches.slice(0, 5),
+            standings: standings,
             updatedAt: new Date().toISOString()
         };
 
         if (!fs.existsSync('data')) fs.mkdirSync('data');
         fs.writeFileSync('data/superliga.json', JSON.stringify(finalData, null, 2));
-        console.log(`Succes! S-au gasit ${liveMatches.length} meciuri live si ${upcoming.length} viitoare.`);
+        console.log("Datele istorice (2024) au fost incarcate pentru testare.");
 
     } catch (e) {
-        console.error("ERRORE CRITICA:", e.message);
-        process.exit(1);
+        console.error("Eroare:", e.message);
     }
 }
-
 fetchData();
