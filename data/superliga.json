@@ -1,6 +1,49 @@
 {
   "liveMatches": [],
   "upcoming": [],
-  "standings": [],
-  "updatedAt": "2026-04-04T01:55:55.815Z"
+  "standings": [
+    {
+      "pos": 1,
+      "name": "FCSB",
+      "pj": 10,
+      "pts": 52,
+      "logo": "https://media.api-sports.io/football/teams/559.png"
+    },
+    {
+      "pos": 2,
+      "name": "CFR 1907 Cluj",
+      "pj": 10,
+      "pts": 43,
+      "logo": "https://media.api-sports.io/football/teams/2246.png"
+    },
+    {
+      "pos": 3,
+      "name": "Universitatea Craiova",
+      "pj": 10,
+      "pts": 40,
+      "logo": "https://media.api-sports.io/football/teams/632.png"
+    },
+    {
+      "pos": 4,
+      "name": "Universitatea Cluj",
+      "pj": 10,
+      "pts": 39,
+      "logo": "https://media.api-sports.io/football/teams/2599.png"
+    },
+    {
+      "pos": 5,
+      "name": "Rapid",
+      "pj": 10,
+      "pts": 33,
+      "logo": "https://media.api-sports.io/football/teams/6231.png"
+    },
+    {
+      "pos": 6,
+      "name": "Dinamo Bucuresti",
+      "pj": 10,
+      "pts": 31,
+      "logo": "https://media.api-sports.io/football/teams/635.png"
+    }
+  ],
+  "updatedAt": "2026-04-04T02:05:03.836Z"
 }
