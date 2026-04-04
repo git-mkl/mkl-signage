@@ -1,72 +1,76 @@
 import fs from 'fs';
 
 async function fetchData() {
-    const API_KEY = process.env.RAPIDAPI_KEY;
-    const HOST = 'free-api-live-football-data.p.rapidapi.com';
-    const headers = { 
-        'x-rapidapi-key': API_KEY, 
-        'x-rapidapi-host': HOST, 
-        'Content-Type': 'application/json' 
+    const API_KEY = process.env.FOOTBALL_API_KEY; // Asigură-te că ai pus cheia în GitHub Secrets
+    const BASE_URL = 'https://v3.football.api-sports.io';
+    const headers = {
+        'x-apisports-key': API_KEY,
+        'Content-Type': 'application/json'
     };
-    const LEAGUE_ID = "189";
+
+    const LEAGUE_ID = 283; // SuperLiga Romania
+    const SEASON = 2025; // Sezonul curent
 
     try {
         if (!fs.existsSync('data')) fs.mkdirSync('data', { recursive: true });
 
-        // 1. LIVE DATA (Rămâne pe API pentru viteză)
-        const liveRes = await fetch(`https://${HOST}/football-current-live`, { headers });
-        const liveJson = await liveRes.json();
-        const liveMatches = (liveJson.response?.live || [])
-            .filter(m => m.leagueId == LEAGUE_ID)
+        // 1. Preluăm meciurile LIVE (Live & In-Play)
+        const liveRes = await fetch(`${BASE_URL}/fixtures?league=${LEAGUE_ID}&live=all`, { headers });
+        const liveData = await liveRes.json();
+        const liveMatches = (liveData.response || []).map(m => ({
+            id: m.fixture.id,
+            home: m.teams.home.name,
+            away: m.teams.away.name,
+            hScore: m.goals.home,
+            aScore: m.goals.away,
+            minute: m.fixture.status.elapsed + "'",
+            logoH: m.teams.home.logo,
+            logoA: m.teams.away.logo
+        }));
+
+        // 2. Preluăm Programul (Următoarele meciuri)
+        const nextRes = await fetch(`${BASE_URL}/fixtures?league=${LEAGUE_ID}&season=${SEASON}&next=10`, { headers });
+        const nextData = await nextRes.json();
+        const upcoming = (nextData.response || [])
+            .filter(m => !liveMatches.find(l => l.id === m.fixture.id))
             .map(m => ({
-                id: m.id,
-                home: m.home.name,
-                away: m.away.name,
-                hScore: m.home.score,
-                aScore: m.away.score,
-                minute: m.status?.liveTime?.short || "LIVE"
+                id: m.fixture.id,
+                home: m.teams.home.name,
+                away: m.teams.away.name,
+                time: m.fixture.timestamp,
+                logoH: m.teams.home.logo,
+                logoA: m.teams.away.logo
             }));
 
-        // 2. PROGRAM & CLASAMENT
-        // Notă: Aici, în mod ideal, am face scraping pe lpf.ro/liga-1
-        // Deocamdată folosim API-ul ca fallback, dar mapăm datele conform structurii LPF
-        const allRes = await fetch(`https://${HOST}/football-get-all-matches-by-league?leagueid=${LEAGUE_ID}`, { headers });
-        const allJson = await allRes.json();
-        const matchesRaw = allJson.response?.matches || [];
-
-        const upcoming = matchesRaw
-            .filter(m => !m.status?.finished && !liveMatches.find(l => l.id == m.id))
-            .slice(0, 4)
-            .map(m => ({
-                home: m.home.name,
-                away: m.away.name,
-                time: Math.floor(new Date(m.status.utcTime).getTime() / 1000)
-            }));
-
+        // 3. Preluăm Clasamentul
         let standings = [];
-        const stdRes = await fetch(`https://${HOST}/football-get-standing-all?leagueid=${LEAGUE_ID}`, { headers });
-        const stdJson = await stdRes.json();
-        if (stdJson.status === "success") {
-            standings = (stdJson.response?.standings?.[0]?.table?.all || []).map(s => ({
-                pos: s.idx || s.rank,
-                name: s.name,
-                pj: s.p || 0, // Meciuri jucate (Specific LPF)
-                pts: s.pts
-            })).slice(0, 16); // Toate cele 16 echipe din SuperLigă
+        const stdRes = await fetch(`${BASE_URL}/standings?league=${LEAGUE_ID}&season=${SEASON}`, { headers });
+        const stdData = await stdRes.json();
+        
+        if (stdData.response && stdData.response[0]) {
+            const table = stdData.response[0].league.standings[0];
+            standings = table.map(s => ({
+                pos: s.rank,
+                name: s.team.name,
+                pj: s.all.played,
+                pts: s.points,
+                logo: s.team.logo
+            }));
         }
 
-        const finalData = { 
-            liveMatches, 
-            upcoming, 
-            standings, 
-            source: "LPF.ro / RapidAPI",
-            updatedAt: new Date().toISOString() 
+        const finalData = {
+            liveMatches,
+            upcoming,
+            standings,
+            updatedAt: new Date().toISOString()
         };
-        
+
         fs.writeFileSync('data/superliga.json', JSON.stringify(finalData));
-        console.log("Datele au fost sincronizate.");
+        console.log("Datele de la API-Football au fost salvate.");
+
     } catch (e) {
-        console.error("Eroare fetch:", e.message);
+        console.error("Eroare API-Football:", e.message);
     }
 }
+
 fetchData();
