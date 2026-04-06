@@ -2,31 +2,30 @@
 <html>
 <head>
     <meta charset="UTF-8">
+    <title>SuperLiga Hub</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div class="container">
-        <div class="column col-1">
+        <div class="column col-matches">
             <div class="group-title">Rezultate Recente</div>
-            <div id="past-list"></div>
+            <div id="past-area"></div>
         </div>
 
-        <div class="column col-2">
+        <div class="column col-central">
             <div id="today-area"></div>
             <div class="group-title">Program Viitor</div>
-            <div id="future-list"></div>
+            <div id="future-area"></div>
         </div>
 
-        <div class="column col-3">
+        <div class="column col-table">
             <div class="group-title">Clasament SuperLiga</div>
             <div class="table-card">
                 <table>
                     <thead>
                         <tr>
-                            <th>#</th>
-                            <th style="text-align:left">Echipă</th>
-                            <th>MJ</th><th>V</th><th>E</th><th>Î</th><th>GD</th>
-                            <th style="text-align:right">Pct</th>
+                            <th>#</th><th style="text-align:left">Echipă</th>
+                            <th>MJ</th><th>V</th><th>GD</th><th>Pct</th>
                         </tr>
                     </thead>
                     <tbody id="std-body"></tbody>
@@ -41,46 +40,48 @@
             xhr.open('GET', 'data/superliga.json?t=' + new Date().getTime(), true);
             xhr.onreadystatechange = function () {
                 if (xhr.readyState === 4 && xhr.status === 200) {
-                    var data = JSON.parse(xhr.responseText);
+                    var d = JSON.parse(xhr.responseText);
                     
-                    renderMatches('past-list', data.past);
-                    renderMatches('today-area', data.today, "AZI / LIVE");
-                    renderMatches('future-list', data.future);
+                    // Render meciuri folosind concatenare clasica (safe pentru TV)
+                    renderGroup('past-area', d.past || d.matches.slice(0,6));
+                    renderGroup('today-area', d.today, "AZI / LIVE");
+                    renderGroup('future-area', d.future);
                     
-                    var html = '';
-                    for (var i = 0; i < Math.min(data.standings.length, 16); i++) {
-                        var s = data.standings[i];
-                        html += '<tr>' +
-                            '<td class="col-rank">' + s.rank + '</td>' +
-                            '<td class="team-name-cell">' + s.name + '</td>' +
+                    var h = '';
+                    var st = d.standings || [];
+                    for (var i = 0; i < Math.min(st.length, 16); i++) {
+                        var s = st[i];
+                        h += '<tr>' +
+                            '<td style="color:#aaa">' + s.rank + '</td>' +
+                            '<td class="t-name">' + s.name + '</td>' +
                             '<td>' + s.pj + '</td>' +
                             '<td>' + s.v + '</td>' +
-                            '<td>' + s.e + '</td>' +
-                            '<td>' + s.i + '</td>' +
                             '<td>' + s.gd + '</td>' +
-                            '<td class="col-pts">' + s.pts + '</td>' +
+                            '<td class="t-pts">' + s.pts + '</td>' +
                         '</tr>';
                     }
-                    document.getElementById('std-body').innerHTML = html;
+                    document.getElementById('std-body').innerHTML = h;
                 }
             };
             xhr.send();
         }
 
-        function renderMatches(id, list, customTitle) {
-            var container = document.getElementById(id);
-            if(!list || list.length === 0) { container.innerHTML = ''; return; }
-            
-            var html = customTitle ? '<div class="group-title" style="color:#f28b82; border-color:#f28b82;">' + customTitle + '</div>' : '';
+        function renderGroup(id, list, specialTitle) {
+            var el = document.getElementById(id);
+            if (!list || list.length === 0) {
+                if(!specialTitle) el.innerHTML = '';
+                return;
+            }
+            var html = specialTitle ? '<div class="group-title" style="background:#d32f2f">' + specialTitle + '</div>' : '';
             for (var i = 0; i < list.length; i++) {
                 var m = list[i];
                 html += '<div class="match-card">' +
-                    '<div class="status">' + (m.status === 'FT' ? 'Finalizat' : m.time) + '</div>' +
-                    '<div class="team-row"><span class="team-name">' + m.home.name + '</span><span class="score-box">' + m.home.score + '</span></div>' +
-                    '<div class="team-row"><span class="team-name">' + m.away.name + '</span><span class="score-box">' + m.away.score + '</span></div>' +
+                    '<div class="m-status">' + (m.status === 'FT' ? 'Finalizat' : m.date + ' ' + m.time) + '</div>' +
+                    '<div class="team-row"><span class="team-name">' + m.home.name + '</span><span class="score">' + m.home.score + '</span></div>' +
+                    '<div class="team-row"><span class="team-name">' + m.away.name + '</span><span class="score">' + m.away.score + '</span></div>' +
                 '</div>';
             }
-            container.innerHTML = html;
+            el.innerHTML = html;
         }
 
         updateUI();
