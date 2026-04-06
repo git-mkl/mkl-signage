@@ -1,6 +1,14 @@
+:root {
+    --bg: #101214;
+    --card: #202124;
+    --border: #3c4043;
+    --text: #e8eaed;
+    --muted: #9aa0a6;
+}
+
 body {
-    background-color: #121212;
-    color: #e8eaed;
+    background-color: var(--bg);
+    color: var(--text);
     font-family: 'Roboto', sans-serif;
     margin: 0; padding: 20px;
     display: flex; justify-content: center;
@@ -8,43 +16,44 @@ body {
 
 .container {
     display: grid;
-    grid-template-columns: 1fr 380px;
+    grid-template-columns: 1fr 420px;
     gap: 24px;
     width: 100%;
     max-width: 1300px;
 }
 
-h2 { font-size: 16px; font-weight: 400; color: #9aa0a6; margin-bottom: 15px; }
-
-.match-grid {
+/* Carduri Meciuri */
+.matches-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
     gap: 12px;
 }
 
-.card {
-    background: #202124;
-    border: 1px solid #3c4043;
+.match-card {
+    background: var(--card);
+    border: 1px solid var(--border);
     border-radius: 12px;
     padding: 16px;
 }
 
-.status { font-size: 11px; font-weight: bold; color: #9aa0a6; margin-bottom: 10px; text-transform: uppercase; }
-.live-txt { color: #f28b82; }
+.m-status { font-size: 12px; color: var(--muted); margin-bottom: 10px; }
+.team-row { display: flex; justify-content: space-between; align-items: center; margin: 4px 0; }
+.t-name { font-size: 15px; font-weight: 500; }
+.t-score { font-size: 16px; font-weight: 700; }
 
-.team-row { display: flex; justify-content: space-between; align-items: center; margin: 5px 0; }
-.score { font-weight: 700; font-size: 18px; }
-
-.sidebar-card {
-    background: #202124;
-    border: 1px solid #3c4043;
+/* Tabel Clasament */
+.table-card {
+    background: var(--card);
+    border: 1px solid var(--border);
     border-radius: 12px;
-    padding: 15px;
+    padding: 16px;
 }
 
 table { width: 100%; border-collapse: collapse; font-size: 13px; }
-th { text-align: left; color: #9aa0a6; border-bottom: 1px solid #3c4043; padding-bottom: 8px; font-weight: 400; }
+th { text-align: left; color: var(--muted); font-weight: 400; padding-bottom: 10px; border-bottom: 1px solid var(--border); }
 td { padding: 10px 0; border-bottom: 1px solid #303134; }
-.pts-col { text-align: right; font-weight: bold; color: #8ab4f8; }
 
-@media (max-width: 1000px) { .container { grid-template-columns: 1fr; } }
+.col-num { text-align: center; width: 35px; color: var(--muted); }
+.col-pct { text-align: right; font-weight: 700; color: #8ab4f8; }
+
+@media (max-width: 1100px) { .container { grid-template-columns: 1fr; } }
