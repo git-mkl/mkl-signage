@@ -2,27 +2,20 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>SuperLiga Tizen TV</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div class="container">
         <div class="main-content">
-            <h2>Meciuri • SuperLiga</h2>
-            <div id="matches-grid">
-                <p style="color:#9aa0a6">Incarcare...</p>
-            </div>
+            <div id="past-section"></div>
+            <div id="today-section"></div>
+            <div id="future-section"></div>
         </div>
         <div class="sidebar">
-            <h2>Clasament</h2>
+            <div class="group-title">Clasament</div>
             <div class="table-card">
                 <table>
-                    <thead>
-                        <tr>
-                            <th>#</th><th>Echipa</th><th class="col-num">MJ</th><th style="text-align:right">Pct</th>
-                        </tr>
-                    </thead>
-                    <tbody id="standings-body"></tbody>
+                    <tbody id="std-body"></tbody>
                 </table>
             </div>
         </div>
@@ -31,52 +24,43 @@
     <script>
         function updateUI() {
             var xhr = new XMLHttpRequest();
-            // Adaugam timestamp pentru a evita cache-ul agresiv al televizoarelor
             xhr.open('GET', 'data/superliga.json?t=' + new Date().getTime(), true);
             xhr.onreadystatechange = function () {
                 if (xhr.readyState === 4 && xhr.status === 200) {
                     var data = JSON.parse(xhr.responseText);
-                    renderMatches(data.matches);
-                    renderStandings(data.standings);
+                    
+                    renderGroup('past-section', 'Rezultate recente', data.past);
+                    renderGroup('today-section', 'Meciuri Azi', data.today);
+                    renderGroup('future-section', 'Program viitor', data.future);
+                    
+                    var stdHtml = '';
+                    for (var i = 0; i < data.standings.length; i++) {
+                        var s = data.standings[i];
+                        stdHtml += '<tr><td>' + s.rank + '</td><td>' + s.name + '</td><td class="col-pct">' + s.pts + '</td></tr>';
+                    }
+                    document.getElementById('std-body').innerHTML = stdHtml;
                 }
             };
             xhr.send();
         }
 
-        function renderMatches(matches) {
-            var html = '';
+        function renderGroup(containerId, title, matches) {
             if (!matches || matches.length === 0) {
-                html = '<p>Nu sunt meciuri disponibile.</p>';
-            } else {
-                for (var i = 0; i < matches.length; i++) {
-                    var m = matches[i];
-                    html += '<div class="match-card">' +
-                                '<div class="m-status">' + (m.status === 'Finalizat' ? 'FT' : m.date + ' ' + m.time) + '</div>' +
-                                '<div class="team-row"><span class="team-name">' + m.home.name + '</span><span class="score">' + (m.home.score !== null ? m.home.score : '-') + '</span></div>' +
-                                '<div class="team-row"><span class="team-name">' + m.away.name + '</span><span class="score">' + (m.away.score !== null ? m.away.score : '-') + '</span></div>' +
-                            '</div>';
-                }
+                document.getElementById(containerId).innerHTML = '';
+                return;
             }
-            document.getElementById('matches-grid').innerHTML = html;
+            var html = '<div class="group-title">' + title + '</div>';
+            for (var i = 0; i < matches.length; i++) {
+                var m = matches[i];
+                html += '<div class="match-card">' +
+                    '<div class="m-status">' + (m.status === 'FT' ? 'Finalizat' : m.date + ' ' + m.time) + '</div>' +
+                    '<div class="team-row"><span class="team-name">' + m.home.name + '</span><span class="score">' + m.home.score + '</span></div>' +
+                    '<div class="team-row"><span class="team-name">' + m.away.name + '</span><span class="score">' + m.away.score + '</span></div>' +
+                '</div>';
+            }
+            document.getElementById(containerId).innerHTML = html;
         }
 
-        function renderStandings(standings) {
-            var html = '';
-            if (standings && standings.length > 0) {
-                for (var j = 0; j < standings.length; j++) {
-                    var s = standings[j];
-                    html += '<tr>' +
-                                '<td class="col-num">' + (s.rank || s.pos) + '</td>' +
-                                '<td><strong>' + s.name + '</strong></td>' +
-                                '<td class="col-num">' + (s.pj || 0) + '</td>' +
-                                '<td class="col-pct">' + (s.pts || 0) + '</td>' +
-                            '</tr>';
-                }
-            }
-            document.getElementById('standings-body').innerHTML = html;
-        }
-
-        // Pornire si refresh la 5 minute (mai rar pentru TV ca sa nu consume resurse)
         updateUI();
         setInterval(updateUI, 300000);
     </script>
