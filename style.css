@@ -1,21 +1,20 @@
-/* Reset total pentru Tizen 4.0 */
-* { box-sizing: border-box; -webkit-font-smoothing: antialiased; }
+/* Optimizat pentru Signage / TV */
+* { box-sizing: border-box; }
 
 html, body {
     background-color: #000000;
     color: #ffffff;
-    font-family: Arial, sans-serif;
+    font-family: Arial, Helvetica, sans-serif;
     margin: 0; padding: 0;
     width: 100%; height: 100%;
-    overflow: hidden; /* Important pentru signage */
+    overflow: hidden; /* Fără scrollbars pe TV */
 }
 
 .container {
     display: table;
-    width: 100%;
-    height: 100%;
+    width: 100%; height: 100%;
     table-layout: fixed;
-    border-spacing: 15px; /* Creeaza spatiu intre coloane */
+    border-spacing: 15px;
 }
 
 .column {
@@ -29,85 +28,81 @@ html, body {
 .col-table { width: 40%; }
 
 .group-title {
-    font-size: 18px;
-    color: #ffffff;
-    background-color: #333;
-    padding: 8px;
-    margin-bottom: 10px;
+    font-size: 1.2rem;
+    color: #8ab4f8; /* Albastru Google */
+    background-color: #1a1a1a;
+    padding: 10px;
+    margin-bottom: 12px;
     text-transform: uppercase;
     font-weight: bold;
-    border-radius: 4px;
+    border-radius: 6px;
+    border-left: 5px solid #8ab4f8;
 }
 
 /* Carduri Meciuri */
 .match-card {
-    background-color: #1c1c1c;
-    border: 1px solid #444;
-    border-radius: 10px;
-    padding: 15px;
-    margin-bottom: 12px;
+    background-color: #111111;
+    border: 1px solid #333;
+    border-radius: 12px;
+    padding: 18px;
+    margin-bottom: 15px;
 }
 
 .m-status {
-    font-size: 12px;
-    color: #bbbbbb;
-    margin-bottom: 8px;
+    font-size: 0.8rem;
+    color: #9aa0a6;
+    margin-bottom: 10px;
+    font-weight: bold;
 }
 
 .team-row {
-    height: 30px;
-    line-height: 30px;
+    height: 35px;
+    line-height: 35px;
     display: block;
     clear: both;
 }
 
 .team-name {
     float: left;
-    font-size: 16px;
-    font-weight: bold;
-    color: #ffffff; /* Fortam alb */
+    font-size: 1.1rem;
+    font-weight: 500;
 }
 
 .score {
     float: right;
-    font-size: 20px;
+    font-size: 1.3rem;
     font-weight: 900;
-    color: #ffffff;
-    background-color: #333;
-    padding: 0 10px;
-    border-radius: 5px;
-    min-width: 35px;
+    background-color: #222;
+    padding: 0 12px;
+    border-radius: 6px;
+    min-width: 45px;
     text-align: center;
+    color: #fcd535; /* Scor evidențiat cu galben */
 }
 
-/* Clasament */
+/* Tabel Clasament Detaliat */
 .table-card {
-    background-color: #1c1c1c;
-    border-radius: 10px;
-    padding: 10px;
-    border: 1px solid #444;
+    background-color: #111111;
+    border-radius: 12px;
+    padding: 15px;
+    border: 1px solid #333;
 }
 
-table {
-    width: 100%;
-    border-collapse: collapse;
-}
-
+table { width: 100%; border-collapse: collapse; }
 th {
     color: #8ab4f8;
-    font-size: 14px;
-    padding: 10px 5px;
-    border-bottom: 2px solid #444;
+    font-size: 0.9rem;
+    padding: 12px 5px;
+    border-bottom: 2px solid #333;
     text-align: center;
 }
 
 td {
-    padding: 12px 5px;
-    border-bottom: 1px solid #333;
-    font-size: 15px;
-    color: #ffffff;
+    padding: 14px 5px;
+    border-bottom: 1px solid #222;
+    font-size: 1rem;
     text-align: center;
 }
 
-.t-name { text-align: left; font-weight: bold; }
-.t-pts { color: #fcd535; font-weight: bold; font-size: 18px; }
+.t-name { text-align: left; font-weight: bold; font-size: 1.1rem; }
+.t-pts { color: #fcd535; font-weight: bold; font-size: 1.2rem; }
