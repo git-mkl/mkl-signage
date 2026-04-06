@@ -1,48 +1,37 @@
-name: SuperLiga Data Sync
+name: Update SuperLiga Scores
 
 on:
   schedule:
-    - cron: '*/15 * * * *' # Rulează la fiecare 15 minute
-  workflow_dispatch: # Permite rularea manuală pentru teste
-
-permissions:
-  contents: write
+    # Rulează la fiecare 30 de minute
+    - cron: '*/30 * * * *'
+  workflow_dispatch: # Permite rularea manuală din interfața GitHub
 
 jobs:
-  build:
+  update:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v4
+      - name: Checkout repository
+        uses: actions/checkout@v3
 
       - name: Setup Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v3
         with:
           node-version: '20'
 
-      - name: Create data directory
-        run: mkdir -p data
+      - name: Install dependencies
+        # Aceasta este singura dependință necesară pentru scraping
+        run: npm install cheerio 
 
       - name: Fetch Football Data
-        env:
-          FOOTBALL_API_KEY: ${{ secrets.FOOTBALL_API_KEY }}
         run: node .github/scripts/fetch_scores.mjs
-
-      - name: Check if data was generated
-        run: |
-          if [ -f data/superliga.json ]; then
-            echo "File exists, size: $(stat -c%s data/superliga.json) bytes"
-            cat data/superliga.json
-          else
-            echo "Error: data/superliga.json was not created!"
-            exit 1
-          fi
+        env:
+          # Asigură-te că ai acest secret salvat în GitHub Settings > Secrets
+          RAPIDAPI_KEY: ${{ secrets.RAPIDAPI_KEY }}
 
       - name: Commit and Push
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
           git add data/superliga.json
-          git commit -m "Update SuperLiga scores [skip ci]" || echo "No changes to commit"
+          git commit -m "Update SuperLiga scores [skip ci]" || exit 0
           git push
