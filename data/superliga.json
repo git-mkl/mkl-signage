@@ -260,124 +260,164 @@
   "standings": [
     {
       "rank": 1,
-      "name": "FC Unirea Slobozia",
-      "pj": 2,
-      "v": 2,
-      "e": 0,
-      "i": 0,
-      "gd": 2,
-      "pts": 6
+      "name": "Universitatea Craiova",
+      "pj": 30,
+      "v": 17,
+      "e": 9,
+      "i": 4,
+      "gd": 26,
+      "pts": 60
     },
     {
       "rank": 2,
-      "name": "UTA Arad",
-      "pj": 1,
-      "v": 1,
-      "e": 0,
-      "i": 0,
-      "gd": 4,
-      "pts": 3
+      "name": "Rapid Bucuresti",
+      "pj": 30,
+      "v": 16,
+      "e": 8,
+      "i": 6,
+      "gd": 17,
+      "pts": 56
     },
     {
       "rank": 3,
       "name": "Universitatea Cluj",
-      "pj": 1,
-      "v": 1,
-      "e": 0,
-      "i": 0,
-      "gd": 1,
-      "pts": 3
+      "pj": 30,
+      "v": 16,
+      "e": 6,
+      "i": 8,
+      "gd": 21,
+      "pts": 54
     },
     {
       "rank": 4,
-      "name": "Otelul Galati",
-      "pj": 2,
-      "v": 1,
-      "e": 0,
-      "i": 1,
-      "gd": 1,
-      "pts": 3
+      "name": "CFR Cluj",
+      "pj": 30,
+      "v": 15,
+      "e": 8,
+      "i": 7,
+      "gd": 9,
+      "pts": 53
     },
     {
       "rank": 5,
-      "name": "Hermannstadt",
-      "pj": 2,
-      "v": 1,
-      "e": 0,
-      "i": 1,
-      "gd": 1,
-      "pts": 3
+      "name": "Dinamo Bucuresti",
+      "pj": 30,
+      "v": 14,
+      "e": 10,
+      "i": 6,
+      "gd": 14,
+      "pts": 52
     },
     {
       "rank": 6,
-      "name": "Botosani",
-      "pj": 2,
-      "v": 1,
-      "e": 0,
-      "i": 1,
-      "gd": -2,
-      "pts": 3
+      "name": "FC Arges Pitesti",
+      "pj": 30,
+      "v": 15,
+      "e": 5,
+      "i": 10,
+      "gd": 9,
+      "pts": 50
     },
     {
       "rank": 7,
-      "name": "FC Arges Pitesti",
-      "pj": 1,
-      "v": 0,
-      "e": 1,
-      "i": 0,
-      "gd": 0,
-      "pts": 1
+      "name": "FCSB",
+      "pj": 30,
+      "v": 13,
+      "e": 7,
+      "i": 10,
+      "gd": 8,
+      "pts": 46
     },
     {
       "rank": 8,
-      "name": "Dinamo Bucuresti",
-      "pj": 1,
-      "v": 0,
-      "e": 1,
-      "i": 0,
-      "gd": 0,
-      "pts": 1
+      "name": "UTA Arad",
+      "pj": 30,
+      "v": 11,
+      "e": 10,
+      "i": 9,
+      "gd": -5,
+      "pts": 43
     },
     {
       "rank": 9,
-      "name": "Rapid Bucuresti",
-      "pj": 1,
-      "v": 0,
-      "e": 0,
-      "i": 1,
-      "gd": -1,
-      "pts": 0
+      "name": "Botosani",
+      "pj": 30,
+      "v": 11,
+      "e": 9,
+      "i": 10,
+      "gd": 8,
+      "pts": 42
     },
     {
       "rank": 10,
-      "name": "FCV Farul Constanta",
-      "pj": 1,
-      "v": 0,
-      "e": 0,
-      "i": 1,
-      "gd": -1,
-      "pts": 0
+      "name": "Otelul Galati",
+      "pj": 30,
+      "v": 11,
+      "e": 8,
+      "i": 11,
+      "gd": 7,
+      "pts": 41
     },
     {
       "rank": 11,
-      "name": "FCSB",
-      "pj": 1,
-      "v": 0,
-      "e": 0,
-      "i": 1,
-      "gd": -1,
-      "pts": 0
+      "name": "FCV Farul Constanta",
+      "pj": 30,
+      "v": 10,
+      "e": 7,
+      "i": 13,
+      "gd": 2,
+      "pts": 37
     },
     {
       "rank": 12,
+      "name": "Petrolul Ploiesti",
+      "pj": 30,
+      "v": 7,
+      "e": 11,
+      "i": 12,
+      "gd": -7,
+      "pts": 32
+    },
+    {
+      "rank": 13,
+      "name": "Csikszereda Miercurea Ciuc",
+      "pj": 30,
+      "v": 8,
+      "e": 8,
+      "i": 14,
+      "gd": -28,
+      "pts": 32
+    },
+    {
+      "rank": 14,
+      "name": "FC Unirea Slobozia",
+      "pj": 30,
+      "v": 7,
+      "e": 4,
+      "i": 19,
+      "gd": -19,
+      "pts": 25
+    },
+    {
+      "rank": 15,
+      "name": "Hermannstadt",
+      "pj": 30,
+      "v": 5,
+      "e": 8,
+      "i": 17,
+      "gd": -21,
+      "pts": 23
+    },
+    {
+      "rank": 16,
       "name": "FC Metaloglobus Bucuresti",
-      "pj": 1,
-      "v": 0,
-      "e": 0,
-      "i": 1,
-      "gd": -4,
-      "pts": 0
+      "pj": 30,
+      "v": 2,
+      "e": 6,
+      "i": 22,
+      "gd": -41,
+      "pts": 12
     }
   ],
-  "updatedAt": "06.04.2026, 11:17:48"
+  "updatedAt": "06.04.2026, 11:25:15"
 }
