@@ -2,57 +2,85 @@
 <html lang="ro">
 <head>
     <meta charset="UTF-8">
-    <title>SuperLiga Dashboard</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SuperLiga Hub</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div class="container">
         <main>
-            <h2 style="font-weight: 400;">Meciuri • SuperLiga</h2>
-            <div id="matches-grid" class="matches-grid"></div>
+            <h2 class="section-title">Meciuri • SuperLiga</h2>
+            <div id="matches-grid" class="matches-grid">
+                </div>
         </main>
         <aside>
-            <h2 style="font-weight: 400;">Clasament</h2>
+            <h2 class="section-title">Clasament</h2>
             <div class="table-card">
-                <table>
+                <table id="std-table">
                     <thead>
                         <tr>
-                            <th>#</th><th>Club</th><th class="col-num">MJ</th>
-                            <th class="col-num">V</th><th class="col-num">GD</th>
-                            <th style="text-align:right">Pct</th>
+                            <th>#</th>
+                            <th>Club</th>
+                            <th class="col-num">MJ</th>
+                            <th class="col-pct">Pct</th>
                         </tr>
                     </thead>
-                    <tbody id="standings-body"></tbody>
+                    <tbody id="standings-body">
+                        </tbody>
                 </table>
+                <div id="no-standings" style="display:none; color:var(--muted); font-size:12px; padding:20px 0;">
+                    Datele clasamentului se actualizează...
+                </div>
             </div>
         </aside>
     </div>
 
     <script>
         async function updateUI() {
-            const res = await fetch('data/superliga.json?v=' + Date.now());
-            const data = await res.json();
+            try {
+                const res = await fetch('data/superliga.json?t=' + Date.now());
+                const data = await res.json();
 
-            document.getElementById('matches-grid').innerHTML = data.matches.map(m => `
-                <div class="match-card">
-                    <div class="m-status">${m.status === 'Programat' ? m.date + ' ' + m.time : m.status}</div>
-                    <div class="team-row"><span>${m.home.name}</span><span class="t-score">${m.home.score}</span></div>
-                    <div class="team-row"><span>${m.away.name}</span><span class="t-score">${m.away.score}</span></div>
-                </div>
-            `).join('');
+                // Randare Meciuri
+                if (data.matches && data.matches.length > 0) {
+                    document.getElementById('matches-grid').innerHTML = data.matches.map(m => `
+                        <div class="match-card">
+                            <div class="m-status">${m.status === 'Finalizat' ? 'FT' : m.date + ' ' + m.time}</div>
+                            <div class="team-row">
+                                <span class="team-name">${m.home.name}</span>
+                                <span class="score">${m.home.score ?? '-'}</span>
+                            </div>
+                            <div class="team-row">
+                                <span class="team-name">${m.away.name}</span>
+                                <span class="score">${m.away.score ?? '-'}</span>
+                            </div>
+                        </div>
+                    `).join('');
+                }
 
-            document.getElementById('standings-body').innerHTML = data.standings.map(s => `
-                <tr>
-                    <td style="color:var(--muted); width:25px;">${s.rank}</td>
-                    <td style="font-weight:500;">${s.name}</td>
-                    <td class="col-num">${s.mj}</td>
-                    <td class="col-num">${s.v}</td>
-                    <td class="col-num">${s.gd}</td>
-                    <td class="col-pct">${s.pct}</td>
-                </tr>
-            `).join('');
+                // Randare Clasament
+                const stdBody = document.getElementById('standings-body');
+                if (data.standings && data.standings.length > 0) {
+                    stdBody.innerHTML = data.standings.map(s => `
+                        <tr>
+                            <td class="col-num">${s.rank || s.pos}</td>
+                            <td style="font-weight:500">${s.name}</td>
+                            <td class="col-num">${s.pj || 0}</td>
+                            <td class="col-pct">${s.pts || 0}</td>
+                        </tr>
+                    `).join('');
+                } else {
+                    document.getElementById('std-table').style.display = 'none';
+                    document.getElementById('no-standings').style.display = 'block';
+                }
+
+            } catch (e) {
+                console.error("Eroare la randare UI:", e);
+            }
         }
+
         updateUI();
+        setInterval(updateUI, 60000);
     </script>
 </body>
 </html>
