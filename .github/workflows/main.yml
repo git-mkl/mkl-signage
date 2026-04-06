@@ -1,0 +1,17 @@
+steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20'
+
+      # ACESTA ESTE PASUL NOU:
+      - name: Install dependencies
+        run: npm install cheerio
+
+      - name: Fetch Football Data
+        run: node .github/scripts/fetch_scores.mjs
+        env:
+          RAPIDAPI_KEY: ${{ secrets.RAPIDAPI_KEY }}
