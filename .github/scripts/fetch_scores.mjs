@@ -9,44 +9,49 @@ async function fetchData() {
     try {
         if (!fs.existsSync('data')) fs.mkdirSync('data', { recursive: true });
 
-        // 1. Preluare MECIURI
-        const matchesRes = await fetch(`https://${HOST}/football-get-all-matches-by-league?leagueid=${LEAGUE_ID}`, { headers });
-        const matchesJson = await matchesRes.json();
-        const allMatches = matchesJson.response?.matches || [];
+        const res = await fetch(`https://${HOST}/football-get-all-matches-by-league?leagueid=${LEAGUE_ID}`, { headers });
+        const json = await res.json();
+        const allMatches = json.response?.matches || [];
 
-        const processedMatches = allMatches.map(m => ({
-            home: { name: m.home.name, score: m.home.score ?? "-" },
-            away: { name: m.away.name, score: m.away.score ?? "-" },
-            status: m.status.finished ? "Finalizat" : (m.status.started ? "LIVE" : "Programat"),
-            date: new Date(m.status.utcTime).toLocaleDateString('ro-RO', { weekday: 'short', day: 'numeric', month: 'short' }),
-            time: new Date(m.status.utcTime).toLocaleTimeString('ro-RO', { hour: '2-digit', minute: '2-digit' }),
-            ts: new Date(m.status.utcTime).getTime()
-        }));
+        const now = new Date();
+        const startOfToday = new Date(now.getFullYear(), now.getMonth(), now.getDate()).getTime();
+        const endOfToday = startOfToday + 86400000;
 
-        // 2. Preluare CLASAMENT
+        const processed = allMatches.map(m => {
+            const utc = new Date(m.status.utcTime).getTime();
+            return {
+                home: { name: m.home.name, score: m.home.score ?? "-" },
+                away: { name: m.away.name, score: m.away.score ?? "-" },
+                status: m.status.finished ? "FT" : (m.status.started ? "LIVE" : "NS"),
+                date: new Date(m.status.utcTime).toLocaleDateString('ro-RO', { weekday: 'short', day: 'numeric', month: 'short' }),
+                time: new Date(m.status.utcTime).toLocaleTimeString('ro-RO', { hour: '2-digit', minute: '2-digit' }),
+                ts: utc
+            };
+        });
+
+        // 1. Meciuri trecute (6 cele mai recente înainte de azi)
+        const past = processed.filter(m => m.ts < startOfToday)
+            .sort((a, b) => b.ts - a.ts).slice(0, 6);
+
+        // 2. Meciuri de AZI
+        const today = processed.filter(m => m.ts >= startOfToday && m.ts < endOfToday)
+            .sort((a, b) => a.ts - b.ts);
+
+        // 3. Meciuri viitoare (6 după ziua de azi)
+        const future = processed.filter(m => m.ts >= endOfToday)
+            .sort((a, b) => a.ts - b.ts).slice(0, 6);
+
+        // Clasament
         const stdRes = await fetch(`https://${HOST}/football-get-standing-all?leagueid=${LEAGUE_ID}`, { headers });
         const stdJson = await stdRes.json();
-        const table = stdJson.response?.standings?.[0]?.table?.all || [];
-
-        const standings = table.map(s => ({
+        const standings = (stdJson.response?.standings?.[0]?.table?.all || []).map(s => ({
             rank: s.idx || s.rank,
             name: s.name,
-            mj: s.p, // Meciuri Jucate
-            v: s.w,  // Victorii
-            e: s.d,  // Egaluri
-            i: s.l,  // Înfrângeri
-            gd: s.gd, // Golaveraj
-            pct: s.pts // Puncte
+            pj: s.p,
+            pts: s.pts
         }));
 
-        const finalData = {
-            matches: processedMatches.sort((a,b) => a.ts - b.ts).slice(0, 12),
-            standings: standings,
-            updatedAt: new Date().toISOString()
-        };
-
-        fs.writeFileSync('data/superliga.json', JSON.stringify(finalData, null, 2));
-        console.log("Date salvate cu succes!");
+        fs.writeFileSync('data/superliga.json', JSON.stringify({ past, today, future, standings }, null, 2));
     } catch (e) { console.error(e); }
 }
 fetchData();
