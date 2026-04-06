@@ -1,62 +1,53 @@
 import fs from 'fs';
 
 async function fetchData() {
-    const API_KEY = process.env.FOOTBALL_API_KEY;
-    const BASE_URL = 'https://v3.football.api-sports.io';
-    const headers = { 'x-apisports-key': API_KEY, 'Content-Type': 'application/json' };
-    const LEAGUE_ID = 283; 
+    const API_KEY = process.env.RAPIDAPI_KEY; // Schimbă în GitHub Secrets dacă e cazul
+    const HOST = 'free-api-live-football-data.p.rapidapi.com';
+    const headers = { 
+        'x-rapidapi-key': API_KEY, 
+        'x-rapidapi-host': HOST, 
+        'Content-Type': 'application/json' 
+    };
+    const LEAGUE_ID = "189"; // ID-ul pentru SuperLiga în acest API
 
     try {
-        console.log("Preluare date SuperLiga...");
+        if (!fs.existsSync('data')) fs.mkdirSync('data', { recursive: true });
 
-        // 1. Detectăm sezonul curent
-        const leagueRes = await fetch(`${BASE_URL}/leagues?id=${LEAGUE_ID}`, { headers });
-        const leagueData = await leagueRes.json();
-        const currentSeason = leagueData.response[0].seasons.find(s => s.current).year;
+        // 1. Preluare Meciuri (Live + Programate)
+        const res = await fetch(`https://${HOST}/football-get-all-matches-by-league?leagueid=${LEAGUE_ID}`, { headers });
+        const json = await res.json();
+        const matchesRaw = json.response?.matches || [];
 
-        // 2. Meciuri LIVE
-        const liveRes = await fetch(`${BASE_URL}/fixtures?league=${LEAGUE_ID}&live=all`, { headers });
-        const liveJson = await liveRes.json();
-        const liveMatches = (liveJson.response || []).map(m => ({
-            id: m.fixture.id,
-            home: { name: m.teams.home.name, logo: m.teams.home.logo, score: m.goals.home },
-            away: { name: m.teams.away.name, logo: m.teams.away.logo, score: m.goals.away },
-            status: m.fixture.status.elapsed + "'",
-            isLive: true
-        }));
+        const processedMatches = matchesRaw.map(m => ({
+            id: m.id,
+            timestamp: Math.floor(new Date(m.status.utcTime).getTime() / 1000),
+            status: m.status.finished ? 'FT' : (m.status.started ? 'LIVE' : 'NS'),
+            home: { name: m.home.name, score: m.home.score },
+            away: { name: m.away.name, score: m.away.score },
+            timeStr: new Date(m.status.utcTime).toLocaleTimeString('ro-RO', { hour: '2-digit', minute: '2-digit' })
+        })).slice(0, 15);
 
-        // 3. Program (NS = Not Started)
-        const nextRes = await fetch(`${BASE_URL}/fixtures?league=${LEAGUE_ID}&season=${currentSeason}&status=NS`, { headers });
-        const nextData = await nextRes.json();
-        const upcoming = (nextData.response || [])
-            .sort((a, b) => a.fixture.timestamp - b.fixture.timestamp)
-            .slice(0, 6)
-            .map(m => ({
-                home: { name: m.teams.home.name, logo: m.teams.home.logo },
-                away: { name: m.teams.away.name, logo: m.teams.away.logo },
-                timestamp: m.fixture.timestamp,
-                dateStr: new Date(m.fixture.timestamp * 1000).toLocaleDateString('ro-RO', { weekday: 'short', day: 'numeric', month: 'short' })
-            }));
-
-        // 4. Clasament
-        const stdRes = await fetch(`${BASE_URL}/standings?league=${LEAGUE_ID}&season=${currentSeason}`, { headers });
+        // 2. Preluare Clasament
+        const stdRes = await fetch(`https://${HOST}/football-get-standing-all?leagueid=${LEAGUE_ID}`, { headers });
         const stdJson = await stdRes.json();
-        const standings = stdJson.response[0].league.standings[0].map(s => ({
-            rank: s.rank,
-            team: s.team.name,
-            logo: s.team.logo,
-            played: s.all.played,
-            win: s.all.win,
-            draw: s.all.draw,
-            lose: s.all.lose,
-            gd: s.goalsDiff,
-            points: s.points
+        const standings = (stdJson.response?.standings?.[0]?.table?.all || []).map(s => ({
+            rank: s.idx || s.rank,
+            team: s.name,
+            pj: s.p,
+            gd: s.gd,
+            pts: s.pts
         }));
 
-        const finalData = { liveMatches, upcoming, standings, updatedAt: new Date().toISOString() };
-        if (!fs.existsSync('data')) fs.mkdirSync('data');
+        const finalData = { 
+            matches: processedMatches, 
+            standings, 
+            updatedAt: new Date().toISOString() 
+        };
+
         fs.writeFileSync('data/superliga.json', JSON.stringify(finalData, null, 2));
-        
-    } catch (e) { console.error("Eroare:", e.message); }
+        console.log("Sync SuperLiga 2026 complet!");
+    } catch (e) {
+        console.error("Eroare la culegere:", e.message);
+    }
 }
 fetchData();
