@@ -2,31 +2,22 @@
 <html lang="ro">
 <head>
     <meta charset="UTF-8">
-    <title>SuperLiga - Rezultate și Clasament</title>
+    <title>SuperLiga 2026 Dashboard</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div class="container">
         <main>
             <h2 class="section-title">Meciuri • SuperLiga</h2>
-            <div id="matches-container" class="matches-grid">
-                </div>
+            <div id="matches-grid" class="matches-grid"></div>
         </main>
-
         <aside>
             <h2 class="section-title">Clasament</h2>
             <div class="table-card">
                 <table>
                     <thead>
                         <tr>
-                            <th>#</th>
-                            <th>Club</th>
-                            <th class="stat-cell">MJ</th>
-                            <th class="stat-cell">V</th>
-                            <th class="stat-cell">E</th>
-                            <th class="stat-cell">Î</th>
-                            <th class="stat-cell">GD</th>
-                            <th style="text-align:right">Pct</th>
+                            <th>#</th><th>Echipă</th><th class="col-num">MJ</th><th class="col-num">GD</th><th style="text-align:right">Pct</th>
                         </tr>
                     </thead>
                     <tbody id="standings-body"></tbody>
@@ -37,53 +28,28 @@
 
     <script>
         async function updateUI() {
-            const res = await fetch('data/superliga.json?t=' + Date.now());
-            const data = await res.json();
+            try {
+                const res = await fetch('data/superliga.json?t=' + Date.now());
+                const data = await res.json();
 
-            // Randare Meciuri (Live + Upcoming)
-            const matchesAll = [...data.liveMatches, ...data.upcoming];
-            document.getElementById('matches-container').innerHTML = matchesAll.map(m => {
-                const isLive = m.isLive;
-                const timeStr = isLive ? `<span class="live-dot">LIVE ${m.status}</span>` : m.dateStr;
-                
-                return `
-                <div class="match-card">
-                    <div class="match-status">${timeStr}</div>
-                    <div class="team-row">
-                        <div class="team-info">
-                            <img src="${m.home.logo}" class="team-logo">
-                            <span class="team-name">${m.home.name}</span>
-                        </div>
-                        <span class="score">${m.home.score ?? ''}</span>
+                document.getElementById('matches-grid').innerHTML = data.matches.map(m => `
+                    <div class="match-card">
+                        <div class="status">${m.status === 'FT' ? 'Finalizat' : 'Azi ' + m.timeStr}</div>
+                        <div class="team-row"><span>${m.home.name}</span><span class="score">${m.home.score ?? 0}</span></div>
+                        <div class="team-row"><span>${m.away.name}</span><span class="score">${m.away.score ?? 0}</span></div>
                     </div>
-                    <div class="team-row">
-                        <div class="team-info">
-                            <img src="${m.away.logo}" class="team-logo">
-                            <span class="team-name">${m.away.name}</span>
-                        </div>
-                        <span class="score">${m.away.score ?? ''}</span>
-                    </div>
-                </div>`;
-            }).join('');
+                `).join('');
 
-            // Randare Clasament
-            document.getElementById('standings-body').innerHTML = data.standings.map(s => `
-                <tr>
-                    <td class="rank">${s.rank}</td>
-                    <td>
-                        <div class="team-cell">
-                            <img src="${s.logo}" width="18">
-                            <span>${s.team}</span>
-                        </div>
-                    </td>
-                    <td class="stat-cell">${s.played}</td>
-                    <td class="stat-cell">${s.win}</td>
-                    <td class="stat-cell">${s.draw}</td>
-                    <td class="stat-cell">${s.lose}</td>
-                    <td class="stat-cell">${s.gd}</td>
-                    <td class="pts-cell">${s.points}</td>
-                </tr>
-            `).join('');
+                document.getElementById('standings-body').innerHTML = data.standings.map(s => `
+                    <tr>
+                        <td style="color:#9aa0a6">${s.rank}</td>
+                        <td style="font-weight:500">${s.team}</td>
+                        <td class="col-num">${s.pj}</td>
+                        <td class="col-num">${s.gd}</td>
+                        <td class="col-pts">${s.pts}</td>
+                    </tr>
+                `).join('');
+            } catch (e) { console.error("Eroare UI:", e); }
         }
         updateUI();
         setInterval(updateUI, 60000);
