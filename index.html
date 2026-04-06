@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=1920, user-scalable=no">
-    <title>SuperLiga TV - Unified Dashboard</title>
+    <title>SuperLiga TV - Dark Theme</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -29,7 +29,7 @@
                 <div class="table-header-tag badge-po">PLAY-OFF</div>
                 <table>
                     <thead>
-                        <tr><th width="50">#</th><th align="left">Echipă</th><th width="60">MJ</th><th width="60">GD</th><th width="80">Pts</th></tr>
+                        <tr><th width="40">#</th><th align="left">Echipă</th><th width="50">MJ</th><th width="50">GD</th><th width="70">Pts</th></tr>
                     </thead>
                     <tbody id="po-table"></tbody>
                 </table>
@@ -37,7 +37,7 @@
                 <div class="table-header-tag badge-pout">PLAY-OUT</div>
                 <table>
                     <thead>
-                        <tr><th width="50">#</th><th align="left">Echipă</th><th width="60">MJ</th><th width="60">GD</th><th width="80">Pts</th></tr>
+                        <tr><th width="40">#</th><th align="left">Echipă</th><th width="50">MJ</th><th width="50">GD</th><th width="70">Pts</th></tr>
                     </thead>
                     <tbody id="pout-table"></tbody>
                 </table>
@@ -54,12 +54,11 @@
                 if (xhr.readyState === 4 && xhr.status === 200) {
                     var d = JSON.parse(xhr.responseText);
                     
-                    // Populare Ecrane Meciuri (Se filtrează toate la un loc, ignorând faza)
                     renderCompactPastMatches('past-area', d.past);
                     renderMatches('today-area', d.today);
-                    renderMatches('future-area', d.future);
+                    // Afișăm MAXIM 6 meciuri viitoare pentru a nu depăși ecranul
+                    renderMatches('future-area', d.future.slice(0, 6));
 
-                    // Populare Clasament Combinat
                     renderTable('po-table', d.standingsPlayoff);
                     renderTable('pout-table', d.standingsPlayout);
                 }
@@ -67,7 +66,6 @@
             xhr.send();
         }
 
-        // FUNCȚIA NOUĂ PENTRU CARDUL COMPACT (Rezultate Trecute)
         function renderCompactPastMatches(id, list) {
             var el = document.getElementById(id);
             if (!list || list.length === 0) {
@@ -75,7 +73,6 @@
                 return;
             }
             var html = '';
-            // Afișăm maxim 4 meciuri pentru a încăpea perfect în card
             var maxItems = Math.min(list.length, 4);
             
             for (var i = 0; i < maxItems; i++) {
@@ -83,22 +80,25 @@
                 var hLogo = 'https://images.fotmob.com/image_resources/logo/teamlogo/'+m.home.id+'.png';
                 var aLogo = 'https://images.fotmob.com/image_resources/logo/teamlogo/'+m.away.id+'.png';
                 
+                var phaseClass = m.phase === "Play-off" ? 'cp-po' : 'cp-pout';
+                var phaseText = m.phase === "Play-off" ? 'PLAY-OFF' : 'PLAY-OUT';
+
                 html += '<div class="c-row">' +
                     '<div class="c-team-home">' + m.home.name + '</div>' +
                     '<img src="' + hLogo + '" class="c-logo">' +
                     '<div class="c-score">' + m.home.score + '-' + m.away.score + '</div>' +
                     '<img src="' + aLogo + '" class="c-logo">' +
                     '<div class="c-team-away">' + m.away.name + '</div>' +
+                    '<div class="c-phase ' + phaseClass + '">' + phaseText + '</div>' +
                 '</div>';
             }
             el.innerHTML = html;
         }
 
-        // Funcția clasică pentru meciuri curente și viitoare
         function renderMatches(id, list) {
             var el = document.getElementById(id);
             if (!list || list.length === 0) {
-                el.innerHTML = '<div style="color:#777;font-size:22px;padding:20px;text-align:center;">Niciun meci</div>';
+                el.innerHTML = '<div style="color:#777;font-size:20px;padding:20px;text-align:center;">Niciun meci</div>';
                 return;
             }
             var html = '';
@@ -107,25 +107,24 @@
                 var hLogo = 'https://images.fotmob.com/image_resources/logo/teamlogo/'+m.home.id+'.png';
                 var aLogo = 'https://images.fotmob.com/image_resources/logo/teamlogo/'+m.away.id+'.png';
                 
-                var phaseBadge = m.phase === "Play-off" ? '<span style="color:#4da3ff; font-size:14px; margin-left:10px;">[PO]</span>' : '<span style="color:#ffcc00; font-size:14px; margin-left:10px;">[POUT]</span>';
+                // Tag complet PLAY-OFF / PLAY-OUT
+                var phaseBadge = m.phase === "Play-off" ? '<span style="color:#4da3ff; font-size:14px; margin-left:10px;">[PLAY-OFF]</span>' : '<span style="color:#ffcc00; font-size:14px; margin-left:10px;">[PLAY-OUT]</span>';
 
                 if (m.status === 'LIVE') {
-                    // Meci LIVE - Tracker Style
                     html += '<div class="live-tracker-card">' +
-                        '<div class="live-header"><span class="live-minute">● '+m.time+'</span><span class="status-right" style="color:#aaa;">LIVE '+phaseBadge+'</span></div>' +
+                        '<div class="live-header"><span class="live-minute">● '+m.time+'</span><span class="status-right" style="color:#888;">LIVE '+phaseBadge+'</span></div>' +
                         '<div style="clear:both"></div>' +
                         '<div class="team-row"><img src="'+hLogo+'" class="small-logo"><span class="team-name" style="width:250px;">'+m.home.name+'</span><span class="score">'+m.home.score+'</span></div>' +
-                        '<div class="team-row" style="margin-bottom:10px;"><img src="'+aLogo+'" class="small-logo"><span class="team-name" style="width:250px;">'+m.away.name+'</span><span class="score">'+m.away.score+'</span></div>' +
+                        '<div class="team-row" style="margin-bottom:8px;"><img src="'+aLogo+'" class="small-logo"><span class="team-name" style="width:250px;">'+m.away.name+'</span><span class="score">'+m.away.score+'</span></div>' +
                         '<div class="live-pitch">MECI ÎN DESFĂȘURARE</div>' +
                     '</div>';
                 } else {
-                    // Meci Viitor
-                    var st = m.time;
+                    var st = m.status === 'FT' ? 'FINAL' : m.time;
                     html += '<div class="match-card">' +
                         '<div class="m-status"><span class="status-left">'+st+phaseBadge+'</span><span class="status-right">'+m.date+'</span></div>' +
                         '<div style="clear:both"></div>' +
-                        '<div class="team-row"><img src="'+hLogo+'" class="small-logo"><span class="team-name">'+m.home.name+'</span><span class="score">-</span></div>' +
-                        '<div class="team-row"><img src="'+aLogo+'" class="small-logo"><span class="team-name">'+m.away.name+'</span><span class="score">-</span></div>' +
+                        '<div class="team-row"><img src="'+hLogo+'" class="small-logo"><span class="team-name">'+m.home.name+'</span><span class="score">'+(m.home.score !== "-" ? m.home.score : "")+'</span></div>' +
+                        '<div class="team-row"><img src="'+aLogo+'" class="small-logo"><span class="team-name">'+m.away.name+'</span><span class="score">'+(m.away.score !== "-" ? m.away.score : "")+'</span></div>' +
                     '</div>';
                 }
             }
@@ -148,7 +147,7 @@
         }
 
         updateUI(); 
-        setInterval(updateUI, 15000); // Fetch local la fiecare 15 secunde
+        setInterval(updateUI, 15000); 
     </script>
 </body>
 </html>
