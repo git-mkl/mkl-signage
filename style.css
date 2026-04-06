@@ -1,71 +1,102 @@
-/* Reset de baza pentru a preveni overflow-ul */
-html, body {
-    margin: 0;
-    padding: 0;
-    overflow: hidden; /* Previne scroll-ul pe TV */
-    background-color: #101214;
+/* Resetare completa pentru TV */
+* { box-sizing: border-box; -webkit-font-smoothing: antialiased; }
+
+body {
+    background-color: #0a0a0a; /* Negru mai intens */
+    color: #ffffff; /* Alb pur pentru contrast */
+    font-family: "Segoe UI", Roboto, Arial, sans-serif;
+    margin: 0; padding: 20px;
+    overflow: hidden;
 }
 
 .container {
-    width: 100vw;
-    height: 100vh;
-    padding: 20px;
-    box-sizing: border-box;
-    display: block;
-    white-space: nowrap; /* Permite alinierea main si sidebar */
+    width: 100%;
+    max-width: 1280px;
+    margin: 0 auto;
+    white-space: nowrap;
 }
 
 .main-content {
-    width: 65%;
+    width: 66%;
     display: inline-block;
     vertical-align: top;
-    white-space: normal; /* Revine la normal pentru carduri */
+    white-space: normal;
 }
 
 .sidebar {
-    width: 30%;
+    width: 32%;
     display: inline-block;
     vertical-align: top;
     margin-left: 2%;
     white-space: normal;
 }
 
-/* Cardul de meci - Aici e cheia succesului */
+.group-title {
+    font-size: 16px;
+    color: #8ab4f8; /* Albastru Google pentru titluri */
+    text-transform: uppercase;
+    margin: 15px 0 10px 0;
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+
+/* Carduri Meciuri */
 .match-card {
-    background-color: #202124;
-    border: 1px solid #3c4043;
-    border-radius: 8px;
-    padding: 10px;
-    margin-bottom: 10px;
+    background-color: #1e1e1e; /* Gri inchis contrastant */
+    border: 1px solid #333333;
+    border-radius: 10px;
+    padding: 15px;
+    margin-bottom: 12px;
     margin-right: 10px;
-    
-    /* Fortam 2 carduri pe rand pe latimea main-content */
-    width: calc(50% - 15px); 
+    width: calc(50% - 15px);
     display: inline-block;
     vertical-align: top;
-    box-sizing: border-box;
+}
+
+.m-status {
+    font-size: 12px;
+    color: #9aa0a6; /* Gri deschis pentru status */
+    margin-bottom: 10px;
+    font-weight: bold;
 }
 
 .team-row {
     display: block;
-    width: 100%;
-    height: 24px;
-    line-height: 24px;
-    margin: 2px 0;
+    height: 28px;
+    line-height: 28px;
     clear: both;
 }
 
 .team-name {
     float: left;
-    font-size: 14px;
-    max-width: 75%;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+    font-size: 15px;
+    font-weight: 500;
+    color: #ffffff;
 }
 
 .score {
     float: right;
-    font-weight: bold;
-    color: #fff;
+    font-weight: 900;
+    font-size: 18px;
+    color: #ffffff;
+    background: #2d2d2d;
+    padding: 0 8px;
+    border-radius: 4px;
+    min-width: 30px;
+    text-align: center;
 }
+
+/* Tabel Clasament */
+.table-card {
+    background-color: #1e1e1e;
+    border: 1px solid #333333;
+    border-radius: 10px;
+    padding: 15px;
+}
+
+table { width: 100%; border-collapse: collapse; }
+th { text-align: left; color: #8ab4f8; font-size: 12px; border-bottom: 1px solid #333; padding-bottom: 10px; }
+td { padding: 10px 0; border-bottom: 1px solid #2a2a2a; font-size: 14px; color: #ffffff; }
+
+.col-pts { text-align: right; color: #fcd535; font-weight: bold; font-size: 15px; }
+.col-num { color: #9aa0a6; text-align: center; }
