@@ -9,12 +9,12 @@ body {
 .container {
     display: grid;
     grid-template-columns: 1fr 380px;
-    gap: 20px;
+    gap: 24px;
     width: 100%;
     max-width: 1300px;
 }
 
-h2 { font-size: 16px; font-weight: 400; color: #9aa0a6; margin: 0 0 15px 0; }
+h2 { font-size: 16px; font-weight: 400; color: #9aa0a6; margin-bottom: 15px; }
 
 .match-grid {
     display: grid;
@@ -22,22 +22,29 @@ h2 { font-size: 16px; font-weight: 400; color: #9aa0a6; margin: 0 0 15px 0; }
     gap: 12px;
 }
 
-.match-card {
+.card {
     background: #202124;
     border: 1px solid #3c4043;
-    border-radius: 12px; padding: 16px;
+    border-radius: 12px;
+    padding: 16px;
 }
 
-.status { font-size: 11px; color: #9aa0a6; font-weight: bold; margin-bottom: 10px; }
+.status { font-size: 11px; font-weight: bold; color: #9aa0a6; margin-bottom: 10px; text-transform: uppercase; }
+.live-txt { color: #f28b82; }
+
 .team-row { display: flex; justify-content: space-between; align-items: center; margin: 5px 0; }
 .score { font-weight: 700; font-size: 18px; }
 
 .sidebar-card {
-    background: #202124; border: 1px solid #3c4043; border-radius: 12px; padding: 15px;
+    background: #202124;
+    border: 1px solid #3c4043;
+    border-radius: 12px;
+    padding: 15px;
 }
 
 table { width: 100%; border-collapse: collapse; font-size: 13px; }
-td, th { padding: 8px 0; border-bottom: 1px solid #303134; text-align: left; }
-.col-pts { text-align: right; color: #8ab4f8; font-weight: bold; }
+th { text-align: left; color: #9aa0a6; border-bottom: 1px solid #3c4043; padding-bottom: 8px; font-weight: 400; }
+td { padding: 10px 0; border-bottom: 1px solid #303134; }
+.pts-col { text-align: right; font-weight: bold; color: #8ab4f8; }
 
 @media (max-width: 1000px) { .container { grid-template-columns: 1fr; } }
