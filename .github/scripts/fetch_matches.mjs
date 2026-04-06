@@ -1,37 +1,27 @@
 import fs from 'fs';
 
 async function fetchMatches() {
-    // Folosim variabila de mediu pentru securitate sau string-ul tau direct daca preferi
-    const API_KEY = process.env.RAPIDAPI_KEY;
-    
-    // Configurația replicată după $.ajax(settings)
+    const API_KEY = process.env.RAPIDAPI_KEY; 
+    const HOST = 'free-api-live-football-data.p.rapidapi.com';
     const url = 'https://free-api-live-football-data.p.rapidapi.com/football-get-all-matches-by-league?leagueid=189';
     
     const options = {
         method: 'GET',
         headers: {
             'x-rapidapi-key': API_KEY,
-            'x-rapidapi-host': 'free-api-live-football-data.p.rapidapi.com',
-            'Content-Type': 'application/json' // Adăugat conform setărilor tale
+            'x-rapidapi-host': HOST,
+            'Content-Type': 'application/json'
         }
     };
 
     try {
-        console.log("--- START FETCH MATCHES (jQuery Logic Replication) ---");
-        
+        console.log("--- FETCH MATCHES (RapidAPI) ---");
         const res = await fetch(url, options);
         const response = await res.json();
 
-        // Verificăm dacă am primit eroare de subscripție
-        if (response.message && response.message.includes("not subscribed")) {
-            console.error("Eroare subscripție:", response.message);
-            return;
-        }
-
         const allMatches = response.response?.matches || [];
-        
         if (allMatches.length === 0) {
-            console.log("Response primit dar matches este gol. Verifică structura:", JSON.stringify(response).substring(0, 100));
+            console.log("Response primit dar matches este gol.");
             return;
         }
 
@@ -54,26 +44,16 @@ async function fetchMatches() {
             future: processed.filter(m => m.ts >= endOfToday).sort((a, b) => a.ts - b.ts).slice(0, 8)
         };
 
-        // Citim JSON-ul existent pentru MERGE
         let currentJSON = {};
         if (fs.existsSync('data/superliga.json')) {
             currentJSON = JSON.parse(fs.readFileSync('data/superliga.json', 'utf8'));
         }
 
-        const finalOutput = { 
-            ...currentJSON, 
-            ...matchData, 
-            updatedAt: new Date().toLocaleString('ro-RO') 
-        };
-        
+        const finalOutput = { ...currentJSON, ...matchData, updatedAt: new Date().toLocaleString('ro-RO') };
         if (!fs.existsSync('data')) fs.mkdirSync('data');
         fs.writeFileSync('data/superliga.json', JSON.stringify(finalOutput, null, 2));
         
-        console.log("Succes: " + allMatches.length + " meciuri procesate conform logicii jQuery.");
-
-    } catch (e) {
-        console.error("Eroare la execuție:", e.message);
-    }
+        console.log(`Succes: ${allMatches.length} meciuri salvate.`);
+    } catch (e) { console.error("Eroare:", e.message); }
 }
-
 fetchMatches();
