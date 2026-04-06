@@ -1,107 +1,70 @@
-:root {
-    --bg: #101214;
-    --card: #202124;
-    --border: #3c4043;
-    --text: #e8eaed;
-    --muted: #9aa0a6;
-}
-
+/* Resetare pentru TV */
+* { box-sizing: border-box; }
 body {
-    background-color: var(--bg);
-    color: var(--text);
-    font-family: 'Roboto', Arial, sans-serif;
+    background-color: #101214;
+    color: #e8eaed;
+    font-family: Arial, sans-serif;
     margin: 0; padding: 20px;
-    display: flex; justify-content: center;
 }
 
 .container {
-    display: grid;
-    grid-template-columns: 1fr 380px;
-    gap: 24px;
     width: 100%;
     max-width: 1200px;
+    margin: 0 auto;
+    display: block; /* Tizen 4.0 fallback */
 }
 
-.section-title {
-    font-size: 16px;
-    color: var(--text);
-    margin-bottom: 16px;
-    font-weight: 400;
+/* Folosim float sau inline-block pentru siguranta maxima pe TV */
+.main-content {
+    width: 65%;
+    display: inline-block;
+    vertical-align: top;
 }
 
-/* Grid Meciuri */
-.matches-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: 12px;
+.sidebar {
+    width: 30%;
+    display: inline-block;
+    vertical-align: top;
+    margin-left: 4%;
 }
 
+h2 { font-size: 18px; font-weight: normal; margin-bottom: 15px; color: #9aa0a6; }
+
+/* Meciuri */
 .match-card {
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 16px;
-    display: flex;
-    flex-direction: column;
+    background-color: #202124;
+    border: 1px solid #3c4043;
+    border-radius: 8px;
+    padding: 15px;
+    margin-bottom: 10px;
+    width: 48%; /* 2 pe rand */
+    display: inline-block;
+    margin-right: 1%;
+    vertical-align: top;
 }
 
-.m-status {
-    font-size: 12px;
-    color: var(--muted);
-    margin-bottom: 12px;
-    font-weight: 500;
-}
-
-.team-row {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin: 4px 0;
-}
-
-.team-name {
-    font-size: 14px;
-    font-weight: 400;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-
-.score {
-    font-size: 16px;
-    font-weight: 700;
-}
+.m-status { font-size: 11px; color: #9aa0a6; margin-bottom: 10px; }
+.team-row { display: block; height: 25px; margin: 5px 0; }
+.team-name { float: left; font-size: 14px; }
+.score { float: right; font-weight: bold; font-size: 16px; }
 
 /* Tabel Clasament */
 .table-card {
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 16px;
+    background-color: #202124;
+    border: 1px solid #3c4043;
+    border-radius: 8px;
+    padding: 15px;
 }
 
-table {
-    width: 100%;
-    border-collapse: collapse;
-    font-size: 13px;
-}
+table { width: 100%; border-collapse: collapse; }
+th { text-align: left; color: #9aa0a6; font-size: 12px; border-bottom: 1px solid #3c4043; padding-bottom: 8px; }
+td { padding: 8px 0; border-bottom: 1px solid #303134; font-size: 13px; }
 
-th {
-    text-align: left;
-    color: var(--muted);
-    font-weight: 400;
-    padding-bottom: 12px;
-    border-bottom: 1px solid var(--border);
-}
+.col-num { text-align: center; }
+.col-pct { text-align: right; color: #8ab4f8; font-weight: bold; }
 
-td {
-    padding: 10px 0;
-    border-bottom: 1px solid #303134;
-}
-
-.col-num { text-align: center; color: var(--muted); width: 30px; }
-.col-pct { text-align: right; font-weight: 700; color: #8ab4f8; }
-
-@media (max-width: 1000px) {
-    .container { grid-template-columns: 1fr; }
+/* Ajustare Mobile/Small TV */
+@media screen and (max-width: 800px) {
+    .main-content, .sidebar { width: 100%; margin-left: 0; }
+    .match-card { width: 100%; }
 }
