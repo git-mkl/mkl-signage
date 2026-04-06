@@ -7,31 +7,18 @@
 </head>
 <body>
     <div class="container">
-        <div class="column col-matches">
-            <div id="past-area"></div>
-        </div>
-
-        <div class="column col-central">
-            <div id="today-area"></div>
-            <div id="future-area"></div>
-        </div>
-
+        <div class="column col-matches"><div id="past-area"></div></div>
+        <div class="column col-central"><div id="today-area"></div><div id="future-area"></div></div>
         <div class="column col-table">
             <div class="group-title">Clasament SuperLiga</div>
             <div class="table-card">
                 <table>
-                    <thead>
-                        <tr>
-                            <th>#</th><th style="text-align:left">Echipă</th>
-                            <th>MJ</th><th>V</th><th>GD</th><th>Pct</th>
-                        </tr>
-                    </thead>
+                    <thead><tr><th>#</th><th style="text-align:left">Echipă</th><th>MJ</th><th>V</th><th>GD</th><th>Pts</th></tr></thead>
                     <tbody id="std-body"></tbody>
                 </table>
             </div>
         </div>
     </div>
-
     <script>
         function updateUI() {
             var xhr = new XMLHttpRequest();
@@ -39,54 +26,30 @@
             xhr.onreadystatechange = function () {
                 if (xhr.readyState === 4 && xhr.status === 200) {
                     var d = JSON.parse(xhr.responseText);
-                    
-                    renderGroup('past-area', 'Rezultate Recente', d.past);
-                    renderGroup('today-area', 'Meciuri Azi / Live', d.today);
-                    renderGroup('future-area', 'Program Viitor', d.future);
-                    
+                    renderGroup('past-area', 'Rezultate', d.past);
+                    renderGroup('today-area', 'Azi / Live', d.today);
+                    renderGroup('future-area', 'Program', d.future);
                     var h = '';
-                    var st = d.standings || [];
-                    for (var i = 0; i < Math.min(st.length, 16); i++) {
-                        var s = st[i];
-                        h += '<tr>' +
-                            '<td style="color:#666">' + s.rank + '</td>' +
-                            '<td class="t-name">' + s.name + '</td>' +
-                            '<td>' + s.pj + '</td>' +
-                            '<td>' + s.v + '</td>' +
-                            '<td>' + s.gd + '</td>' +
-                            '<td class="t-pts">' + s.pts + '</td>' +
-                        '</tr>';
-                    }
+                    (d.standings || []).forEach(function(s) {
+                        h += '<tr><td>' + s.rank + '</td><td class="t-name">' + s.name + '</td><td>' + s.pj + '</td><td>' + s.v + '</td><td>' + (s.gd > 0 ? '+' + s.gd : s.gd) + '</td><td class="t-pts">' + s.pts + '</td></tr>';
+                    });
                     document.getElementById('std-body').innerHTML = h;
                 }
             };
             xhr.send();
         }
-
         function renderGroup(id, title, list) {
             var el = document.getElementById(id);
-            if (!list || list.length === 0) {
-                el.innerHTML = '';
-                return;
-            }
+            if (!list || list.length === 0) { el.innerHTML = ''; return; }
             var html = '<div class="group-title">' + title + '</div>';
-            for (var i = 0; i < list.length; i++) {
-                var m = list[i];
-                var scoreHome = m.home.score !== undefined ? m.home.score : '-';
-                var scoreAway = m.away.score !== undefined ? m.away.score : '-';
-                var status = (m.status === 'FT' || m.status === 'Finalizat') ? 'FINALIZAT' : (m.date + ' ' + m.time);
-                
-                html += '<div class="match-card">' +
-                    '<div class="m-status">' + status + '</div>' +
-                    '<div class="team-row"><span class="team-name">' + m.home.name + '</span><span class="score">' + scoreHome + '</span></div>' +
-                    '<div class="team-row"><span class="team-name">' + m.away.name + '</span><span class="score">' + scoreAway + '</span></div>' +
-                '</div>';
-            }
+            list.forEach(function(m) {
+                html += '<div class="match-card"><div class="m-status">' + (m.status === 'FT' ? 'FINALIZAT' : m.time) + '</div>' +
+                    '<div class="team-row"><span class="team-name">' + m.home.name + '</span><span class="score">' + m.home.score + '</span></div>' +
+                    '<div class="team-row"><span class="team-name">' + m.away.name + '</span><span class="score">' + m.away.score + '</span></div></div>';
+            });
             el.innerHTML = html;
         }
-
-        updateUI();
-        setInterval(updateUI, 300000); // Update la 5 minute
+        updateUI(); setInterval(updateUI, 300000);
     </script>
 </body>
 </html>
