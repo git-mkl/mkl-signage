@@ -379,182 +379,136 @@
       "ts": 1776447000000
     }
   ],
-  "standings": [
+  "standingsPlayoff": [
     {
       "rank": 1,
-      "name": "Universitatea Craiova",
-      "id": 480286,
-      "pj": 30,
-      "v": 17,
-      "e": 9,
-      "i": 4,
-      "gd": 26,
-      "pts": 60
+      "name": "Universitatea Cluj",
+      "pj": 3,
+      "gd": 3,
+      "pts": 36,
+      "id": 89022
     },
     {
       "rank": 2,
-      "name": "Rapid Bucuresti",
-      "id": 9738,
-      "pj": 30,
-      "v": 16,
-      "e": 8,
-      "i": 6,
-      "gd": 17,
-      "pts": 56
+      "name": "Universitatea Craiova",
+      "pj": 2,
+      "gd": 0,
+      "pts": 33,
+      "id": 480286
     },
     {
       "rank": 3,
-      "name": "Universitatea Cluj",
-      "id": 89022,
-      "pj": 30,
-      "v": 16,
-      "e": 6,
-      "i": 8,
-      "gd": 21,
-      "pts": 54
+      "name": "Rapid Bucuresti",
+      "pj": 3,
+      "gd": -1,
+      "pts": 31,
+      "id": 9738
     },
     {
       "rank": 4,
       "name": "CFR Cluj",
-      "id": 9731,
-      "pj": 30,
-      "v": 15,
-      "e": 8,
-      "i": 7,
-      "gd": 9,
-      "pts": 53
+      "pj": 2,
+      "gd": 0,
+      "pts": 30,
+      "id": 9731
     },
     {
       "rank": 5,
-      "name": "Dinamo Bucuresti",
-      "id": 10271,
-      "pj": 30,
-      "v": 14,
-      "e": 10,
-      "i": 6,
-      "gd": 14,
-      "pts": 52
+      "name": "FC Arges",
+      "pj": 3,
+      "gd": 0,
+      "pts": 29,
+      "id": 9732
     },
     {
       "rank": 6,
-      "name": "FC Arges Pitesti",
-      "id": 9732,
-      "pj": 30,
-      "v": 15,
-      "e": 5,
-      "i": 10,
-      "gd": 9,
-      "pts": 50
+      "name": "Dinamo Bucuresti",
+      "pj": 3,
+      "gd": -2,
+      "pts": 27,
+      "id": 10271
+    }
+  ],
+  "standingsPlayout": [
+    {
+      "rank": 1,
+      "name": "UTA Arad",
+      "pj": 3,
+      "gd": 4,
+      "pts": 28,
+      "id": 584663
+    },
+    {
+      "rank": 2,
+      "name": "FCSB",
+      "pj": 3,
+      "gd": 0,
+      "pts": 27,
+      "id": 9723
+    },
+    {
+      "rank": 3,
+      "name": "Botosani",
+      "pj": 3,
+      "gd": -1,
+      "pts": 27,
+      "id": 188191
+    },
+    {
+      "rank": 4,
+      "name": "Otelul Galati",
+      "pj": 3,
+      "gd": 0,
+      "pts": 24,
+      "id": 9736
+    },
+    {
+      "rank": 5,
+      "name": "Farul Constanta",
+      "pj": 3,
+      "gd": 1,
+      "pts": 23,
+      "id": 210132
+    },
+    {
+      "rank": 6,
+      "name": "Csikszereda",
+      "pj": 2,
+      "gd": 1,
+      "pts": 20,
+      "id": 583690
     },
     {
       "rank": 7,
-      "name": "FCSB",
-      "id": 9723,
-      "pj": 30,
-      "v": 13,
-      "e": 7,
-      "i": 10,
-      "gd": 8,
-      "pts": 46
+      "name": "Unirea Slobozia",
+      "pj": 3,
+      "gd": 1,
+      "pts": 19,
+      "id": 364411
     },
     {
       "rank": 8,
-      "name": "UTA Arad",
-      "id": 584663,
-      "pj": 30,
-      "v": 11,
-      "e": 10,
-      "i": 9,
-      "gd": -5,
-      "pts": 43
+      "name": "Petrolul Ploiesti",
+      "pj": 2,
+      "gd": -3,
+      "pts": 16,
+      "id": 188187
     },
     {
       "rank": 9,
-      "name": "Botosani",
-      "id": 188191,
-      "pj": 30,
-      "v": 11,
-      "e": 9,
-      "i": 10,
-      "gd": 8,
-      "pts": 42
+      "name": "Hermannstadt",
+      "pj": 3,
+      "gd": 0,
+      "pts": 15,
+      "id": 864269
     },
     {
       "rank": 10,
-      "name": "Otelul Galati",
-      "id": 9736,
-      "pj": 30,
-      "v": 11,
-      "e": 8,
-      "i": 11,
-      "gd": 7,
-      "pts": 41
-    },
-    {
-      "rank": 11,
-      "name": "FCV Farul Constanta",
-      "id": 210132,
-      "pj": 30,
-      "v": 10,
-      "e": 7,
-      "i": 13,
-      "gd": 2,
-      "pts": 37
-    },
-    {
-      "rank": 12,
-      "name": "Petrolul Ploiesti",
-      "id": 188187,
-      "pj": 30,
-      "v": 7,
-      "e": 11,
-      "i": 12,
-      "gd": -7,
-      "pts": 32
-    },
-    {
-      "rank": 13,
-      "name": "Csikszereda Miercurea Ciuc",
-      "id": 583690,
-      "pj": 30,
-      "v": 8,
-      "e": 8,
-      "i": 14,
-      "gd": -28,
-      "pts": 32
-    },
-    {
-      "rank": 14,
-      "name": "FC Unirea Slobozia",
-      "id": 364411,
-      "pj": 30,
-      "v": 7,
-      "e": 4,
-      "i": 19,
-      "gd": -19,
-      "pts": 25
-    },
-    {
-      "rank": 15,
-      "name": "Hermannstadt",
-      "id": 864269,
-      "pj": 30,
-      "v": 5,
-      "e": 8,
-      "i": 17,
-      "gd": -21,
-      "pts": 23
-    },
-    {
-      "rank": 16,
-      "name": "FC Metaloglobus Bucuresti",
-      "id": 404509,
-      "pj": 30,
-      "v": 2,
-      "e": 6,
-      "i": 22,
-      "gd": -41,
-      "pts": 12
+      "name": "Metaloglobus",
+      "pj": 3,
+      "gd": -3,
+      "pts": 10,
+      "id": 404509
     }
   ]
 }
