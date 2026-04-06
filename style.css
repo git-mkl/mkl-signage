@@ -1,4 +1,3 @@
-/* Resetare și blocare scroll */
 * {
     margin: 0;
     padding: 0;
@@ -10,8 +9,8 @@ body {
     background-color: #121212;
     color: #ffffff;
     font-family: 'Segoe UI', Roboto, Arial, sans-serif;
-    width: 1920px;  /* Fixat pe Full HD */
-    height: 1080px; /* Fixat pe Full HD */
+    width: 1920px;
+    height: 1080px;
     overflow: hidden;
     position: relative;
 }
@@ -19,41 +18,40 @@ body {
 .container {
     width: 100%;
     height: 100%;
-    padding: 40px;
+    padding: 50px;
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
 }
 
-/* Dimensiuni Fixe pentru Coloane */
 .column {
-    height: 1000px;
+    height: 980px;
     display: flex;
     flex-direction: column;
 }
 
-.col-matches { width: 450px; }
-.col-central { width: 450px; }
-.col-table   { width: 850px; }
+.col-matches { width: 460px; }
+.col-central { width: 460px; }
+.col-table   { width: 840px; }
 
-/* Titluri */
 .group-title {
-    font-size: 32px; /* Font mare pentru TV */
+    font-size: 34px;
     font-weight: bold;
     color: #4da3ff;
-    margin-bottom: 25px;
+    margin-bottom: 30px;
     display: flex;
     align-items: center;
     height: 60px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
 }
 
 .league-logo {
-    width: 60px;
-    height: 60px;
+    width: 65px;
+    height: 65px;
     margin-right: 20px;
 }
 
-/* Carduri Meciuri Fixe */
 .match-list {
     display: flex;
     flex-direction: column;
@@ -62,40 +60,45 @@ body {
 
 .match-card {
     background-color: #1e1e1e;
-    width: 450px;
-    height: 150px; /* Înălțime fixă pentru a preveni suprapunerea */
+    width: 460px;
+    height: 145px;
     border-radius: 15px;
     padding: 20px;
     display: flex;
     flex-direction: column;
     justify-content: center;
+    border-left: 5px solid #333;
 }
 
 .m-status {
     font-size: 20px;
-    color: #aaaaaa;
+    color: #888;
     margin-bottom: 15px;
     display: flex;
     justify-content: space-between;
+    font-weight: bold;
 }
 
 .team-row {
     display: flex;
     align-items: center;
-    height: 45px;
+    height: 42px;
+    margin-bottom: 4px;
 }
 
 .small-logo {
-    width: 40px;
-    height: 40px;
-    margin-right: 20px;
+    width: 38px;
+    height: 38px;
+    margin-right: 18px;
     object-fit: contain;
 }
 
 .team-name {
     flex-grow: 1;
-    font-size: 26px; /* Citibil de la 3 metri */
+    font-size: 26px;
     white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .score {
@@ -106,12 +109,11 @@ body {
     text-align: right;
 }
 
-/* Tabel Clasament Non-Responsive */
 .table-card {
     background-color: #1e1e1e;
     border-radius: 20px;
-    padding: 30px;
-    width: 850px;
+    padding: 25px;
+    width: 840px;
 }
 
 table {
@@ -120,7 +122,7 @@ table {
 }
 
 th {
-    color: #888;
+    color: #777;
     font-size: 20px;
     padding-bottom: 20px;
     border-bottom: 2px solid #333;
@@ -128,15 +130,16 @@ th {
 }
 
 td {
-    padding: 15px 10px;
-    font-size: 24px;
+    padding: 12px 10px;
+    font-size: 26px;
     border-bottom: 1px solid #262626;
-    height: 55px; /* Înălțime fixă rând */
+    height: 56px;
 }
 
 .t-name {
     text-align: left !important;
-    width: 450px;
+    display: flex;
+    align-items: center;
 }
 
 .t-pts {
