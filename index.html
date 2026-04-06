@@ -17,24 +17,23 @@
             <div class="group-title">Meciuri Azi</div>
             <div id="today-area" class="match-list"></div>
             
-            <div class="group-title" style="margin-top: 50px;">Program</div>
+            <div class="group-title" style="margin-top: 25px;">Program</div>
             <div id="future-area" class="match-list"></div>
         </div>
 
         <div class="column col-table">
             <div class="group-title">
                 <img src="https://images.fotmob.com/image_resources/logo/leaguelogo/dark/189.png" class="league-logo">
-                Clasament SuperLiga
             </div>
             <div class="table-card">
                 <table>
                     <thead>
                         <tr>
-                            <th style="width: 70px;">#</th>
+                            <th style="width: 60px;">#</th>
                             <th style="text-align:left">Echipă</th>
-                            <th style="width: 90px;">MJ</th>
-                            <th style="width: 90px;">GD</th>
-                            <th style="width: 110px;">Pts</th>
+                            <th style="width: 80px;">MJ</th>
+                            <th style="width: 80px;">GD</th>
+                            <th style="width: 90px;">Pts</th>
                         </tr>
                     </thead>
                     <tbody id="std-body"></tbody>
@@ -74,7 +73,7 @@
         function renderMatches(id, list) {
             var el = document.getElementById(id);
             if (!list || list.length === 0) {
-                if(id === 'today-area') el.innerHTML = '<div style="color:#444; font-size:26px; padding:20px; background:#1a1a1a; border-radius:15px; text-align:center;">Fără meciuri programate azi</div>';
+                if(id === 'today-area') el.innerHTML = '<div style="color:#555; font-size:22px; padding:20px; border:1px dashed #333; border-radius:10px; text-align:center;">Fără meciuri azi</div>';
                 else el.innerHTML = '';
                 return;
             }
