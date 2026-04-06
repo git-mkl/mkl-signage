@@ -22,7 +22,6 @@ async function fetchSuperligaData() {
             const res = await fetch(url, { headers });
             const json = await res.json();
             
-            // 1. Extragere Meciuri (Events)
             const events = json.Stages?.[0]?.Events || [];
             const phaseName = stage.includes('championship') ? 'Play-off' : 'Play-out';
 
@@ -38,7 +37,6 @@ async function fetchSuperligaData() {
                 const dateRo = matchDate.toLocaleDateString('ro-RO', { day: 'numeric', month: 'short' });
                 const timeRo = matchDate.toLocaleTimeString('ro-RO', { hour: '2-digit', minute: '2-digit', hour12: false });
 
-                // Extrage ID FotMob (curățat de string-ul 'enet/')
                 const homeId = m.T1[0].Img ? m.T1[0].Img.replace('enet/', '').replace('.png', '') : m.T1[0].ID;
                 const awayId = m.T2[0].Img ? m.T2[0].Img.replace('enet/', '').replace('.png', '') : m.T2[0].ID;
 
@@ -66,7 +64,6 @@ async function fetchSuperligaData() {
                 });
             });
 
-            // 2. Extragere Clasament (LeagueTable)
             const tableArray = json.Stages?.[0]?.LeagueTable?.L?.[0]?.Tables?.[0]?.team || [];
             const formattedTable = tableArray.map(t => {
                 const teamId = t.Img ? t.Img.replace('enet/', '').replace('.png', '') : t.Tid;
@@ -87,14 +84,14 @@ async function fetchSuperligaData() {
             }
         }
 
-        // 3. Sortare Timp pentru Meciuri
         const now = new Date();
         const startOfToday = new Date(now.getFullYear(), now.getMonth(), now.getDate()).getTime();
         const endOfToday = startOfToday + 86400000;
 
-        finalData.past = allProcessedMatches.filter(m => m.ts < startOfToday).sort((a, b) => b.ts - a.ts).slice(0, 10);
-        finalData.today = allProcessedMatches.filter(m => m.ts >= startOfToday && m.ts < endOfToday);
-        finalData.future = allProcessedMatches.filter(m => m.ts >= endOfToday).sort((a, b) => a.ts - b.ts).slice(0, 10);
+        // Sortăm toate meciurile (fără să mai ținem cont din ce grupă sunt) cronologic
+        finalData.past = allProcessedMatches.filter(m => m.ts < startOfToday).sort((a, b) => b.ts - a.ts).slice(0, 4); // Trimitem doar 4 pt cardul compact
+        finalData.today = allProcessedMatches.filter(m => m.ts >= startOfToday && m.ts < endOfToday).sort((a, b) => a.ts - b.ts);
+        finalData.future = allProcessedMatches.filter(m => m.ts >= endOfToday).sort((a, b) => a.ts - b.ts).slice(0, 8);
 
         if (!fs.existsSync('data')) fs.mkdirSync('data');
         fs.writeFileSync('data/superliga.json', JSON.stringify(finalData, null, 2));
