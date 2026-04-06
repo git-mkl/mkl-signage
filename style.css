@@ -1,44 +1,146 @@
-* { margin: 0; padding: 0; box-sizing: border-box; -webkit-user-select: none; }
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    -webkit-user-select: none;
+}
+
 body {
     background: url('image_b60266.jpg') no-repeat center center fixed;
-    background-size: cover; color: #ffffff; font-family: "Segoe UI", Roboto, Arial, sans-serif;
-    width: 1920px; height: 1080px; overflow: hidden; position: relative;
+    background-size: cover;
+    color: #ffffff;
+    font-family: "Segoe UI", Roboto, Arial, sans-serif;
+    width: 1920px;
+    height: 1080px;
+    overflow: hidden;
+    position: relative;
 }
-body::before { content: ""; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.80); z-index: -1; }
-.view-container { position: absolute; top: 0; left: 0; width: 1920px; height: 1080px; padding: 40px 50px; opacity: 0; transition: opacity 1s ease-in-out; z-index: 0; }
-.view-active { opacity: 1; z-index: 10; }
-.column { float: left; height: 1000px; margin-right: 30px; }
-.col-matches { width: 450px; } .col-central { width: 450px; } .col-table { width: 840px; margin-right: 0; }
-.group-title { font-size: 32px; font-weight: bold; color: #4da3ff; height: 50px; line-height: 50px; margin-bottom: 20px; text-transform: uppercase; }
-.league-logo-container { height: 60px; margin-bottom: 20px; }
-.league-logo { height: 60px; width: auto; vertical-align: middle; }
-.phase-badge { font-size: 28px; font-weight: bold; vertical-align: middle; margin-left: 15px; padding: 5px 15px; border-radius: 8px; }
-.badge-po { background: rgba(77, 163, 255, 0.2); color: #4da3ff; }
-.badge-pout { background: rgba(255, 204, 0, 0.2); color: #ffcc00; }
-.match-card { background: rgba(30, 30, 30, 0.85); width: 450px; height: 145px; border-radius: 12px; padding: 20px; margin-bottom: 20px; border-left: 6px solid #333; }
-.live-tracker-card { background: linear-gradient(180deg, rgba(40,20,20,0.95) 0%, rgba(20,20,20,0.95) 100%); width: 450px; border-radius: 12px; padding: 15px; margin-bottom: 20px; border: 2px solid #ff3e3e; box-shadow: 0 0 15px rgba(255, 62, 62, 0.3); }
-.live-header { border-bottom: 1px solid #444; padding-bottom: 8px; margin-bottom: 12px; height: 32px; }
-.live-minute { color: #ff3e3e; font-weight: bold; float: left; font-size: 22px; animation: blink 1.5s infinite; }
-.live-pitch { background: #0b220b; border: 1px solid #1a441a; border-radius: 8px; height: 35px; line-height: 35px; text-align: center; color: #fff; font-size: 16px; font-weight: bold; margin-bottom: 15px; letter-spacing: 1px; background-image: linear-gradient(90deg, transparent 49%, rgba(255,255,255,0.2) 50%, transparent 51%); }
-.stat-row { clear: both; height: 22px; font-size: 16px; margin-bottom: 8px; position: relative; }
-.stat-label { position: absolute; width: 100%; text-align: center; color: #aaa; z-index: 2; font-size: 14px;}
-.stat-home { float: left; color: #4da3ff; font-weight: bold; }
-.stat-away { float: right; color: #ffcc00; font-weight: bold; }
-.stat-bar-bg { background: #333; height: 6px; border-radius: 3px; width: 100%; margin-top: 2px; position: relative; clear: both; }
-.stat-bar-home { background: #4da3ff; height: 6px; border-radius: 3px 0 0 3px; position: absolute; left: 0; top: 0; }
-.stat-bar-away { background: #ffcc00; height: 6px; border-radius: 0 3px 3px 0; position: absolute; right: 0; top: 0; }
-.m-status { font-size: 20px; color: #bbb; margin-bottom: 15px; }
+
+body::before {
+    content: "";
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0, 0, 0, 0.85); /* Puțin mai întunecat pentru contrast bun pe TV */
+    z-index: -1;
+}
+
+.container {
+    width: 1920px;
+    height: 1080px;
+    padding: 35px 50px;
+    display: block;
+}
+
+.column {
+    float: left;
+    height: 1010px;
+    margin-right: 30px;
+}
+
+/* Redimensionare pentru a face loc tabelelor de 700px */
+.col-left    { width: 520px; position: relative; } /* Relativ pentru a fixa cardul de rezultate jos */
+.col-central { width: 520px; }
+.col-table   { width: 700px; margin-right: 0; }
+
+.group-title {
+    font-size: 30px;
+    font-weight: bold;
+    color: #4da3ff;
+    height: 45px;
+    line-height: 45px;
+    margin-bottom: 15px;
+    text-transform: uppercase;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+}
+
+/* Carduri Meciuri Standard (Azi / Viitor) */
+.match-card {
+    background: rgba(30, 30, 30, 0.85); 
+    width: 100%;
+    height: 135px;
+    border-radius: 12px;
+    padding: 15px 20px;
+    margin-bottom: 15px;
+    border-left: 6px solid #333;
+}
+
+/* Card Stil Pariuri (LIVE) */
+.live-tracker-card {
+    background: linear-gradient(180deg, rgba(40,20,20,0.95) 0%, rgba(20,20,20,0.95) 100%);
+    width: 100%;
+    border-radius: 12px;
+    padding: 15px;
+    margin-bottom: 15px;
+    border: 2px solid #ff3e3e;
+    box-shadow: 0 0 15px rgba(255, 62, 62, 0.3);
+}
+
+.live-header { border-bottom: 1px solid #444; padding-bottom: 8px; margin-bottom: 10px; height: 30px; }
+.live-minute { color: #ff3e3e; font-weight: bold; float: left; font-size: 20px; animation: blink 1.5s infinite; }
+.live-pitch { background: #0b220b; border: 1px solid #1a441a; border-radius: 8px; height: 30px; line-height: 30px; text-align: center; color: #fff; font-size: 14px; font-weight: bold; margin-bottom: 10px; }
+
+/* CARD COMPACT PENTRU REZULTATE TRECUTE (Jos Stânga) */
+.bottom-widget {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+}
+
+.compact-matches-card {
+    background: rgba(20, 20, 20, 0.9);
+    border-radius: 15px;
+    padding: 10px 20px;
+    width: 100%;
+    border-left: 5px solid #888;
+}
+
+.c-row { clear: both; height: 50px; line-height: 50px; border-bottom: 1px solid #333; }
+.c-row:last-child { border-bottom: none; }
+.c-team-home { float: left; width: 175px; text-align: right; font-size: 22px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.c-logo { float: left; width: 32px; height: 32px; margin: 9px 10px 0 10px; }
+.c-score { float: left; width: 56px; text-align: center; font-weight: bold; color: #ffcc00; font-size: 24px; }
+.c-team-away { float: left; width: 175px; text-align: left; font-size: 22px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+
+/* Elemente comune Meciuri */
+.m-status { font-size: 18px; color: #bbb; margin-bottom: 12px; }
 .status-left { float: left; font-weight: bold; }
 .status-right { float: right; }
-.team-row { clear: both; height: 38px; line-height: 38px; }
-.small-logo { width: 36px; height: 36px; float: left; margin-top: 1px; margin-right: 15px; }
-.team-name { font-size: 24px; float: left; width: 270px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.score { font-size: 30px; font-weight: bold; color: #ffcc00; float: right; }
-.table-card { background: rgba(20, 20, 20, 0.9); border-radius: 15px; padding: 20px 25px; width: 840px; }
+.team-row { clear: both; height: 36px; line-height: 36px; }
+.small-logo { width: 34px; height: 34px; float: left; margin-top: 1px; margin-right: 15px; }
+.team-name { font-size: 24px; float: left; width: 300px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.score { font-size: 28px; font-weight: bold; color: #ffcc00; float: right; }
+
+/* TABEL CLASAMENT (700px) */
+.table-card {
+    background: rgba(20, 20, 20, 0.9);
+    border-radius: 15px;
+    padding: 15px 20px;
+    width: 700px;
+    height: 1010px; /* Forțăm înălțimea completă a coloanei */
+}
+
+.table-header-tag {
+    font-size: 20px; font-weight: bold; display: inline-block;
+    padding: 5px 15px; border-radius: 6px; margin-bottom: 10px;
+}
+.badge-po { background: rgba(77, 163, 255, 0.2); color: #4da3ff; }
+.badge-pout { background: rgba(255, 204, 0, 0.2); color: #ffcc00; margin-top: 15px; }
+
 table { width: 100%; border-collapse: collapse; }
-th { color: #aaa; font-size: 20px; padding-bottom: 15px; border-bottom: 2px solid #444; text-transform: uppercase; }
-td { padding: 10px 5px; font-size: 24px; border-bottom: 1px solid #2a2a2a; height: 60px; text-align: center; }
-.t-name-cell { text-align: left; padding-left: 15px; }
-.pts-bold { font-size: 26px; font-weight: bold; color: #ffcc00; }
+th { color: #aaa; font-size: 16px; padding-bottom: 8px; border-bottom: 2px solid #444; text-transform: uppercase; }
+
+/* Rânduri mai compacte pentru a încăpea 16 echipe + Headere */
+td {
+    padding: 4px 5px;
+    font-size: 21px;
+    border-bottom: 1px solid #2a2a2a;
+    height: 42px; 
+    text-align: center;
+}
+
+.t-name-cell { text-align: left; padding-left: 10px; }
+.pts-bold { font-size: 23px; font-weight: bold; color: #ffcc00; }
+
 .live-dot { color: #ff3e3e; animation: blink 1s infinite; }
 @-webkit-keyframes blink { 50% { opacity: 0.5; } }
