@@ -2,12 +2,16 @@ name: Update SuperLiga Data
 
 on:
   schedule:
-    - cron: '0 * * * *'
-  workflow_dispatch:
+    # Rulează la fiecare 30 de minute
+    - cron: '*/30 * * * *'
+  workflow_dispatch: # Permite declanșarea manuală pentru teste
 
 jobs:
   update:
     runs-on: ubuntu-latest
+    env:
+      # Elimină warning-ul de deprecation pentru Node
+      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
     
     permissions:
       contents: write
@@ -19,21 +23,24 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          # AM MODIFICAT AICI: De la 20 la 24
           node-version: '24'
 
       - name: Install dependencies
+        # Instalăm cheerio pentru scriptul de standings
         run: npm install cheerio
 
-      - name: Run Standings Scraper
+      - name: Run Standings Scraper (FotMob)
+        # Acesta actualizează partea de clasament în superliga.json
         run: node .github/scripts/fetch_standings.mjs
 
-      - name: Run Matches Fetcher
+      - name: Run Matches Fetcher (RapidAPI - jQuery Logic)
+        # Acesta adaugă meciurile în același fișier superliga.json
         run: node .github/scripts/fetch_matches.mjs
         env:
           RAPIDAPI_KEY: ${{ secrets.RAPIDAPI_KEY }}
 
       - name: Commit and Push changes
+        # Salvăm rezultatul final (care conține și clasamentul și meciurile)
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
