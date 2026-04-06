@@ -4,13 +4,13 @@ on:
   schedule:
     # Rulează la fiecare 30 de minute
     - cron: '*/30 * * * *'
-  workflow_dispatch: # Permite declanșarea manuală pentru teste
+  workflow_dispatch: # Permite rularea manuală din butonul "Run workflow"
 
 jobs:
   update:
     runs-on: ubuntu-latest
     env:
-      # Elimină warning-ul de deprecation pentru Node
+      # Forțează Node 24 pentru a elimina warning-urile de sistem
       FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
     
     permissions:
@@ -25,24 +25,20 @@ jobs:
         with:
           node-version: '24'
 
-      - name: Install dependencies
-        # Instalăm cheerio pentru scriptul de standings
-        run: npm install cheerio
-
-      - name: Run Standings Scraper (FotMob)
-        # Acesta actualizează partea de clasament în superliga.json
-        run: node .github/scripts/fetch_standings.mjs
-
-      - name: Run Matches Fetcher (RapidAPI - jQuery Logic)
-        # Acesta adaugă meciurile în același fișier superliga.json
+      - name: Run Matches Fetcher (RapidAPI)
+        # Acest pas aduce meciurile brute în superliga.json
         run: node .github/scripts/fetch_matches.mjs
         env:
           RAPIDAPI_KEY: ${{ secrets.RAPIDAPI_KEY }}
 
+      - name: Run Standings Calculator (Internal Logic)
+        # Acest pas citește meciurile salvate anterior și calculează punctele
+        run: node .github/scripts/fetch_standings.mjs
+
       - name: Commit and Push changes
-        # Salvăm rezultatul final (care conține și clasamentul și meciurile)
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
           git add data/superliga.json
-          git diff --quiet && git diff --staged --quiet || (git commit -m "Update scores and standings [skip ci]" && git push)
+          # Face commit doar dacă datele s-au schimbat efectiv
+          git diff --quiet && git diff --staged --quiet || (git commit -m "Update matches and recalculate standings [skip ci]" && git push)
