@@ -73,7 +73,7 @@
     {
       "home": {
         "name": "Petrolul Ploiesti",
-        "score": "1",
+        "score": "2",
         "id": "188187"
       },
       "away": {
@@ -81,27 +81,27 @@
         "score": "0",
         "id": "583690"
       },
-      "status": "LIVE",
+      "status": "FT",
       "phase": "Play-out",
       "date": "6 apr.",
-      "time": "46'",
+      "time": "17:30",
       "ts": 1775496600000
     },
     {
       "home": {
         "name": "CS Universitatea Craiova",
-        "score": "-",
+        "score": "0",
         "id": "480286"
       },
       "away": {
         "name": "CFR Cluj",
-        "score": "-",
+        "score": "0",
         "id": "9731"
       },
-      "status": "NS",
+      "status": "LIVE",
       "phase": "Play-off",
       "date": "6 apr.",
-      "time": "20:30",
+      "time": "3'",
       "ts": 1775507400000
     }
   ],
@@ -290,25 +290,25 @@
       "rank": 2,
       "name": "CS Universitatea Craiova",
       "id": "480286",
-      "pj": 2,
+      "pj": 3,
       "gd": 0,
-      "pts": 33
+      "pts": 34
     },
     {
       "rank": 3,
+      "name": "CFR Cluj",
+      "id": "9731",
+      "pj": 3,
+      "gd": 0,
+      "pts": 31
+    },
+    {
+      "rank": 4,
       "name": "FC Rapid 1923",
       "id": "9738",
       "pj": 3,
       "gd": -1,
       "pts": 31
-    },
-    {
-      "rank": 4,
-      "name": "CFR Cluj",
-      "id": "9731",
-      "pj": 2,
-      "gd": 0,
-      "pts": 30
     },
     {
       "rank": 5,
@@ -373,7 +373,7 @@
       "name": "Miercurea Ciuc",
       "id": "583690",
       "pj": 3,
-      "gd": 0,
+      "gd": -1,
       "pts": 20
     },
     {
@@ -389,7 +389,7 @@
       "name": "Petrolul Ploiesti",
       "id": "188187",
       "pj": 3,
-      "gd": -2,
+      "gd": -1,
       "pts": 19
     },
     {
