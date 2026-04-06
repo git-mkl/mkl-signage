@@ -3,40 +3,60 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=1920, user-scalable=no">
-    <title>SuperLiga TV</title>
+    <title>SuperLiga TV - Live Betting Style</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="container">
+
+    <div id="view-playoff" class="view-container view-active">
         <div class="column col-matches">
             <div class="group-title">Rezultate</div>
-            <div id="past-area" class="match-list"></div>
+            <div id="po-past"></div>
         </div>
-
         <div class="column col-central">
             <div class="group-title">Meciuri Azi</div>
-            <div id="today-area" class="match-list"></div>
-            
-            <div class="group-title" style="margin-top: 25px;">Program</div>
-            <div id="future-area" class="match-list"></div>
+            <div id="po-today"></div>
+            <div class="group-title" style="margin-top:30px">Program</div>
+            <div id="po-future"></div>
         </div>
-
         <div class="column col-table">
             <div class="league-logo-container">
                 <img src="https://images.fotmob.com/image_resources/logo/leaguelogo/dark/189.png" class="league-logo">
+                <span class="phase-badge badge-po">PLAY-OFF</span>
             </div>
             <div class="table-card">
                 <table>
                     <thead>
-                        <tr>
-                            <th width="60">#</th>
-                            <th align="left">Echipă</th>
-                            <th width="80">MJ</th>
-                            <th width="80">GD</th>
-                            <th width="100">Pts</th>
-                        </tr>
+                        <tr><th width="60">#</th><th align="left">Echipă</th><th width="80">MJ</th><th width="80">GD</th><th width="100">Pts</th></tr>
                     </thead>
-                    <tbody id="std-body"></tbody>
+                    <tbody id="po-table"></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div id="view-playout" class="view-container">
+        <div class="column col-matches">
+            <div class="group-title">Rezultate</div>
+            <div id="pout-past"></div>
+        </div>
+        <div class="column col-central">
+            <div class="group-title">Meciuri Azi</div>
+            <div id="pout-today"></div>
+            <div class="group-title" style="margin-top:30px">Program</div>
+            <div id="pout-future"></div>
+        </div>
+        <div class="column col-table">
+            <div class="league-logo-container">
+                <img src="https://images.fotmob.com/image_resources/logo/leaguelogo/dark/189.png" class="league-logo">
+                <span class="phase-badge badge-pout">PLAY-OUT</span>
+            </div>
+            <div class="table-card">
+                <table>
+                    <thead>
+                        <tr><th width="60">#</th><th align="left">Echipă</th><th width="80">MJ</th><th width="80">GD</th><th width="100">Pts</th></tr>
+                    </thead>
+                    <tbody id="pout-table"></tbody>
                 </table>
             </div>
         </div>
@@ -49,10 +69,16 @@
             xhr.onreadystatechange = function () {
                 if (xhr.readyState === 4 && xhr.status === 200) {
                     var d = JSON.parse(xhr.responseText);
-                    renderMatches('past-area', d.past);
-                    renderMatches('today-area', d.today);
-                    renderMatches('future-area', d.future);
-                    renderStandings(d.standings);
+                    
+                    renderMatches('po-past', d.past.filter(m => m.phase === "Play-off"));
+                    renderMatches('po-today', d.today.filter(m => m.phase === "Play-off"));
+                    renderMatches('po-future', d.future.filter(m => m.phase === "Play-off"));
+                    renderTable('po-table', d.standingsPlayoff);
+
+                    renderMatches('pout-past', d.past.filter(m => m.phase === "Play-out"));
+                    renderMatches('pout-today', d.today.filter(m => m.phase === "Play-out"));
+                    renderMatches('pout-future', d.future.filter(m => m.phase === "Play-out"));
+                    renderTable('pout-table', d.standingsPlayout);
                 }
             };
             xhr.send();
@@ -61,44 +87,86 @@
         function renderMatches(id, list) {
             var el = document.getElementById(id);
             if (!list || list.length === 0) {
-                el.innerHTML = (id === 'today-area') ? '<div style="color:#555;font-size:22px;padding:20px;border:1px dashed #333;border-radius:10px;text-align:center;">Fără meciuri azi</div>' : '';
+                el.innerHTML = '<div style="color:#777;font-size:24px;padding:20px;text-align:center;">Niciun meci programat</div>';
                 return;
             }
             var html = '';
             for (var i = 0; i < list.length; i++) {
                 var m = list[i];
-                var hLogo = 'https://images.fotmob.com/image_resources/logo/teamlogo/' + m.home.id + '.png';
-                var aLogo = 'https://images.fotmob.com/image_resources/logo/teamlogo/' + m.away.id + '.png';
-                var statusText = (m.status === 'LIVE') ? '<span class="live-dot">● LIVE</span>' : (m.status === 'FT' ? 'FINAL' : m.time);
+                var hLogo = 'https://images.fotmob.com/image_resources/logo/teamlogo/'+m.home.id+'.png';
+                var aLogo = 'https://images.fotmob.com/image_resources/logo/teamlogo/'+m.away.id+'.png';
+                
+                if (m.status === 'LIVE') {
+                    // UI SPECIFIC PARIURI PENTRU MECIURI LIVE
+                    // Date simulate vizual pentru Posesie (deoarece API-ul free dă doar scorul)
+                    var mockPosH = Math.floor(Math.random() * 30) + 35; // intre 35 si 65
+                    var mockPosA = 100 - mockPosH;
 
-                html += '<div class="match-card">' +
-                    '<div class="m-status"><span class="status-left">' + statusText + '</span><span class="status-right">' + m.date + '</span></div>' +
-                    '<div style="clear:both"></div>' +
-                    '<div class="team-row"><img src="' + hLogo + '" class="small-logo"><span class="team-name">' + m.home.name + '</span><span class="score">' + m.home.score + '</span></div>' +
-                    '<div class="team-row"><img src="' + aLogo + '" class="small-logo"><span class="team-name">' + m.away.name + '</span><span class="score">' + m.away.score + '</span></div>' +
-                '</div>';
+                    html += '<div class="live-tracker-card">' +
+                        '<div class="live-header"><span class="live-minute">● '+m.time+'</span><span class="status-right" style="color:#aaa;">LIVE</span></div>' +
+                        '<div style="clear:both"></div>' +
+                        '<div class="team-row"><img src="'+hLogo+'" class="small-logo"><span class="team-name" style="width:250px;">'+m.home.name+'</span><span class="score">'+m.home.score+'</span></div>' +
+                        '<div class="team-row" style="margin-bottom:10px;"><img src="'+aLogo+'" class="small-logo"><span class="team-name" style="width:250px;">'+m.away.name+'</span><span class="score">'+m.away.score+'</span></div>' +
+                        
+                        '<div class="live-pitch">ATAC PERICULOS</div>' +
+                        
+                        '<div class="stat-row">' +
+                            '<span class="stat-home">'+mockPosH+'%</span>' +
+                            '<span class="stat-label">POSESIE</span>' +
+                            '<span class="stat-away">'+mockPosA+'%</span>' +
+                        '</div>' +
+                        '<div class="stat-bar-bg">' +
+                            '<div class="stat-bar-home" style="width: '+mockPosH+'%;"></div>' +
+                            '<div class="stat-bar-away" style="width: '+mockPosA+'%;"></div>' +
+                        '</div>' +
+                    '</div>';
+                } else {
+                    // UI NORMAL PENTRU MECIURI TRECUTE SAU VIITOARE
+                    var st = m.status === 'FT' ? 'FINAL' : m.time;
+                    html += '<div class="match-card">' +
+                        '<div class="m-status"><span class="status-left">'+st+'</span><span class="status-right">'+m.date+'</span></div>' +
+                        '<div style="clear:both"></div>' +
+                        '<div class="team-row"><img src="'+hLogo+'" class="small-logo"><span class="team-name">'+m.home.name+'</span><span class="score">'+m.home.score+'</span></div>' +
+                        '<div class="team-row"><img src="'+aLogo+'" class="small-logo"><span class="team-name">'+m.away.name+'</span><span class="score">'+m.away.score+'</span></div>' +
+                    '</div>';
+                }
             }
             el.innerHTML = html;
         }
 
-        function renderStandings(list) {
-            var h = '';
+        function renderTable(id, list) {
+            var html = '';
             for (var i = 0; i < (list || []).length; i++) {
                 var s = list[i];
-                var logo = 'https://images.fotmob.com/image_resources/logo/teamlogo/' + s.id + '.png';
-                h += '<tr>' +
-                    '<td>' + s.rank + '</td>' +
-                    '<td class="t-name-cell"><img src="' + logo + '" class="small-logo" style="margin-right:10px">' + s.name + '</td>' +
-                    '<td>' + s.pj + '</td>' +
-                    '<td>' + (s.gd > 0 ? '+' + s.gd : s.gd) + '</td>' +
-                    '<td class="t-pts">' + s.pts + '</td>' +
+                html += '<tr>' +
+                    '<td>'+s.rank+'</td>' +
+                    '<td class="t-name-cell"><img src="https://images.fotmob.com/image_resources/logo/teamlogo/'+s.id+'.png" class="small-logo">'+s.name+'</td>' +
+                    '<td>'+s.pj+'</td>' +
+                    '<td>'+(s.gd > 0 ? '+' + s.gd : s.gd)+'</td>' +
+                    '<td class="pts-bold">'+s.pts+'</td>' +
                 '</tr>';
             }
-            document.getElementById('std-body').innerHTML = h;
+            document.getElementById(id).innerHTML = html;
         }
 
-        updateUI();
+        var isPlayoffView = true;
+        function toggleView() {
+            var po = document.getElementById('view-playoff');
+            var pout = document.getElementById('view-playout');
+            
+            if (isPlayoffView) {
+                po.classList.remove('view-active');
+                pout.classList.add('view-active');
+            } else {
+                pout.classList.remove('view-active');
+                po.classList.add('view-active');
+            }
+            isPlayoffView = !isPlayoffView;
+        }
+
+        updateUI(); 
         setInterval(updateUI, 300000);
+        setInterval(toggleView, 15000); 
     </script>
 </body>
 </html>
