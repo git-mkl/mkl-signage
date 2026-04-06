@@ -95,38 +95,6 @@
       "date": "3 apr.",
       "time": "17:30",
       "ts": 1775237400000
-    },
-    {
-      "home": {
-        "name": "FC Unirea Slobozia",
-        "score": 2,
-        "id": "364411"
-      },
-      "away": {
-        "name": "Otelul Galati",
-        "score": 1,
-        "id": "9736"
-      },
-      "status": "FT",
-      "date": "23 mar.",
-      "time": "18:30",
-      "ts": 1774290600000
-    },
-    {
-      "home": {
-        "name": "Hermannstadt",
-        "score": 3,
-        "id": "864269"
-      },
-      "away": {
-        "name": "Botosani",
-        "score": 0,
-        "id": "188191"
-      },
-      "status": "FT",
-      "date": "22 mar.",
-      "time": "17:00",
-      "ts": 1774198800000
     }
   ],
   "today": [
@@ -227,70 +195,6 @@
       "date": "12 apr.",
       "time": "15:15",
       "ts": 1776006900000
-    },
-    {
-      "home": {
-        "name": "CFR Cluj",
-        "score": 0,
-        "id": "9731"
-      },
-      "away": {
-        "name": "Dinamo Bucuresti",
-        "score": 0,
-        "id": "10271"
-      },
-      "status": "NS",
-      "date": "12 apr.",
-      "time": "18:00",
-      "ts": 1776016800000
-    },
-    {
-      "home": {
-        "name": "FC Metaloglobus Bucuresti",
-        "score": 0,
-        "id": "404509"
-      },
-      "away": {
-        "name": "Csikszereda Miercurea Ciuc",
-        "score": 0,
-        "id": "583690"
-      },
-      "status": "NS",
-      "date": "13 apr.",
-      "time": "12:30",
-      "ts": 1776083400000
-    },
-    {
-      "home": {
-        "name": "Rapid Bucuresti",
-        "score": 0,
-        "id": "9738"
-      },
-      "away": {
-        "name": "FC Arges Pitesti",
-        "score": 0,
-        "id": "9732"
-      },
-      "status": "NS",
-      "date": "13 apr.",
-      "time": "15:30",
-      "ts": 1776094200000
-    },
-    {
-      "home": {
-        "name": "Universitatea Cluj",
-        "score": 0,
-        "id": "89022"
-      },
-      "away": {
-        "name": "Universitatea Craiova",
-        "score": 0,
-        "id": "480286"
-      },
-      "status": "NS",
-      "date": "13 apr.",
-      "time": "18:30",
-      "ts": 1776105000000
     }
   ],
   "standings": [
