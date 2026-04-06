@@ -79,22 +79,6 @@
       "date": "4 apr.",
       "time": "12:00",
       "ts": 1775304000000
-    },
-    {
-      "home": {
-        "name": "Botosani",
-        "score": 3,
-        "id": "188191"
-      },
-      "away": {
-        "name": "FCSB",
-        "score": 2,
-        "id": "9723"
-      },
-      "status": "FT",
-      "date": "3 apr.",
-      "time": "17:30",
-      "ts": 1775237400000
     }
   ],
   "today": [
@@ -179,22 +163,6 @@
       "date": "11 apr.",
       "time": "17:00",
       "ts": 1775926800000
-    },
-    {
-      "home": {
-        "name": "FC Unirea Slobozia",
-        "score": 0,
-        "id": "364411"
-      },
-      "away": {
-        "name": "Petrolul Ploiesti",
-        "score": 0,
-        "id": "188187"
-      },
-      "status": "NS",
-      "date": "12 apr.",
-      "time": "15:15",
-      "ts": 1776006900000
     }
   ],
   "standings": [
