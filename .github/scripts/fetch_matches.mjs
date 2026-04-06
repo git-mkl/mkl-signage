@@ -26,14 +26,14 @@ async function fetchMatches() {
         }));
 
         const matchData = {
-            past: processed.filter(m => m.ts < startOfToday).sort((a, b) => b.ts - a.ts).slice(0, 5),
+            past: processed.filter(m => m.ts < startOfToday).sort((a, b) => b.ts - a.ts).slice(0, 4),
             today: processed.filter(m => m.ts >= startOfToday && m.ts < endOfToday).sort((a, b) => a.ts - b.ts).slice(0, 2),
             future: processed.filter(m => m.ts >= endOfToday).sort((a, b) => a.ts - b.ts).slice(0, 3)
         };
 
         if (!fs.existsSync('data')) fs.mkdirSync('data');
         fs.writeFileSync('data/superliga.json', JSON.stringify(matchData, null, 2));
-        console.log("Date sincronizate cu layout optimizat.");
-    } catch (e) { console.error("Eroare API:", e.message); }
+        console.log("Sync complete: Vertical space optimized.");
+    } catch (e) { console.error("API Error:", e.message); }
 }
 fetchMatches();
