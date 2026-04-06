@@ -2,12 +2,18 @@ import fs from 'fs';
 
 function calculateStandings() {
     try {
-        console.log("--- CALCULARE CLASAMENT (Baza Etapa 30 + Actualizări) ---");
-        if (!fs.existsSync('data/superliga.json')) return;
         const data = JSON.parse(fs.readFileSync('data/superliga.json', 'utf8'));
+        
+        // Mapare Nume -> ID (extras din sistemul FotMob)
+        const teamIds = {
+            "Universitatea Craiova": 480286, "Rapid Bucuresti": 9738, "Universitatea Cluj": 89022,
+            "CFR Cluj": 9731, "Dinamo Bucuresti": 10271, "FC Arges Pitesti": 9732,
+            "FCSB": 9723, "UTA Arad": 584663, "Botosani": 188191, "Otelul Galati": 9736,
+            "FCV Farul Constanta": 210132, "Petrolul Ploiesti": 188187, "Hermannstadt": 864269,
+            "Csikszereda Miercurea Ciuc": 583690, "FC Unirea Slobozia": 364411, "FC Metaloglobus Bucuresti": 404509
+        };
 
-        // Baza de date extrasă din imaginea ta (Etapa 30)
-        const baseStandings = {
+        const base = {
             "Universitatea Craiova": { pj: 30, v: 17, e: 9, i: 4, gd: 26, pts: 60 },
             "Rapid Bucuresti": { pj: 30, v: 16, e: 8, i: 6, gd: 17, pts: 56 },
             "Universitatea Cluj": { pj: 30, v: 16, e: 6, i: 8, gd: 21, pts: 54 },
@@ -26,35 +32,14 @@ function calculateStandings() {
             "FC Metaloglobus Bucuresti": { pj: 30, v: 2, e: 6, i: 22, gd: -41, pts: 12 }
         };
 
-        // Procesăm DOAR meciurile jucate DUPĂ etapa 30 (care apar în "today" sau "past" recent)
-        // Pentru a evita dublarea, în mod ideal API-ul ar trebui să aibă timestamp-uri.
-        // Dacă API-ul trimite meciuri noi, ele vor fi adăugate la baza de mai sus.
-        const allMatches = [...(data.past || []), ...(data.today || [])];
-        const newFinishedMatches = allMatches.filter(m => m.status === 'FT');
-
-        newFinishedMatches.forEach(m => {
-            const h = m.home.name;
-            const a = m.away.name;
-            const sH = parseInt(m.home.score);
-            const sA = parseInt(m.away.score);
-
-            // Adăugăm la tabel doar dacă echipa există în baza noastră și meciul nu e deja socotit
-            // Notă: Această logică simplă presupune că orice meci FT din API este unul "nou"
-            if (baseStandings[h] && !isNaN(sH)) {
-                // Aici ar trebui o verificare de timestamp/ID meci pentru a nu aduna de două ori
-                // Dar pentru faza actuală, calculăm bazat pe logică incrementală dacă e necesar.
-                // Momentan, tabelul afișat va fi cel puțin baza de 16 echipe.
-            }
-        });
-
-        const standings = Object.keys(baseStandings).map(name => ({
+        const standings = Object.keys(base).map(name => ({
             name,
-            ...baseStandings[name]
-        })).sort((a, b) => b.pts !== a.pts ? b.pts - a.pts : b.gd - a.gd)
-           .map((team, index) => ({ rank: index + 1, ...team }));
+            id: teamIds[name], // Adăugăm ID-ul pentru logo
+            ...base[name]
+        })).sort((a, b) => b.pts - a.pts || b.gd - a.gd)
+           .map((t, idx) => ({ rank: idx + 1, ...t }));
 
         fs.writeFileSync('data/superliga.json', JSON.stringify({ ...data, standings }, null, 2));
-        console.log("Succes: Clasament actualizat (16 echipe).");
-    } catch (e) { console.error("Eroare:", e.message); }
+    } catch (e) { console.error(e); }
 }
 calculateStandings();
