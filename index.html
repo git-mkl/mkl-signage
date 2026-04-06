@@ -8,18 +8,21 @@
 <body>
     <div class="container">
         <main>
-            <div id="live-container"></div>
-            <h2>Meciuri • SuperLiga</h2>
-            <div id="matches-grid" class="match-grid"></div>
+            <h2 style="font-weight: 400;">Meciuri • SuperLiga</h2>
+            <div id="matches-grid" class="matches-grid"></div>
         </main>
         <aside>
-            <h2>Clasament</h2>
-            <div class="sidebar-card">
+            <h2 style="font-weight: 400;">Clasament</h2>
+            <div class="table-card">
                 <table>
                     <thead>
-                        <tr><th>#</th><th>Echipă</th><th>MJ</th><th style="text-align:right">Pct</th></tr>
+                        <tr>
+                            <th>#</th><th>Club</th><th class="col-num">MJ</th>
+                            <th class="col-num">V</th><th class="col-num">GD</th>
+                            <th style="text-align:right">Pct</th>
+                        </tr>
                     </thead>
-                    <tbody id="standings-list"></tbody>
+                    <tbody id="standings-body"></tbody>
                 </table>
             </div>
         </aside>
@@ -27,48 +30,28 @@
 
     <script>
         async function updateUI() {
-            try {
-                const res = await fetch('data/superliga.json?t=' + Date.now());
-                const data = await res.json();
+            const res = await fetch('data/superliga.json?v=' + Date.now());
+            const data = await res.json();
 
-                // 1. LIVE
-                if (data.live && data.live.length > 0) {
-                    document.getElementById('live-container').innerHTML = `
-                        <h2 class="live-txt">● LIVE ACUM</h2>
-                        <div class="match-grid" style="margin-bottom:25px">${data.live.map(m => renderCard(m)).join('')}</div>`;
-                }
+            document.getElementById('matches-grid').innerHTML = data.matches.map(m => `
+                <div class="match-card">
+                    <div class="m-status">${m.status === 'Programat' ? m.date + ' ' + m.time : m.status}</div>
+                    <div class="team-row"><span>${m.home.name}</span><span class="t-score">${m.home.score}</span></div>
+                    <div class="team-row"><span>${m.away.name}</span><span class="t-score">${m.away.score}</span></div>
+                </div>
+            `).join('');
 
-                // 2. Recente + Viitoare
-                const all = [...data.recent, ...data.upcoming];
-                if (all.length > 0) {
-                    document.getElementById('matches-grid').innerHTML = all.map(m => renderCard(m)).join('');
-                } else {
-                    document.getElementById('matches-grid').innerHTML = "<p>Nu s-au gasit meciuri programate.</p>";
-                }
-
-                // 3. Clasament
-                if (data.standings && data.standings.length > 0) {
-                    document.getElementById('standings-list').innerHTML = data.standings.map(s => `
-                        <tr>
-                            <td style="color:#9aa0a6">${s.pos}</td>
-                            <td style="font-weight:500">${s.name}</td>
-                            <td style="color:#9aa0a6">${s.pj}</td>
-                            <td class="pts-col">${s.pts}</td>
-                        </tr>`).join('');
-                }
-            } catch (e) { console.error("Eroare UI:", e); }
+            document.getElementById('standings-body').innerHTML = data.standings.map(s => `
+                <tr>
+                    <td style="color:var(--muted); width:25px;">${s.rank}</td>
+                    <td style="font-weight:500;">${s.name}</td>
+                    <td class="col-num">${s.mj}</td>
+                    <td class="col-num">${s.v}</td>
+                    <td class="col-num">${s.gd}</td>
+                    <td class="col-pct">${s.pct}</td>
+                </tr>
+            `).join('');
         }
-
-        function renderCard(m) {
-            const isLive = m.status === 'LIVE';
-            return `
-                <div class="card">
-                    <div class="status ${isLive ? 'live-txt' : ''}">${isLive ? '● LIVE' : m.date + ' ' + m.time}</div>
-                    <div class="team-row"><span>${m.home.name}</span><span class="score">${m.home.score}</span></div>
-                    <div class="team-row"><span>${m.away.name}</span><span class="score">${m.away.score}</span></div>
-                </div>`;
-        }
-
         updateUI();
     </script>
 </body>
