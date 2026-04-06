@@ -1,86 +1,84 @@
 <!DOCTYPE html>
-<html lang="ro">
+<html>
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SuperLiga Hub</title>
+    <title>SuperLiga Tizen TV</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div class="container">
-        <main>
-            <h2 class="section-title">Meciuri • SuperLiga</h2>
-            <div id="matches-grid" class="matches-grid">
-                </div>
-        </main>
-        <aside>
-            <h2 class="section-title">Clasament</h2>
+        <div class="main-content">
+            <h2>Meciuri • SuperLiga</h2>
+            <div id="matches-grid">
+                <p style="color:#9aa0a6">Incarcare...</p>
+            </div>
+        </div>
+        <div class="sidebar">
+            <h2>Clasament</h2>
             <div class="table-card">
-                <table id="std-table">
+                <table>
                     <thead>
                         <tr>
-                            <th>#</th>
-                            <th>Club</th>
-                            <th class="col-num">MJ</th>
-                            <th class="col-pct">Pct</th>
+                            <th>#</th><th>Echipa</th><th class="col-num">MJ</th><th style="text-align:right">Pct</th>
                         </tr>
                     </thead>
-                    <tbody id="standings-body">
-                        </tbody>
+                    <tbody id="standings-body"></tbody>
                 </table>
-                <div id="no-standings" style="display:none; color:var(--muted); font-size:12px; padding:20px 0;">
-                    Datele clasamentului se actualizează...
-                </div>
             </div>
-        </aside>
+        </div>
     </div>
 
     <script>
-        async function updateUI() {
-            try {
-                const res = await fetch('data/superliga.json?t=' + Date.now());
-                const data = await res.json();
-
-                // Randare Meciuri
-                if (data.matches && data.matches.length > 0) {
-                    document.getElementById('matches-grid').innerHTML = data.matches.map(m => `
-                        <div class="match-card">
-                            <div class="m-status">${m.status === 'Finalizat' ? 'FT' : m.date + ' ' + m.time}</div>
-                            <div class="team-row">
-                                <span class="team-name">${m.home.name}</span>
-                                <span class="score">${m.home.score ?? '-'}</span>
-                            </div>
-                            <div class="team-row">
-                                <span class="team-name">${m.away.name}</span>
-                                <span class="score">${m.away.score ?? '-'}</span>
-                            </div>
-                        </div>
-                    `).join('');
+        function updateUI() {
+            var xhr = new XMLHttpRequest();
+            // Adaugam timestamp pentru a evita cache-ul agresiv al televizoarelor
+            xhr.open('GET', 'data/superliga.json?t=' + new Date().getTime(), true);
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    var data = JSON.parse(xhr.responseText);
+                    renderMatches(data.matches);
+                    renderStandings(data.standings);
                 }
-
-                // Randare Clasament
-                const stdBody = document.getElementById('standings-body');
-                if (data.standings && data.standings.length > 0) {
-                    stdBody.innerHTML = data.standings.map(s => `
-                        <tr>
-                            <td class="col-num">${s.rank || s.pos}</td>
-                            <td style="font-weight:500">${s.name}</td>
-                            <td class="col-num">${s.pj || 0}</td>
-                            <td class="col-pct">${s.pts || 0}</td>
-                        </tr>
-                    `).join('');
-                } else {
-                    document.getElementById('std-table').style.display = 'none';
-                    document.getElementById('no-standings').style.display = 'block';
-                }
-
-            } catch (e) {
-                console.error("Eroare la randare UI:", e);
-            }
+            };
+            xhr.send();
         }
 
+        function renderMatches(matches) {
+            var html = '';
+            if (!matches || matches.length === 0) {
+                html = '<p>Nu sunt meciuri disponibile.</p>';
+            } else {
+                for (var i = 0; i < matches.length; i++) {
+                    var m = matches[i];
+                    html += '<div class="match-card">' +
+                                '<div class="m-status">' + (m.status === 'Finalizat' ? 'FT' : m.date + ' ' + m.time) + '</div>' +
+                                '<div class="team-row"><span class="team-name">' + m.home.name + '</span><span class="score">' + (m.home.score !== null ? m.home.score : '-') + '</span></div>' +
+                                '<div class="team-row"><span class="team-name">' + m.away.name + '</span><span class="score">' + (m.away.score !== null ? m.away.score : '-') + '</span></div>' +
+                            '</div>';
+                }
+            }
+            document.getElementById('matches-grid').innerHTML = html;
+        }
+
+        function renderStandings(standings) {
+            var html = '';
+            if (standings && standings.length > 0) {
+                for (var j = 0; j < standings.length; j++) {
+                    var s = standings[j];
+                    html += '<tr>' +
+                                '<td class="col-num">' + (s.rank || s.pos) + '</td>' +
+                                '<td><strong>' + s.name + '</strong></td>' +
+                                '<td class="col-num">' + (s.pj || 0) + '</td>' +
+                                '<td class="col-pct">' + (s.pts || 0) + '</td>' +
+                            '</tr>';
+                }
+            }
+            document.getElementById('standings-body').innerHTML = html;
+        }
+
+        // Pornire si refresh la 5 minute (mai rar pentru TV ca sa nu consume resurse)
         updateUI();
-        setInterval(updateUI, 60000);
+        setInterval(updateUI, 300000);
     </script>
 </body>
 </html>
