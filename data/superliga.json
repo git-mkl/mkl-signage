@@ -67,111 +67,26 @@
       "date": "4 apr.",
       "time": "19:30",
       "ts": 1775331000000
-    },
-    {
-      "home": {
-        "name": "Otelul Galati",
-        "score": "2",
-        "id": "9736"
-      },
-      "away": {
-        "name": "Hermannstadt",
-        "score": "0",
-        "id": "864269"
-      },
-      "status": "FT",
-      "phase": "Play-out",
-      "date": "4 apr.",
-      "time": "15:00",
-      "ts": 1775314800000
-    },
-    {
-      "home": {
-        "name": "Botosani",
-        "score": "3",
-        "id": "188191"
-      },
-      "away": {
-        "name": "FCSB",
-        "score": "2",
-        "id": "9723"
-      },
-      "status": "FT",
-      "phase": "Play-out",
-      "date": "3 apr.",
-      "time": "20:30",
-      "ts": 1775248200000
-    },
-    {
-      "home": {
-        "name": "FC Unirea 2004 Slobozia",
-        "score": "2",
-        "id": "364411"
-      },
-      "away": {
-        "name": "Otelul Galati",
-        "score": "1",
-        "id": "9736"
-      },
-      "status": "FT",
-      "phase": "Play-out",
-      "date": "23 mar.",
-      "time": "21:30",
-      "ts": 1774301400000
-    },
-    {
-      "home": {
-        "name": "Hermannstadt",
-        "score": "3",
-        "id": "864269"
-      },
-      "away": {
-        "name": "Botosani",
-        "score": "0",
-        "id": "188191"
-      },
-      "status": "FT",
-      "phase": "Play-out",
-      "date": "22 mar.",
-      "time": "20:00",
-      "ts": 1774209600000
-    },
-    {
-      "home": {
-        "name": "ACS Champions FC Arges",
-        "score": "0",
-        "id": "9732"
-      },
-      "away": {
-        "name": "Universitatea Cluj",
-        "score": "1",
-        "id": "89022"
-      },
-      "status": "FT",
-      "phase": "Play-off",
-      "date": "21 mar.",
-      "time": "21:30",
-      "ts": 1774128600000
-    },
-    {
-      "home": {
-        "name": "Miercurea Ciuc",
-        "score": "1",
-        "id": "583690"
-      },
-      "away": {
-        "name": "FCV Farul Constanta",
-        "score": "1",
-        "id": "210132"
-      },
-      "status": "FT",
-      "phase": "Play-out",
-      "date": "21 mar.",
-      "time": "18:30",
-      "ts": 1774117800000
     }
   ],
   "today": [
+    {
+      "home": {
+        "name": "Petrolul Ploiesti",
+        "score": "1",
+        "id": "188187"
+      },
+      "away": {
+        "name": "Miercurea Ciuc",
+        "score": "0",
+        "id": "583690"
+      },
+      "status": "LIVE",
+      "phase": "Play-out",
+      "date": "6 apr.",
+      "time": "45+2'",
+      "ts": 1775496600000
+    },
     {
       "home": {
         "name": "CS Universitatea Craiova",
@@ -188,23 +103,6 @@
       "date": "6 apr.",
       "time": "20:30",
       "ts": 1775507400000
-    },
-    {
-      "home": {
-        "name": "Petrolul Ploiesti",
-        "score": "0",
-        "id": "188187"
-      },
-      "away": {
-        "name": "Miercurea Ciuc",
-        "score": "0",
-        "id": "583690"
-      },
-      "status": "LIVE",
-      "phase": "Play-out",
-      "date": "6 apr.",
-      "time": "28'",
-      "ts": 1775496600000
     }
   ],
   "future": [
@@ -343,40 +241,6 @@
       "date": "13 apr.",
       "time": "21:30",
       "ts": 1776115800000
-    },
-    {
-      "home": {
-        "name": "Otelul Galati",
-        "score": "-",
-        "id": "9736"
-      },
-      "away": {
-        "name": "UTA Arad",
-        "score": "-",
-        "id": "584663"
-      },
-      "status": "NS",
-      "phase": "Play-out",
-      "date": "17 apr.",
-      "time": "17:30",
-      "ts": 1776447000000
-    },
-    {
-      "home": {
-        "name": "ACS Champions FC Arges",
-        "score": "-",
-        "id": "9732"
-      },
-      "away": {
-        "name": "CFR Cluj",
-        "score": "-",
-        "id": "9731"
-      },
-      "status": "NS",
-      "phase": "Play-off",
-      "date": "17 apr.",
-      "time": "20:30",
-      "ts": 1776457800000
     }
   ],
   "standingsPlayoff": [
@@ -475,8 +339,8 @@
       "name": "Miercurea Ciuc",
       "id": "583690",
       "pj": 3,
-      "gd": 1,
-      "pts": 21
+      "gd": 0,
+      "pts": 20
     },
     {
       "rank": 7,
@@ -491,8 +355,8 @@
       "name": "Petrolul Ploiesti",
       "id": "188187",
       "pj": 3,
-      "gd": -3,
-      "pts": 17
+      "gd": -2,
+      "pts": 19
     },
     {
       "rank": 9,
