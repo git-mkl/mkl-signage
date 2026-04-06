@@ -1,20 +1,18 @@
 <!DOCTYPE html>
-<html>
+<html lang="ro">
 <head>
     <meta charset="UTF-8">
-    <title>SuperLiga Hub</title>
+    <title>SuperLiga Dashboard</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div class="container">
         <div class="column col-matches">
-            <div class="group-title">Rezultate Recente</div>
             <div id="past-area"></div>
         </div>
 
         <div class="column col-central">
             <div id="today-area"></div>
-            <div class="group-title">Program Viitor</div>
             <div id="future-area"></div>
         </div>
 
@@ -42,17 +40,16 @@
                 if (xhr.readyState === 4 && xhr.status === 200) {
                     var d = JSON.parse(xhr.responseText);
                     
-                    // Render meciuri folosind concatenare clasica (safe pentru TV)
-                    renderGroup('past-area', d.past || d.matches.slice(0,6));
-                    renderGroup('today-area', d.today, "AZI / LIVE");
-                    renderGroup('future-area', d.future);
+                    renderGroup('past-area', 'Rezultate Recente', d.past);
+                    renderGroup('today-area', 'Meciuri Azi / Live', d.today);
+                    renderGroup('future-area', 'Program Viitor', d.future);
                     
                     var h = '';
                     var st = d.standings || [];
                     for (var i = 0; i < Math.min(st.length, 16); i++) {
                         var s = st[i];
                         h += '<tr>' +
-                            '<td style="color:#aaa">' + s.rank + '</td>' +
+                            '<td style="color:#666">' + s.rank + '</td>' +
                             '<td class="t-name">' + s.name + '</td>' +
                             '<td>' + s.pj + '</td>' +
                             '<td>' + s.v + '</td>' +
@@ -66,26 +63,30 @@
             xhr.send();
         }
 
-        function renderGroup(id, list, specialTitle) {
+        function renderGroup(id, title, list) {
             var el = document.getElementById(id);
             if (!list || list.length === 0) {
-                if(!specialTitle) el.innerHTML = '';
+                el.innerHTML = '';
                 return;
             }
-            var html = specialTitle ? '<div class="group-title" style="background:#d32f2f">' + specialTitle + '</div>' : '';
+            var html = '<div class="group-title">' + title + '</div>';
             for (var i = 0; i < list.length; i++) {
                 var m = list[i];
+                var scoreHome = m.home.score !== undefined ? m.home.score : '-';
+                var scoreAway = m.away.score !== undefined ? m.away.score : '-';
+                var status = (m.status === 'FT' || m.status === 'Finalizat') ? 'FINALIZAT' : (m.date + ' ' + m.time);
+                
                 html += '<div class="match-card">' +
-                    '<div class="m-status">' + (m.status === 'FT' ? 'Finalizat' : m.date + ' ' + m.time) + '</div>' +
-                    '<div class="team-row"><span class="team-name">' + m.home.name + '</span><span class="score">' + m.home.score + '</span></div>' +
-                    '<div class="team-row"><span class="team-name">' + m.away.name + '</span><span class="score">' + m.away.score + '</span></div>' +
+                    '<div class="m-status">' + status + '</div>' +
+                    '<div class="team-row"><span class="team-name">' + m.home.name + '</span><span class="score">' + scoreHome + '</span></div>' +
+                    '<div class="team-row"><span class="team-name">' + m.away.name + '</span><span class="score">' + scoreAway + '</span></div>' +
                 '</div>';
             }
             el.innerHTML = html;
         }
 
         updateUI();
-        setInterval(updateUI, 300000);
+        setInterval(updateUI, 300000); // Update la 5 minute
     </script>
 </body>
 </html>
