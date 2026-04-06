@@ -83,6 +83,34 @@
       "date": "vin., 3 apr.",
       "time": "17:30",
       "ts": 1775237400000
+    },
+    {
+      "home": {
+        "name": "FC Unirea Slobozia",
+        "score": 2
+      },
+      "away": {
+        "name": "Otelul Galati",
+        "score": 1
+      },
+      "status": "FT",
+      "date": "lun., 23 mar.",
+      "time": "18:30",
+      "ts": 1774290600000
+    },
+    {
+      "home": {
+        "name": "Hermannstadt",
+        "score": 3
+      },
+      "away": {
+        "name": "Botosani",
+        "score": 0
+      },
+      "status": "FT",
+      "date": "dum., 22 mar.",
+      "time": "17:00",
+      "ts": 1774198800000
     }
   ],
   "today": [
@@ -199,7 +227,36 @@
       "date": "lun., 13 apr.",
       "time": "12:30",
       "ts": 1776083400000
+    },
+    {
+      "home": {
+        "name": "Rapid Bucuresti",
+        "score": 0
+      },
+      "away": {
+        "name": "FC Arges Pitesti",
+        "score": 0
+      },
+      "status": "NS",
+      "date": "lun., 13 apr.",
+      "time": "15:30",
+      "ts": 1776094200000
+    },
+    {
+      "home": {
+        "name": "Universitatea Cluj",
+        "score": 0
+      },
+      "away": {
+        "name": "Universitatea Craiova",
+        "score": 0
+      },
+      "status": "NS",
+      "date": "lun., 13 apr.",
+      "time": "18:30",
+      "ts": 1776105000000
     }
   ],
-  "standings": []
+  "standings": [],
+  "updatedAt": "06.04.2026, 09:36:41"
 }
