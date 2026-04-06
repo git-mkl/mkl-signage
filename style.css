@@ -1,20 +1,71 @@
-body { background-color: #101214; color: #e8eaed; font-family: Arial, sans-serif; margin: 0; padding: 15px; }
-.container { width: 100%; max-width: 1200px; margin: 0 auto; }
-.main-content { width: 68%; display: inline-block; vertical-align: top; }
-.sidebar { width: 28%; display: inline-block; vertical-align: top; margin-left: 3%; }
-
-.group-title { font-size: 14px; color: #9aa0a6; text-transform: uppercase; margin: 20px 0 10px 0; letter-spacing: 1px; }
-.match-card { 
-    background-color: #202124; border: 1px solid #3c4043; border-radius: 8px; 
-    padding: 12px; margin-bottom: 8px; width: 49%; display: inline-block; margin-right: 1%;
+/* Reset de baza pentru a preveni overflow-ul */
+html, body {
+    margin: 0;
+    padding: 0;
+    overflow: hidden; /* Previne scroll-ul pe TV */
+    background-color: #101214;
 }
 
-.m-status { font-size: 11px; color: #9aa0a6; margin-bottom: 8px; }
-.team-row { clear: both; height: 22px; margin: 4px 0; }
-.team-name { float: left; font-size: 13px; max-width: 80%; overflow: hidden; }
-.score { float: right; font-weight: bold; color: #fff; }
+.container {
+    width: 100vw;
+    height: 100vh;
+    padding: 20px;
+    box-sizing: border-box;
+    display: block;
+    white-space: nowrap; /* Permite alinierea main si sidebar */
+}
 
-.table-card { background: #202124; border-radius: 8px; padding: 12px; border: 1px solid #3c4043; }
-table { width: 100%; border-collapse: collapse; font-size: 12px; }
-td { padding: 8px 0; border-bottom: 1px solid #303134; }
-.col-pct { text-align: right; color: #8ab4f8; font-weight: bold; }
+.main-content {
+    width: 65%;
+    display: inline-block;
+    vertical-align: top;
+    white-space: normal; /* Revine la normal pentru carduri */
+}
+
+.sidebar {
+    width: 30%;
+    display: inline-block;
+    vertical-align: top;
+    margin-left: 2%;
+    white-space: normal;
+}
+
+/* Cardul de meci - Aici e cheia succesului */
+.match-card {
+    background-color: #202124;
+    border: 1px solid #3c4043;
+    border-radius: 8px;
+    padding: 10px;
+    margin-bottom: 10px;
+    margin-right: 10px;
+    
+    /* Fortam 2 carduri pe rand pe latimea main-content */
+    width: calc(50% - 15px); 
+    display: inline-block;
+    vertical-align: top;
+    box-sizing: border-box;
+}
+
+.team-row {
+    display: block;
+    width: 100%;
+    height: 24px;
+    line-height: 24px;
+    margin: 2px 0;
+    clear: both;
+}
+
+.team-name {
+    float: left;
+    font-size: 14px;
+    max-width: 75%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.score {
+    float: right;
+    font-weight: bold;
+    color: #fff;
+}
