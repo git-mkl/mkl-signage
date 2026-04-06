@@ -1,17 +1,16 @@
 import fs from 'fs';
-import * as cheerio from 'cheerio';
 
 async function fetchData() {
     const API_KEY = "8b8b29c474mshd383ae732d8331ap1b0325jsn05f8a83f75fa"; 
     const HOST = 'free-api-live-football-data.p.rapidapi.com';
     const headers = { 'x-rapidapi-key': API_KEY, 'x-rapidapi-host': HOST };
-    const LEAGUE_ID = "189"; // SuperLiga Romania
+    const LEAGUE_ID = "189";
 
     try {
         console.log("Incepem colectarea datelor...");
         if (!fs.existsSync('data')) fs.mkdirSync('data', { recursive: true });
 
-        // --- 1. COLECTARE MECIURI (API) ---
+        // --- 1. MECIURI (API RAPIDAPI) ---
         const res = await fetch(`https://${HOST}/football-get-all-matches-by-league?leagueid=${LEAGUE_ID}`, { headers });
         const json = await res.json();
         const allMatches = json.response?.matches || [];
@@ -29,60 +28,37 @@ async function fetchData() {
             ts: new Date(m.status.utcTime).getTime()
         }));
 
-        // Filtrare pe categorii pentru layout-ul cu 3 coloane
-        const past = processed.filter(m => m.ts < startOfToday)
-            .sort((a, b) => b.ts - a.ts).slice(0, 8);
+        const past = processed.filter(m => m.ts < startOfToday).sort((a, b) => b.ts - a.ts).slice(0, 8);
+        const today = processed.filter(m => m.ts >= startOfToday && m.ts < endOfToday).sort((a, b) => a.ts - b.ts);
+        const future = processed.filter(m => m.ts >= endOfToday).sort((a, b) => a.ts - b.ts).slice(0, 8);
 
-        const today = processed.filter(m => m.ts >= startOfToday && m.ts < endOfToday)
-            .sort((a, b) => a.ts - b.ts);
-
-        const future = processed.filter(m => m.ts >= endOfToday)
-            .sort((a, b) => a.ts - b.ts).slice(0, 8);
-
-
-// --- PART 2: CLASAMENT PRIN SCRAPING (FOTMOB) ---
-        console.log("Scraping FotMob pentru clasament complet...");
-        const fotmobRes = await fetch("https://www.fotmob.com/leagues/189/table/liga-i");
-        const html = await fotmobRes.text();
-        const $ = cheerio.load(html);
+        // --- 2. CLASAMENT (FOTMOB JSON API - FĂRĂ SCRAPING) ---
+        console.log("Preluare clasament prin API-ul intern FotMob...");
         
-        const standings = [];
-        
-        // Selector mai robust care caută orice rând de tabel (tr) care conține celule (td)
-        $('table tr').each((i, el) => {
-            const cols = $(el).find('td');
-            
-            // Verificăm dacă rândul are suficiente coloane (FotMob are de obicei 9-11)
-            if (cols.length >= 8) {
-                // Extragem numele echipei - FotMob îl pune adesea în interiorul unui link sau span
-                const teamName = $(cols[1]).find('span').last().text().trim() || 
-                                 $(cols[1]).text().trim();
-
-                standings.push({
-                    rank: $(cols[0]).text().trim().replace('.', ''), // Scoatem punctul de după cifră
-                    name: teamName,
-                    pj: $(cols[2]).text().trim(), // Jucate
-                    v:  $(cols[3]).text().trim(), // Victorii
-                    e:  $(cols[4]).text().trim(), // Egaluri
-                    i:  $(cols[5]).text().trim(), // Înfrângeri
-                    gd: $(cols[7]).text().trim(), // Golaveraj
-                    pts: $(cols[8]).text().trim() // Puncte
-                });
+        // Folosim un User-Agent de browser real pentru a evita blocarea
+        const fotmobRes = await fetch("https://www.fotmob.com/api/leagues?id=189&ccode3=ROU", {
+            headers: {
+                "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
             }
         });
+        
+        const fotmobData = await fotmobRes.json();
+        const tableData = fotmobData.table?.[0]?.data?.table?.all || [];
+        
+        const standings = tableData.map(s => ({
+            rank: s.idx,
+            name: s.name,
+            pj: s.played,
+            v: s.wins,
+            e: s.draws,
+            i: s.losses,
+            gd: s.goalConDiff, // Golaveraj
+            pts: s.pts
+        }));
 
-        // Verificăm dacă am găsit date. Dacă nu, încercăm un selector alternativ
-        if (standings.length === 0) {
-            console.log("Selectorul principal a eșuat. Încercăm selectorul de rezervă...");
-            $('tr').each((i, el) => {
-                const text = $(el).text();
-                if (text.length > 50 && !text.includes('Form')) { // Filtru brut pentru rânduri de tabel
-                     // ... logică similară ...
-                }
-            });
-        }
+        console.log(`Am gasit ${standings.length} echipe in clasament.`);
 
-        // --- 3. SALVARE FINALA ---
+        // --- 3. SALVARE ---
         const finalData = { 
             past, 
             today, 
@@ -92,14 +68,10 @@ async function fetchData() {
         };
 
         fs.writeFileSync('data/superliga.json', JSON.stringify(finalData, null, 2));
-        console.log(`Succes! Salvați: ${processed.length} meciuri și ${standings.length} echipe.`);
+        console.log("Fisierul superliga.json a fost salvat cu succes.");
 
     } catch (e) {
-        console.error("EROARE FETCH/SCRAPE:", e.message);
-        // Salvam un JSON minim sa nu crape interfata TV
-        fs.writeFileSync('data/superliga.json', JSON.stringify({ 
-            past: [], today: [], future: [], standings: [], error: e.message 
-        }));
+        console.error("EROARE:", e.message);
     }
 }
 
