@@ -257,6 +257,127 @@
       "ts": 1776105000000
     }
   ],
-  "standings": [],
-  "updatedAt": "06.04.2026, 10:59:04"
+  "standings": [
+    {
+      "rank": 1,
+      "name": "FC Unirea Slobozia",
+      "pj": 2,
+      "v": 2,
+      "e": 0,
+      "i": 0,
+      "gd": 2,
+      "pts": 6
+    },
+    {
+      "rank": 2,
+      "name": "UTA Arad",
+      "pj": 1,
+      "v": 1,
+      "e": 0,
+      "i": 0,
+      "gd": 4,
+      "pts": 3
+    },
+    {
+      "rank": 3,
+      "name": "Universitatea Cluj",
+      "pj": 1,
+      "v": 1,
+      "e": 0,
+      "i": 0,
+      "gd": 1,
+      "pts": 3
+    },
+    {
+      "rank": 4,
+      "name": "Otelul Galati",
+      "pj": 2,
+      "v": 1,
+      "e": 0,
+      "i": 1,
+      "gd": 1,
+      "pts": 3
+    },
+    {
+      "rank": 5,
+      "name": "Hermannstadt",
+      "pj": 2,
+      "v": 1,
+      "e": 0,
+      "i": 1,
+      "gd": 1,
+      "pts": 3
+    },
+    {
+      "rank": 6,
+      "name": "Botosani",
+      "pj": 2,
+      "v": 1,
+      "e": 0,
+      "i": 1,
+      "gd": -2,
+      "pts": 3
+    },
+    {
+      "rank": 7,
+      "name": "FC Arges Pitesti",
+      "pj": 1,
+      "v": 0,
+      "e": 1,
+      "i": 0,
+      "gd": 0,
+      "pts": 1
+    },
+    {
+      "rank": 8,
+      "name": "Dinamo Bucuresti",
+      "pj": 1,
+      "v": 0,
+      "e": 1,
+      "i": 0,
+      "gd": 0,
+      "pts": 1
+    },
+    {
+      "rank": 9,
+      "name": "Rapid Bucuresti",
+      "pj": 1,
+      "v": 0,
+      "e": 0,
+      "i": 1,
+      "gd": -1,
+      "pts": 0
+    },
+    {
+      "rank": 10,
+      "name": "FCV Farul Constanta",
+      "pj": 1,
+      "v": 0,
+      "e": 0,
+      "i": 1,
+      "gd": -1,
+      "pts": 0
+    },
+    {
+      "rank": 11,
+      "name": "FCSB",
+      "pj": 1,
+      "v": 0,
+      "e": 0,
+      "i": 1,
+      "gd": -1,
+      "pts": 0
+    },
+    {
+      "rank": 12,
+      "name": "FC Metaloglobus Bucuresti",
+      "pj": 1,
+      "v": 0,
+      "e": 0,
+      "i": 1,
+      "gd": -4,
+      "pts": 0
+    }
+  ],
+  "updatedAt": "06.04.2026, 11:17:48"
 }
