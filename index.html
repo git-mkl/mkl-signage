@@ -2,26 +2,43 @@
 <html lang="ro">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SuperLiga Dashboard</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div class="container">
-        <div class="column col-matches"><div id="past-area"></div></div>
-        <div class="column col-central"><div id="today-area"></div><div id="future-area"></div></div>
+        <div class="column col-matches">
+            <div id="past-area" class="match-list"></div>
+        </div>
+
+        <div class="column col-central">
+            <div id="today-area" class="match-list"></div>
+            <div id="future-area" class="match-list" style="margin-top:20px;"></div>
+        </div>
+
         <div class="column col-table">
-            <div class="group-title league-header">
+            <div class="group-title">
                 <img src="https://images.fotmob.com/image_resources/logo/leaguelogo/dark/189.png" class="league-logo">
-                Clasament SuperLiga
+                Clasament
             </div>
             <div class="table-card">
                 <table>
-                    <thead><tr><th>#</th><th style="text-align:left">Echipă</th><th>MJ</th><th>GD</th><th>Pts</th></tr></thead>
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th style="text-align:left">Echipă</th>
+                            <th>MJ</th>
+                            <th>GD</th>
+                            <th>Pts</th>
+                        </tr>
+                    </thead>
                     <tbody id="std-body"></tbody>
                 </table>
             </div>
         </div>
     </div>
+
     <script>
         function updateUI() {
             var xhr = new XMLHttpRequest();
@@ -30,13 +47,19 @@
                 if (xhr.readyState === 4 && xhr.status === 200) {
                     var d = JSON.parse(xhr.responseText);
                     renderGroup('past-area', 'Rezultate', d.past);
-                    renderGroup('today-area', 'Meciuri Azi', d.today);
+                    renderGroup('today-area', 'Azi', d.today);
                     renderGroup('future-area', 'Program', d.future);
                     
                     var h = '';
                     (d.standings || []).forEach(function(s) {
                         var logo = 'https://images.fotmob.com/image_resources/logo/teamlogo/' + s.id + '_xsmall.png';
-                        h += '<tr><td>' + s.rank + '</td><td class="t-name"><img src="' + logo + '" class="small-logo"> ' + s.name + '</td><td>' + s.pj + '</td><td>' + s.gd + '</td><td class="t-pts">' + s.pts + '</td></tr>';
+                        h += '<tr>' +
+                            '<td>' + s.rank + '</td>' +
+                            '<td class="t-name"><img src="' + logo + '" class="small-logo">' + s.name + '</td>' +
+                            '<td>' + s.pj + '</td>' +
+                            '<td>' + (s.gd > 0 ? '+' + s.gd : s.gd) + '</td>' +
+                            '<td class="t-pts">' + s.pts + '</td>' +
+                        '</tr>';
                     });
                     document.getElementById('std-body').innerHTML = h;
                 }
@@ -47,13 +70,19 @@
         function renderGroup(id, title, list) {
             var el = document.getElementById(id);
             if (!list || list.length === 0) { el.innerHTML = ''; return; }
+            
             var html = '<div class="group-title">' + title + '</div>';
             list.forEach(function(m) {
                 var hLogo = 'https://images.fotmob.com/image_resources/logo/teamlogo/' + m.home.id + '_xsmall.png';
                 var aLogo = 'https://images.fotmob.com/image_resources/logo/teamlogo/' + m.away.id + '_xsmall.png';
-                html += '<div class="match-card"><div class="m-status">' + (m.status === 'FT' ? 'FINAL' : m.time) + '</div>' +
-                    '<div class="team-row"><img src="' + hLogo + '" class="small-logo"> <span class="team-name">' + m.home.name + '</span><span class="score">' + m.home.score + '</span></div>' +
-                    '<div class="team-row"><img src="' + aLogo + '" class="small-logo"> <span class="team-name">' + m.away.name + '</span><span class="score">' + m.away.score + '</span></div></div>';
+                var statusText = m.status === 'FT' ? 'FINAL' : m.time;
+                if (m.status === 'LIVE') statusText = '<span class="live-dot">● LIVE</span>';
+
+                html += '<div class="match-card">' +
+                    '<div class="m-status"><span>' + statusText + '</span><span>' + m.date + '</span></div>' +
+                    '<div class="team-row"><img src="' + hLogo + '" class="small-logo"><span class="team-name">' + m.home.name + '</span><span class="score">' + m.home.score + '</span></div>' +
+                    '<div class="team-row"><img src="' + aLogo + '" class="small-logo"><span class="team-name">' + m.away.name + '</span><span class="score">' + m.away.score + '</span></div>' +
+                '</div>';
             });
             el.innerHTML = html;
         }
