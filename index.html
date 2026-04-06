@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SuperLiga Dashboard</title>
+    <title>SuperLiga Dashboard Pro</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -20,7 +20,7 @@
         <div class="column col-table">
             <div class="group-title">
                 <img src="https://images.fotmob.com/image_resources/logo/leaguelogo/dark/189.png" class="league-logo">
-                Clasament
+                Clasament SuperLiga
             </div>
             <div class="table-card">
                 <table>
@@ -46,13 +46,14 @@
             xhr.onreadystatechange = function () {
                 if (xhr.readyState === 4 && xhr.status === 200) {
                     var d = JSON.parse(xhr.responseText);
-                    renderGroup('past-area', 'Rezultate', d.past);
-                    renderGroup('today-area', 'Azi', d.today);
-                    renderGroup('future-area', 'Program', d.future);
+                    renderGroup('past-area', 'Rezultate Recente', d.past);
+                    renderGroup('today-area', 'Meciuri Azi', d.today);
+                    renderGroup('future-area', 'Program Viitor', d.future);
                     
                     var h = '';
                     (d.standings || []).forEach(function(s) {
-                        var logo = 'https://images.fotmob.com/image_resources/logo/teamlogo/' + s.id + '_xsmall.png';
+                        // Folosim imaginea de rezoluție mare
+                        var logo = 'https://images.fotmob.com/image_resources/logo/teamlogo/' + s.id + '.png';
                         h += '<tr>' +
                             '<td>' + s.rank + '</td>' +
                             '<td class="t-name"><img src="' + logo + '" class="small-logo">' + s.name + '</td>' +
@@ -73,8 +74,9 @@
             
             var html = '<div class="group-title">' + title + '</div>';
             list.forEach(function(m) {
-                var hLogo = 'https://images.fotmob.com/image_resources/logo/teamlogo/' + m.home.id + '_xsmall.png';
-                var aLogo = 'https://images.fotmob.com/image_resources/logo/teamlogo/' + m.away.id + '_xsmall.png';
+                // Imagine rezoluție mare pentru lista de meciuri
+                var hLogo = 'https://images.fotmob.com/image_resources/logo/teamlogo/' + m.home.id + '.png';
+                var aLogo = 'https://images.fotmob.com/image_resources/logo/teamlogo/' + m.away.id + '.png';
                 var statusText = m.status === 'FT' ? 'FINAL' : m.time;
                 if (m.status === 'LIVE') statusText = '<span class="live-dot">● LIVE</span>';
 
