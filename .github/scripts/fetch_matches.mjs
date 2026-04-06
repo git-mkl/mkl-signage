@@ -1,59 +1,105 @@
 import fs from 'fs';
 
-async function fetchMatches() {
+async function fetchSuperligaData() {
     const API_KEY = process.env.RAPIDAPI_KEY; 
-    const HOST = 'free-api-live-football-data.p.rapidapi.com';
-    const url = 'https://free-api-live-football-data.p.rapidapi.com/football-get-all-matches-by-league?leagueid=189';
-    
+    const HOST = 'livescore6.p.rapidapi.com';
+    const headers = {
+        'x-rapidapi-key': API_KEY,
+        'x-rapidapi-host': HOST,
+        'Content-Type': 'application/json'
+    };
+
     try {
-        const res = await fetch(url, {
-            headers: { 'x-rapidapi-key': API_KEY, 'x-rapidapi-host': HOST }
-        });
-        const response = await res.json();
-        const allMatches = response.response?.matches || [];
-
-        const now = new Date();
-        const startOfToday = new Date(now.getFullYear(), now.getMonth(), now.getDate()).getTime();
-
-        const processed = allMatches.map(m => {
-            const matchDate = new Date(m.status.utcTime);
-            let phase = "Sezon Regular";
-            const stageName = (m.leagueName || m.roundName || "").toLowerCase();
-            
-            if (stageName.includes("championship") || stageName.includes("play-off")) {
-                phase = "Play-off";
-            } else if (stageName.includes("relegation") || stageName.includes("play-out")) {
-                phase = "Play-out";
-            }
-
-            // Calculăm minutul dacă meciul e live (aproximativ pe baza timpului de start)
-            let matchTime = matchDate.toLocaleTimeString('ro-RO', { hour: '2-digit', minute: '2-digit', hour12: false, timeZone: 'Europe/Bucharest' });
-            if (m.status.started && !m.status.finished) {
-                let diffMins = Math.floor((now.getTime() - matchDate.getTime()) / 60000);
-                if(diffMins > 45) diffMins -= 15; // Aproximare pauză
-                matchTime = diffMins > 0 ? diffMins + "'" : "LIVE";
-            }
-
-            return {
-                home: { name: m.home.name, score: m.home.score ?? "-", id: m.home.id },
-                away: { name: m.away.name, score: m.away.score ?? "-", id: m.away.id },
-                status: m.status.finished ? "FT" : (m.status.started ? "LIVE" : "NS"),
-                phase: phase,
-                date: matchDate.toLocaleDateString('ro-RO', { day: 'numeric', month: 'short', timeZone: 'Europe/Bucharest' }),
-                time: matchTime,
-                ts: matchDate.getTime()
-            };
-        });
-
-        const matchData = {
-            past: processed.filter(m => m.ts < startOfToday).sort((a, b) => b.ts - a.ts).slice(0, 10),
-            today: processed.filter(m => m.ts >= startOfToday && m.ts < (startOfToday + 86400000)),
-            future: processed.filter(m => m.ts >= (startOfToday + 86400000)).sort((a, b) => a.ts - b.ts).slice(0, 10)
+        const stages = ['liga-1-championship-group', 'liga-1-relegation-group'];
+        let allProcessedMatches = [];
+        let finalData = {
+            past: [], today: [], future: [],
+            standingsPlayoff: [], standingsPlayout: []
         };
 
+        for (const stage of stages) {
+            const url = `https://livescore6.p.rapidapi.com/matches/v2/list-by-league?Category=soccer&Ccd=romania&Scd=${stage}&Timezone=3`;
+            const res = await fetch(url, { headers });
+            const json = await res.json();
+            
+            // 1. Extragere Meciuri (Events)
+            const events = json.Stages?.[0]?.Events || [];
+            const phaseName = stage.includes('championship') ? 'Play-off' : 'Play-out';
+
+            events.forEach(m => {
+                const esdStr = m.Esd.toString();
+                const year = parseInt(esdStr.substring(0, 4));
+                const month = parseInt(esdStr.substring(4, 6)) - 1;
+                const day = parseInt(esdStr.substring(6, 8));
+                const hour = parseInt(esdStr.substring(8, 10));
+                const min = parseInt(esdStr.substring(10, 12));
+                
+                const matchDate = new Date(year, month, day, hour, min);
+                const dateRo = matchDate.toLocaleDateString('ro-RO', { day: 'numeric', month: 'short' });
+                const timeRo = matchDate.toLocaleTimeString('ro-RO', { hour: '2-digit', minute: '2-digit', hour12: false });
+
+                // Extrage ID FotMob (curățat de string-ul 'enet/')
+                const homeId = m.T1[0].Img ? m.T1[0].Img.replace('enet/', '').replace('.png', '') : m.T1[0].ID;
+                const awayId = m.T2[0].Img ? m.T2[0].Img.replace('enet/', '').replace('.png', '') : m.T2[0].ID;
+
+                let status = "NS";
+                let matchTime = timeRo;
+                
+                if (m.Eps === "FT" || m.Eps === "AET" || m.Eps === "AP") {
+                    status = "FT";
+                } else if (m.Eps === "NS") {
+                    status = "NS";
+                } else if (m.Eps === "Postp" || m.Eps === "Canc") {
+                    status = "Canc"; matchTime = "Amânat";
+                } else {
+                    status = "LIVE"; matchTime = m.Eps; 
+                }
+
+                allProcessedMatches.push({
+                    home: { name: m.T1[0].Nm, score: m.Tr1 ?? "-", id: homeId },
+                    away: { name: m.T2[0].Nm, score: m.Tr2 ?? "-", id: awayId },
+                    status: status,
+                    phase: phaseName,
+                    date: dateRo,
+                    time: matchTime,
+                    ts: matchDate.getTime()
+                });
+            });
+
+            // 2. Extragere Clasament (LeagueTable)
+            const tableArray = json.Stages?.[0]?.LeagueTable?.L?.[0]?.Tables?.[0]?.team || [];
+            const formattedTable = tableArray.map(t => {
+                const teamId = t.Img ? t.Img.replace('enet/', '').replace('.png', '') : t.Tid;
+                return {
+                    rank: t.rnk,
+                    name: t.Tnm,
+                    id: teamId,
+                    pj: t.pld,
+                    gd: t.gd,
+                    pts: t.pts
+                };
+            });
+
+            if (phaseName === 'Play-off') {
+                finalData.standingsPlayoff = formattedTable;
+            } else {
+                finalData.standingsPlayout = formattedTable;
+            }
+        }
+
+        // 3. Sortare Timp pentru Meciuri
+        const now = new Date();
+        const startOfToday = new Date(now.getFullYear(), now.getMonth(), now.getDate()).getTime();
+        const endOfToday = startOfToday + 86400000;
+
+        finalData.past = allProcessedMatches.filter(m => m.ts < startOfToday).sort((a, b) => b.ts - a.ts).slice(0, 10);
+        finalData.today = allProcessedMatches.filter(m => m.ts >= startOfToday && m.ts < endOfToday);
+        finalData.future = allProcessedMatches.filter(m => m.ts >= endOfToday).sort((a, b) => a.ts - b.ts).slice(0, 10);
+
         if (!fs.existsSync('data')) fs.mkdirSync('data');
-        fs.writeFileSync('data/superliga.json', JSON.stringify(matchData, null, 2));
-        console.log("Sincronizare completă - Live Minute Tracker adăugat.");
+        fs.writeFileSync('data/superliga.json', JSON.stringify(finalData, null, 2));
+        console.log("Date Superliga sincronizate dintr-un foc (Meciuri + Clasament).");
+
     } catch (e) { console.error("Eroare API:", e.message); }
 }
-fetchMatches();
+fetchSuperligaData();
