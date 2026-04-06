@@ -17,7 +17,7 @@
             <div class="group-title">Meciuri Azi</div>
             <div id="today-area" class="match-list"></div>
             
-            <div class="group-title" style="margin-top: 30px;">Program</div>
+            <div class="group-title" style="margin-top: 25px;">Program</div>
             <div id="future-area" class="match-list"></div>
         </div>
 
@@ -45,8 +45,7 @@
     <script>
         function updateUI() {
             var xhr = new XMLHttpRequest();
-            // Added cache busting for TV browsers
-            xhr.open('GET', 'data/superliga.json?nocache=' + new Date().getTime(), true);
+            xhr.open('GET', 'data/superliga.json?t=' + new Date().getTime(), true);
             xhr.onreadystatechange = function () {
                 if (xhr.readyState === 4 && xhr.status === 200) {
                     var d = JSON.parse(xhr.responseText);
@@ -62,7 +61,7 @@
         function renderMatches(id, list) {
             var el = document.getElementById(id);
             if (!list || list.length === 0) {
-                el.innerHTML = (id === 'today-area') ? '<div style="color:#555;font-size:24px;padding:20px;">Fără meciuri azi</div>' : '';
+                el.innerHTML = (id === 'today-area') ? '<div style="color:#555;font-size:22px;padding:20px;border:1px dashed #333;border-radius:10px;text-align:center;">Fără meciuri azi</div>' : '';
                 return;
             }
             var html = '';
@@ -70,10 +69,10 @@
                 var m = list[i];
                 var hLogo = 'https://images.fotmob.com/image_resources/logo/teamlogo/' + m.home.id + '.png';
                 var aLogo = 'https://images.fotmob.com/image_resources/logo/teamlogo/' + m.away.id + '.png';
-                var status = (m.status === 'LIVE') ? '<span class="live-dot">● LIVE</span>' : (m.status === 'FT' ? 'FINAL' : m.time);
-                
+                var statusText = (m.status === 'LIVE') ? '<span class="live-dot">● LIVE</span>' : (m.status === 'FT' ? 'FINAL' : m.time);
+
                 html += '<div class="match-card">' +
-                    '<div class="m-status"><span class="status-left">' + status + '</span><span class="status-right">' + m.date + '</span></div>' +
+                    '<div class="m-status"><span class="status-left">' + statusText + '</span><span class="status-right">' + m.date + '</span></div>' +
                     '<div style="clear:both"></div>' +
                     '<div class="team-row"><img src="' + hLogo + '" class="small-logo"><span class="team-name">' + m.home.name + '</span><span class="score">' + m.home.score + '</span></div>' +
                     '<div class="team-row"><img src="' + aLogo + '" class="small-logo"><span class="team-name">' + m.away.name + '</span><span class="score">' + m.away.score + '</span></div>' +
@@ -99,7 +98,7 @@
         }
 
         updateUI();
-        setInterval(updateUI, 300000); // 5 minute refresh
+        setInterval(updateUI, 300000);
     </script>
 </body>
 </html>
