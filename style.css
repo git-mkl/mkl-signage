@@ -1,29 +1,163 @@
-.league-header {
+/* Configurare Generală - Optimizat pentru Vizualizare TV */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #121212; /* Fundal închis ca în FotMob */
+    color: #ffffff;
+    font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    overflow: hidden; /* Previne scroll-ul pe TV */
+    height: 100vh;
+    padding: 20px;
+}
+
+.container {
     display: flex;
-    align-items: center;
+    gap: 20px;
+    height: 100%;
+}
+
+/* Coloane */
+.column {
+    display: flex;
+    flex-direction: column;
     gap: 15px;
 }
 
-.league-logo {
-    width: 45px;
-    height: 45px;
+.col-matches { flex: 1.2; } /* Rezultate */
+.col-central { flex: 1.5; } /* Azi & Program */
+.col-table { flex: 1.8; }   /* Clasament */
+
+/* Titluri Secțiuni */
+.group-title {
+    background-color: #1e1e1e;
+    padding: 12px 15px;
+    border-radius: 8px 8px 0 0;
+    font-size: 1.1rem;
+    font-weight: bold;
+    color: #4da3ff; /* Albastru deschis pentru contrast */
+    border-bottom: 2px solid #333;
+    display: flex;
+    align-items: center;
+    gap: 12px;
 }
 
-.small-logo {
-    width: 22px;
-    height: 22px;
-    vertical-align: middle;
-    margin-right: 8px;
+/* Logo Ligă în Titlu */
+.league-logo {
+    width: 35px;
+    height: 35px;
     object-fit: contain;
+}
+
+/* Carduri Meciuri */
+.match-card {
+    background-color: #1e1e1e;
+    margin-bottom: 2px;
+    padding: 15px;
+    border-radius: 0 0 8px 8px; /* Doar dacă e ultimul, dar folosim margini egale */
+}
+
+.match-card:not(:last-child) {
+    border-radius: 0;
+    border-bottom: 1px solid #2a2a2a;
+}
+
+.m-status {
+    font-size: 0.8rem;
+    color: #aaa;
+    margin-bottom: 8px;
+    text-transform: uppercase;
+    font-weight: bold;
 }
 
 .team-row {
     display: flex;
     align-items: center;
-    margin-bottom: 4px;
+    padding: 4px 0;
+}
+
+.small-logo {
+    width: 24px;
+    height: 24px;
+    margin-right: 12px;
+    object-fit: contain;
+    vertical-align: middle;
 }
 
 .team-name {
     flex-grow: 1;
+    font-size: 1rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.score {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #ffcc00; /* Galben pentru scoruri */
+    min-width: 30px;
+    text-align: right;
+}
+
+/* Tabel Clasament */
+.table-card {
+    background-color: #1e1e1e;
+    border-radius: 0 0 8px 8px;
+    padding: 10px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th {
+    color: #888;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    padding: 10px 5px;
+    border-bottom: 1px solid #333;
+    text-align: center;
+}
+
+td {
+    padding: 10px 5px;
+    border-bottom: 1px solid #262626;
+    text-align: center;
     font-size: 0.95rem;
+}
+
+.t-name {
+    text-align: left !important;
+    display: flex;
+    align-items: center;
+}
+
+.t-pts {
+    font-weight: bold;
+    color: #ffcc00;
+}
+
+/* Evidențiere rânduri tabel la hover (opțional) */
+tr:hover {
+    background-color: #252525;
+}
+
+/* Culori Golaveraj */
+.pos { color: #4cd137; }
+.neg { color: #e84118; }
+
+/* Status LIVE pulsant */
+.live-dot {
+    color: #ff3e3e;
+    font-weight: bold;
+    animation: blink 1s infinite;
+}
+
+@keyframes blink {
+    50% { opacity: 0.5; }
 }
