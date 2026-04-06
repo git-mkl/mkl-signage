@@ -17,16 +17,8 @@ async function fetchMatches() {
         const endOfToday = startOfToday + 86400000;
 
         const processed = allMatches.map(m => ({
-            home: { 
-                name: m.home.name, 
-                score: m.home.score ?? "-", 
-                id: m.home.id // Salvăm ID-ul pentru logo
-            },
-            away: { 
-                name: m.away.name, 
-                score: m.away.score ?? "-", 
-                id: m.away.id // Salvăm ID-ul pentru logo
-            },
+            home: { name: m.home.name, score: m.home.score ?? "-", id: m.home.id },
+            away: { name: m.away.name, score: m.away.score ?? "-", id: m.away.id },
             status: m.status.finished ? "FT" : (m.status.started ? "LIVE" : "NS"),
             date: new Date(m.status.utcTime).toLocaleDateString('ro-RO', { day: 'numeric', month: 'short' }),
             time: new Date(m.status.utcTime).toLocaleTimeString('ro-RO', { hour: '2-digit', minute: '2-digit' }),
@@ -34,14 +26,15 @@ async function fetchMatches() {
         }));
 
         const matchData = {
-            past: processed.filter(m => m.ts < startOfToday).sort((a, b) => b.ts - a.ts).slice(0, 8),
+            // Limităm la 6-7 meciuri pentru a nu face overflow pe TV
+            past: processed.filter(m => m.ts < startOfToday).sort((a, b) => b.ts - a.ts).slice(0, 7),
             today: processed.filter(m => m.ts >= startOfToday && m.ts < endOfToday).sort((a, b) => a.ts - b.ts),
-            future: processed.filter(m => m.ts >= endOfToday).sort((a, b) => a.ts - b.ts).slice(0, 8)
+            future: processed.filter(m => m.ts >= endOfToday).sort((a, b) => a.ts - b.ts).slice(0, 5)
         };
 
         if (!fs.existsSync('data')) fs.mkdirSync('data');
         fs.writeFileSync('data/superliga.json', JSON.stringify(matchData, null, 2));
-        console.log("Succes: Meciuri procesate cu ID-uri.");
-    } catch (e) { console.error("Eroare:", e.message); }
+        console.log("Succes: Date salvate.");
+    } catch (e) { console.error(e); }
 }
 fetchMatches();
