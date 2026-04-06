@@ -26,7 +26,7 @@ async function fetchMatches() {
         }));
 
         const matchData = {
-            // Configurat să încapă în coloana de 1000px
+            // Limităm pentru a menține layout-ul fix de 1080px
             past: processed.filter(m => m.ts < startOfToday).sort((a, b) => b.ts - a.ts).slice(0, 6),
             today: processed.filter(m => m.ts >= startOfToday && m.ts < endOfToday).sort((a, b) => a.ts - b.ts).slice(0, 2),
             future: processed.filter(m => m.ts >= endOfToday).sort((a, b) => a.ts - b.ts).slice(0, 3)
@@ -34,7 +34,7 @@ async function fetchMatches() {
 
         if (!fs.existsSync('data')) fs.mkdirSync('data');
         fs.writeFileSync('data/superliga.json', JSON.stringify(matchData, null, 2));
-        console.log("Succes: Date fixate pentru TV.");
+        console.log("Sincronizare reușită: Date pregătite pentru TV.");
     } catch (e) { console.error(e); }
 }
 fetchMatches();
