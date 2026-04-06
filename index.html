@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=1920, user-scalable=no">
-    <title>SuperLiga TV - Live Betting Style</title>
+    <title>SuperLiga TV - Smart Sync</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -63,8 +63,10 @@
     </div>
 
     <script>
+        // Logica Locală (fără Request la API extern)
         function updateUI() {
             var xhr = new XMLHttpRequest();
+            // Trucul '?t=' evită caching-ul serverului pentru JSON, luând mereu ultima versiune actualizată de GitHub
             xhr.open('GET', 'data/superliga.json?t=' + new Date().getTime(), true);
             xhr.onreadystatechange = function () {
                 if (xhr.readyState === 4 && xhr.status === 200) {
@@ -97,9 +99,8 @@
                 var aLogo = 'https://images.fotmob.com/image_resources/logo/teamlogo/'+m.away.id+'.png';
                 
                 if (m.status === 'LIVE') {
-                    // UI SPECIFIC PARIURI PENTRU MECIURI LIVE
-                    // Date simulate vizual pentru Posesie (deoarece API-ul free dă doar scorul)
-                    var mockPosH = Math.floor(Math.random() * 30) + 35; // intre 35 si 65
+                    // UI SPECIFIC PARIURI (Placeholder pentru Date)
+                    var mockPosH = Math.floor(Math.random() * 30) + 35; // Generare dummy data pe moment
                     var mockPosA = 100 - mockPosH;
 
                     html += '<div class="live-tracker-card">' +
@@ -107,21 +108,11 @@
                         '<div style="clear:both"></div>' +
                         '<div class="team-row"><img src="'+hLogo+'" class="small-logo"><span class="team-name" style="width:250px;">'+m.home.name+'</span><span class="score">'+m.home.score+'</span></div>' +
                         '<div class="team-row" style="margin-bottom:10px;"><img src="'+aLogo+'" class="small-logo"><span class="team-name" style="width:250px;">'+m.away.name+'</span><span class="score">'+m.away.score+'</span></div>' +
-                        
-                        '<div class="live-pitch">ATAC PERICULOS</div>' +
-                        
-                        '<div class="stat-row">' +
-                            '<span class="stat-home">'+mockPosH+'%</span>' +
-                            '<span class="stat-label">POSESIE</span>' +
-                            '<span class="stat-away">'+mockPosA+'%</span>' +
-                        '</div>' +
-                        '<div class="stat-bar-bg">' +
-                            '<div class="stat-bar-home" style="width: '+mockPosH+'%;"></div>' +
-                            '<div class="stat-bar-away" style="width: '+mockPosA+'%;"></div>' +
-                        '</div>' +
+                        '<div class="live-pitch">MECI ÎN DESFĂȘURARE</div>' +
+                        '<div class="stat-row"><span class="stat-home">'+mockPosH+'%</span><span class="stat-label">POSESIE</span><span class="stat-away">'+mockPosA+'%</span></div>' +
+                        '<div class="stat-bar-bg"><div class="stat-bar-home" style="width: '+mockPosH+'%;"></div><div class="stat-bar-away" style="width: '+mockPosA+'%;"></div></div>' +
                     '</div>';
                 } else {
-                    // UI NORMAL PENTRU MECIURI TRECUTE SAU VIITOARE
                     var st = m.status === 'FT' ? 'FINAL' : m.time;
                     html += '<div class="match-card">' +
                         '<div class="m-status"><span class="status-left">'+st+'</span><span class="status-right">'+m.date+'</span></div>' +
@@ -164,8 +155,14 @@
             isPlayoffView = !isPlayoffView;
         }
 
+        // Inițializare rapidă
         updateUI(); 
-        setInterval(updateUI, 300000);
+
+        // CRITIC: Deoarece clientul TV cere doar un fișier JSON minuscul de pe serverul tău gratuit, 
+        // poți face refresh la intervale super scurte, de ex: la fiecare 15 Secunde (15000ms).
+        // Nu costa nimic și nu ai API limite aici. Când Cron-ul va rula si va pusa JSON-ul pe GitHub, TV-ul il ia aproape instant.
+        setInterval(updateUI, 15000);
+
         setInterval(toggleView, 15000); 
     </script>
 </body>
