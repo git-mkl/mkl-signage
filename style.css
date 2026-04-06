@@ -48,25 +48,27 @@ body {
 .league-logo {
     width: 55px;
     height: 55px;
-    margin-right: 0; /* Centrat fără text */
 }
 
 .match-list {
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    /* Forțăm spațiul între carduri */
+    gap: 15px; 
 }
 
 .match-card {
     background-color: #1e1e1e;
     width: 460px;
-    height: 135px; 
+    height: 130px; /* Redus ușor pentru a încăpea toate 5 */
     border-radius: 12px;
     padding: 15px 20px;
     display: flex;
     flex-direction: column;
     justify-content: center;
     border-left: 5px solid #333;
+    /* Previne turtirea cardurilor */
+    flex-shrink: 0; 
 }
 
 .m-status {
@@ -127,7 +129,6 @@ th {
     text-align: center;
 }
 
-/* Reducere agresivă a înălțimii rândului pentru a încăpea cele 16 echipe */
 td {
     padding: 6px 10px;
     font-size: 21px;
