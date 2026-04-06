@@ -26,15 +26,15 @@ async function fetchMatches() {
         }));
 
         const matchData = {
-            // Limităm la 6-7 meciuri pentru a nu face overflow pe TV
-            past: processed.filter(m => m.ts < startOfToday).sort((a, b) => b.ts - a.ts).slice(0, 7),
+            // Slice-uri reduse pentru a asigura aerisirea pe verticală
+            past: processed.filter(m => m.ts < startOfToday).sort((a, b) => b.ts - a.ts).slice(0, 6),
             today: processed.filter(m => m.ts >= startOfToday && m.ts < endOfToday).sort((a, b) => a.ts - b.ts),
-            future: processed.filter(m => m.ts >= endOfToday).sort((a, b) => a.ts - b.ts).slice(0, 5)
+            future: processed.filter(m => m.ts >= endOfToday).sort((a, b) => a.ts - b.ts).slice(0, 4)
         };
 
         if (!fs.existsSync('data')) fs.mkdirSync('data');
         fs.writeFileSync('data/superliga.json', JSON.stringify(matchData, null, 2));
-        console.log("Succes: Date salvate.");
+        console.log("Succes: Date actualizate cu logouri mari.");
     } catch (e) { console.error(e); }
 }
 fetchMatches();
