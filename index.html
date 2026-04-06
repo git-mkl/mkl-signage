@@ -2,13 +2,13 @@
 <html lang="ro">
 <head>
     <meta charset="UTF-8">
-    <title>SuperLiga Google Style</title>
+    <title>SuperLiga Dashboard</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div class="container">
         <main>
-            <div id="live-section"></div>
+            <div id="live-container"></div>
             <h2>Meciuri • SuperLiga</h2>
             <div id="matches-grid" class="match-grid"></div>
         </main>
@@ -31,38 +31,44 @@
                 const res = await fetch('data/superliga.json?t=' + Date.now());
                 const data = await res.json();
 
-                // Live
+                // 1. LIVE
                 if (data.live && data.live.length > 0) {
-                    document.getElementById('live-section').innerHTML = `
-                        <h2 style="color:#f28b82">● LIVE ACUM</h2>
-                        <div class="match-grid" style="margin-bottom:20px;">
-                            ${data.live.map(m => renderCard(m)).join('')}
-                        </div>`;
+                    document.getElementById('live-container').innerHTML = `
+                        <h2 class="live-txt">● LIVE ACUM</h2>
+                        <div class="match-grid" style="margin-bottom:25px">${data.live.map(m => renderCard(m)).join('')}</div>`;
                 }
 
-                // Recent + Upcoming
+                // 2. Recente + Viitoare
                 const all = [...data.recent, ...data.upcoming];
-                document.getElementById('matches-grid').innerHTML = all.map(m => renderCard(m)).join('');
+                if (all.length > 0) {
+                    document.getElementById('matches-grid').innerHTML = all.map(m => renderCard(m)).join('');
+                } else {
+                    document.getElementById('matches-grid').innerHTML = "<p>Nu s-au gasit meciuri programate.</p>";
+                }
 
-                // Clasament
-                document.getElementById('standings-list').innerHTML = data.standings.map(s => `
-                    <tr>
-                        <td style="color:#9aa0a6; width:20px;">${s.pos}</td>
-                        <td style="font-weight:500;">${s.name}</td>
-                        <td style="color:#9aa0a6;">${s.pj}</td>
-                        <td class="col-pts">${s.pts}</td>
-                    </tr>`).join('');
-            } catch (e) { console.error(e); }
+                // 3. Clasament
+                if (data.standings && data.standings.length > 0) {
+                    document.getElementById('standings-list').innerHTML = data.standings.map(s => `
+                        <tr>
+                            <td style="color:#9aa0a6">${s.pos}</td>
+                            <td style="font-weight:500">${s.name}</td>
+                            <td style="color:#9aa0a6">${s.pj}</td>
+                            <td class="pts-col">${s.pts}</td>
+                        </tr>`).join('');
+                }
+            } catch (e) { console.error("Eroare UI:", e); }
         }
 
         function renderCard(m) {
+            const isLive = m.status === 'LIVE';
             return `
-                <div class="match-card">
-                    <div class="status">${m.status === 'FT' ? 'Finalizat' : m.date + ' ' + m.time}</div>
+                <div class="card">
+                    <div class="status ${isLive ? 'live-txt' : ''}">${isLive ? '● LIVE' : m.date + ' ' + m.time}</div>
                     <div class="team-row"><span>${m.home.name}</span><span class="score">${m.home.score}</span></div>
                     <div class="team-row"><span>${m.away.name}</span><span class="score">${m.away.score}</span></div>
                 </div>`;
         }
+
         updateUI();
     </script>
 </body>
