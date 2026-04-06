@@ -2,8 +2,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SuperLiga Signage - Tizen 4.0</title>
+    <title>SuperLiga Hub</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -13,51 +12,52 @@
             <div id="today-section"></div>
             <div id="future-section"></div>
         </div>
-
         <div class="sidebar">
             <div class="group-title">Clasament SuperLiga</div>
             <div class="table-card">
-                <table id="std-table">
+                <table>
                     <thead>
                         <tr>
                             <th style="width:10%">#</th>
-                            <th style="width:65%">Echipă</th>
-                            <th style="width:10%; text-align:center;">MJ</th>
+                            <th style="width:60%">Echipă</th>
+                            <th style="width:15%; text-align:center;">MJ</th>
                             <th style="width:15%; text-align:right;">Pct</th>
                         </tr>
                     </thead>
-                    <tbody id="std-body">
-                        </tbody>
+                    <tbody id="std-body"></tbody>
                 </table>
             </div>
-            <div id="update-time" style="font-size:10px; color:#555; margin-top:10px; text-align:right;"></div>
         </div>
     </div>
 
     <script>
         function updateUI() {
             var xhr = new XMLHttpRequest();
-            // Parametrul ?t= previne cache-ul agresiv al browserului TV
             xhr.open('GET', 'data/superliga.json?t=' + new Date().getTime(), true);
             xhr.onreadystatechange = function () {
                 if (xhr.readyState === 4 && xhr.status === 200) {
-                    try {
-                        var data = JSON.parse(xhr.responseText);
-                        
-                        // Randare secțiuni meciuri
-                        renderGroup('past-section', 'Rezultate recente', data.past);
-                        renderGroup('today-section', 'Meciuri Azi', data.today);
-                        renderGroup('future-section', 'Program viitor', data.future);
-                        
-                        // Randare clasament
-                        renderStandings(data.standings);
-
-                        if(data.updatedAt) {
-                            document.getElementById('update-time').innerHTML = 'Update: ' + data.updatedAt;
+                    var data = JSON.parse(xhr.responseText);
+                    
+                    renderGroup('past-section', 'Rezultate recente', data.past || data.matches.slice(0,6));
+                    renderGroup('today-section', 'Meciuri Azi', data.today);
+                    renderGroup('future-section', 'Program viitor', data.future);
+                    
+                    var stdHtml = '';
+                    var list = data.standings || [];
+                    if (list.length === 0) {
+                        stdHtml = '<tr><td colspan="4" style="text-align:center; padding:20px; color:#9aa0a6;">Se încarcă clasamentul...</td></tr>';
+                    } else {
+                        for (var i = 0; i < Math.min(list.length, 14); i++) {
+                            var s = list[i];
+                            stdHtml += '<tr>' +
+                                '<td class="col-num">' + (s.rank || (i+1)) + '</td>' +
+                                '<td>' + s.name + '</td>' +
+                                '<td class="col-num">' + (s.pj || 0) + '</td>' +
+                                '<td class="col-pts">' + (s.pts || 0) + '</td>' +
+                            '</tr>';
                         }
-                    } catch (e) {
-                        console.error("Eroare parsare JSON:", e);
                     }
+                    document.getElementById('std-body').innerHTML = stdHtml;
                 }
             };
             xhr.send();
@@ -65,56 +65,22 @@
 
         function renderGroup(containerId, title, matches) {
             var container = document.getElementById(containerId);
-            if (!matches || matches.length === 0) {
-                container.innerHTML = '';
-                return;
-            }
+            if (!matches || matches.length === 0) { container.innerHTML = ''; return; }
 
             var html = '<div class="group-title">' + title + '</div>';
-            html += '<div class="match-row-wrapper">'; // Wrapper pentru a controla alinierea cardurilor
-            
             for (var i = 0; i < matches.length; i++) {
                 var m = matches[i];
-                var statusLabel = (m.status === 'FT' || m.status === 'Finalizat') ? 'FT' : (m.date + ' ' + m.time);
-                
+                var status = (m.status === 'FT' || m.status === 'Finalizat') ? 'FT' : (m.date + ' ' + m.time);
                 html += '<div class="match-card">' +
-                            '<div class="m-status">' + statusLabel + '</div>' +
-                            '<div class="team-row">' +
-                                '<span class="team-name">' + m.home.name + '</span>' +
-                                '<span class="score">' + (m.home.score !== null ? m.home.score : '-') + '</span>' +
-                            '</div>' +
-                            '<div class="team-row">' +
-                                '<span class="team-name">' + m.away.name + '</span>' +
-                                '<span class="score">' + (m.away.score !== null ? m.away.score : '-') + '</span>' +
-                            '</div>' +
-                        '</div>';
+                    '<div class="m-status">' + status + '</div>' +
+                    '<div class="team-row"><span class="team-name">' + m.home.name + '</span><span class="score">' + m.home.score + '</span></div>' +
+                    '<div class="team-row"><span class="team-name">' + m.away.name + '</span><span class="score">' + m.away.score + '</span></div>' +
+                '</div>';
             }
-            html += '</div>';
             container.innerHTML = html;
         }
 
-        function renderStandings(standings) {
-            var html = '';
-            if (standings && standings.length > 0) {
-                // Limităm la 14 echipe pentru a nu ieși din ecran pe verticală
-                var limit = Math.min(standings.length, 14); 
-                for (var j = 0; j < limit; j++) {
-                    var s = standings[j];
-                    html += '<tr>' +
-                                '<td style="color:#9aa0a6">' + (s.rank || (j+1)) + '</td>' +
-                                '<td><strong style="font-size:13px; color:#fff">' + s.name + '</strong></td>' +
-                                '<td style="text-align:center; color:#9aa0a6">' + (s.pj || 0) + '</td>' +
-                                '<td class="col-pct">' + (s.pts || 0) + '</td>' +
-                            '</tr>';
-                }
-            }
-            document.getElementById('std-body').innerHTML = html;
-        }
-
-        // Inițializare
         updateUI();
-        
-        // Refresh la fiecare 5 minute
         setInterval(updateUI, 300000);
     </script>
 </body>
