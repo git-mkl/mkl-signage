@@ -84,7 +84,7 @@
       "status": "LIVE",
       "phase": "Play-out",
       "date": "6 apr.",
-      "time": "45+2'",
+      "time": "46'",
       "ts": 1775496600000
     },
     {
@@ -241,6 +241,40 @@
       "date": "13 apr.",
       "time": "21:30",
       "ts": 1776115800000
+    },
+    {
+      "home": {
+        "name": "Otelul Galati",
+        "score": "-",
+        "id": "9736"
+      },
+      "away": {
+        "name": "UTA Arad",
+        "score": "-",
+        "id": "584663"
+      },
+      "status": "NS",
+      "phase": "Play-out",
+      "date": "17 apr.",
+      "time": "17:30",
+      "ts": 1776447000000
+    },
+    {
+      "home": {
+        "name": "ACS Champions FC Arges",
+        "score": "-",
+        "id": "9732"
+      },
+      "away": {
+        "name": "CFR Cluj",
+        "score": "-",
+        "id": "9731"
+      },
+      "status": "NS",
+      "phase": "Play-off",
+      "date": "17 apr.",
+      "time": "20:30",
+      "ts": 1776457800000
     }
   ],
   "standingsPlayoff": [
