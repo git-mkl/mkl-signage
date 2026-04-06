@@ -88,14 +88,13 @@ async function fetchSuperligaData() {
         const startOfToday = new Date(now.getFullYear(), now.getMonth(), now.getDate()).getTime();
         const endOfToday = startOfToday + 86400000;
 
-        // Sortăm toate meciurile (fără să mai ținem cont din ce grupă sunt) cronologic
-        finalData.past = allProcessedMatches.filter(m => m.ts < startOfToday).sort((a, b) => b.ts - a.ts).slice(0, 4); // Trimitem doar 4 pt cardul compact
+        finalData.past = allProcessedMatches.filter(m => m.ts < startOfToday).sort((a, b) => b.ts - a.ts).slice(0, 4);
         finalData.today = allProcessedMatches.filter(m => m.ts >= startOfToday && m.ts < endOfToday).sort((a, b) => a.ts - b.ts);
-        finalData.future = allProcessedMatches.filter(m => m.ts >= endOfToday).sort((a, b) => a.ts - b.ts).slice(0, 8);
+        finalData.future = allProcessedMatches.filter(m => m.ts >= endOfToday).sort((a, b) => a.ts - b.ts).slice(0, 10); // Lăsăm mai multe în backend; frontend-ul taie la 6
 
         if (!fs.existsSync('data')) fs.mkdirSync('data');
         fs.writeFileSync('data/superliga.json', JSON.stringify(finalData, null, 2));
-        console.log("Date Superliga sincronizate dintr-un foc (Meciuri + Clasament).");
+        console.log("Date sincronizate cu succes (Dark Theme Ready).");
 
     } catch (e) { console.error("Eroare API:", e.message); }
 }
