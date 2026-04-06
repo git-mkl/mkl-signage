@@ -2,7 +2,7 @@ import fs from 'fs';
 
 async function fetchMatches() {
     // Folosim variabila de mediu pentru securitate sau string-ul tau direct daca preferi
-    const API_KEY = process.env.RAPIDAPI_KEY || '8b8b29c474mshd383ae732d8331ap1b0325jsn05f8a83f75fa'; 
+    const API_KEY = process.env.RAPIDAPI_KEY;
     
     // Configurația replicată după $.ajax(settings)
     const url = 'https://free-api-live-football-data.p.rapidapi.com/football-get-all-matches-by-league?leagueid=189';
