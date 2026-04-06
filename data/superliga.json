@@ -1,7 +1,262 @@
 {
-  "past": [],
-  "today": [],
-  "future": [],
+  "past": [
+    {
+      "home": {
+        "name": "Rapid Bucuresti",
+        "score": 1
+      },
+      "away": {
+        "name": "Universitatea Cluj",
+        "score": 2
+      },
+      "status": "FT",
+      "date": "dum., 5 apr.",
+      "time": "17:30",
+      "ts": 1775410200000
+    },
+    {
+      "home": {
+        "name": "FCV Farul Constanta",
+        "score": 0
+      },
+      "away": {
+        "name": "FC Unirea Slobozia",
+        "score": 1
+      },
+      "status": "FT",
+      "date": "dum., 5 apr.",
+      "time": "14:30",
+      "ts": 1775399400000
+    },
+    {
+      "home": {
+        "name": "UTA Arad",
+        "score": 5
+      },
+      "away": {
+        "name": "FC Metaloglobus Bucuresti",
+        "score": 1
+      },
+      "status": "FT",
+      "date": "dum., 5 apr.",
+      "time": "12:00",
+      "ts": 1775390400000
+    },
+    {
+      "home": {
+        "name": "FC Arges Pitesti",
+        "score": 1
+      },
+      "away": {
+        "name": "Dinamo Bucuresti",
+        "score": 1
+      },
+      "status": "FT",
+      "date": "sâm., 4 apr.",
+      "time": "16:30",
+      "ts": 1775320200000
+    },
+    {
+      "home": {
+        "name": "Otelul Galati",
+        "score": 2
+      },
+      "away": {
+        "name": "Hermannstadt",
+        "score": 0
+      },
+      "status": "FT",
+      "date": "sâm., 4 apr.",
+      "time": "12:00",
+      "ts": 1775304000000
+    },
+    {
+      "home": {
+        "name": "Botosani",
+        "score": 3
+      },
+      "away": {
+        "name": "FCSB",
+        "score": 2
+      },
+      "status": "FT",
+      "date": "vin., 3 apr.",
+      "time": "17:30",
+      "ts": 1775237400000
+    },
+    {
+      "home": {
+        "name": "FC Unirea Slobozia",
+        "score": 2
+      },
+      "away": {
+        "name": "Otelul Galati",
+        "score": 1
+      },
+      "status": "FT",
+      "date": "lun., 23 mar.",
+      "time": "18:30",
+      "ts": 1774290600000
+    },
+    {
+      "home": {
+        "name": "Hermannstadt",
+        "score": 3
+      },
+      "away": {
+        "name": "Botosani",
+        "score": 0
+      },
+      "status": "FT",
+      "date": "dum., 22 mar.",
+      "time": "17:00",
+      "ts": 1774198800000
+    }
+  ],
+  "today": [
+    {
+      "home": {
+        "name": "Petrolul Ploiesti",
+        "score": 0
+      },
+      "away": {
+        "name": "Csikszereda Miercurea Ciuc",
+        "score": 0
+      },
+      "status": "NS",
+      "date": "lun., 6 apr.",
+      "time": "14:30",
+      "ts": 1775485800000
+    },
+    {
+      "home": {
+        "name": "Universitatea Craiova",
+        "score": 0
+      },
+      "away": {
+        "name": "CFR Cluj",
+        "score": 0
+      },
+      "status": "NS",
+      "date": "lun., 6 apr.",
+      "time": "17:30",
+      "ts": 1775496600000
+    }
+  ],
+  "future": [
+    {
+      "home": {
+        "name": "Hermannstadt",
+        "score": 0
+      },
+      "away": {
+        "name": "FCV Farul Constanta",
+        "score": 0
+      },
+      "status": "NS",
+      "date": "vin., 10 apr.",
+      "time": "16:00",
+      "ts": 1775836800000
+    },
+    {
+      "home": {
+        "name": "UTA Arad",
+        "score": 0
+      },
+      "away": {
+        "name": "Botosani",
+        "score": 0
+      },
+      "status": "NS",
+      "date": "sâm., 11 apr.",
+      "time": "14:15",
+      "ts": 1775916900000
+    },
+    {
+      "home": {
+        "name": "FCSB",
+        "score": 0
+      },
+      "away": {
+        "name": "Otelul Galati",
+        "score": 0
+      },
+      "status": "NS",
+      "date": "sâm., 11 apr.",
+      "time": "17:00",
+      "ts": 1775926800000
+    },
+    {
+      "home": {
+        "name": "FC Unirea Slobozia",
+        "score": 0
+      },
+      "away": {
+        "name": "Petrolul Ploiesti",
+        "score": 0
+      },
+      "status": "NS",
+      "date": "dum., 12 apr.",
+      "time": "15:15",
+      "ts": 1776006900000
+    },
+    {
+      "home": {
+        "name": "CFR Cluj",
+        "score": 0
+      },
+      "away": {
+        "name": "Dinamo Bucuresti",
+        "score": 0
+      },
+      "status": "NS",
+      "date": "dum., 12 apr.",
+      "time": "18:00",
+      "ts": 1776016800000
+    },
+    {
+      "home": {
+        "name": "FC Metaloglobus Bucuresti",
+        "score": 0
+      },
+      "away": {
+        "name": "Csikszereda Miercurea Ciuc",
+        "score": 0
+      },
+      "status": "NS",
+      "date": "lun., 13 apr.",
+      "time": "12:30",
+      "ts": 1776083400000
+    },
+    {
+      "home": {
+        "name": "Rapid Bucuresti",
+        "score": 0
+      },
+      "away": {
+        "name": "FC Arges Pitesti",
+        "score": 0
+      },
+      "status": "NS",
+      "date": "lun., 13 apr.",
+      "time": "15:30",
+      "ts": 1776094200000
+    },
+    {
+      "home": {
+        "name": "Universitatea Cluj",
+        "score": 0
+      },
+      "away": {
+        "name": "Universitatea Craiova",
+        "score": 0
+      },
+      "status": "NS",
+      "date": "lun., 13 apr.",
+      "time": "18:30",
+      "ts": 1776105000000
+    }
+  ],
   "standings": [],
-  "updatedAt": "06.04.2026, 10:06:05"
+  "updatedAt": "06.04.2026, 10:59:04"
 }
