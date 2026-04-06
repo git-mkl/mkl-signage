@@ -1,4 +1,4 @@
-/* Tizen 4.0 (Chrome 56) Stable Layout */
+/* Tizen 4.0 Stable Layout cu Background Image */
 * {
     margin: 0;
     padding: 0;
@@ -7,13 +7,27 @@
 }
 
 body {
-    background-color: #121212;
+    /* Imaginea de fundal cu stadionul */
+    background: url('image_b60266.jpg') no-repeat center center fixed;
+    background-size: cover;
     color: #ffffff;
     font-family: "Segoe UI", Roboto, Arial, sans-serif;
     width: 1920px;
     height: 1080px;
     overflow: hidden;
     position: relative;
+}
+
+/* Strat de întunecare pentru a face textul lizibil peste imagine */
+body::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.75); /* Ajustează 0.75 pentru mai multă sau mai puțină vizibilitate a stadionului */
+    z-index: -1;
 }
 
 .container {
@@ -23,7 +37,6 @@ body {
     display: block;
 }
 
-/* Columns - Float based for Tizen 4.0 stability */
 .column {
     float: left;
     height: 1020px;
@@ -42,6 +55,7 @@ body {
     line-height: 50px;
     margin-bottom: 15px;
     text-transform: uppercase;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
 }
 
 .league-logo-container {
@@ -54,26 +68,21 @@ body {
     width: auto;
 }
 
-/* Match Cards */
-.match-list {
-    display: block;
-}
-
+/* Carduri Meciuri - Semi-transparente pentru efect vizual */
 .match-card {
-    background-color: #1e1e1e;
+    background: rgba(30, 30, 30, 0.85); 
     width: 450px;
     height: 135px;
     border-radius: 12px;
     padding: 15px 20px;
-    margin-bottom: 15px; /* Ensures gap between cards */
+    margin-bottom: 15px;
     border-left: 5px solid #333;
     display: block;
-    flex-shrink: 0;
 }
 
 .m-status {
     font-size: 18px;
-    color: #888;
+    color: #bbb;
     margin-bottom: 12px;
     width: 100%;
 }
@@ -114,13 +123,13 @@ body {
     text-align: right;
 }
 
-/* Standings Table - Adjusted to fit 16 teams */
+/* Tabel Clasament */
 .table-card {
-    background-color: #1e1e1e;
+    background: rgba(30, 30, 30, 0.85);
     border-radius: 15px;
     padding: 10px 20px;
     width: 850px;
-    height: auto; /* Allow it to wrap content */
+    height: auto;
     display: block;
     overflow: hidden;
 }
@@ -131,17 +140,17 @@ table {
 }
 
 th {
-    color: #aaa;
+    color: #ccc;
     font-size: 18px;
     padding: 10px 5px;
-    border-bottom: 2px solid #333;
+    border-bottom: 2px solid #444;
 }
 
 td {
     padding: 6px 5px;
     font-size: 21px;
-    border-bottom: 1px solid #262626;
-    height: 48px; /* Fixed height for row calculation */
+    border-bottom: 1px solid #333;
+    height: 48px;
     text-align: center;
 }
 
@@ -155,11 +164,11 @@ td {
     color: #ffcc00;
 }
 
-/* Animations */
 .live-dot {
     color: #ff3e3e;
     animation: blink 1s infinite;
 }
+
 @-webkit-keyframes blink {
     50% { opacity: 0.5; }
 }
