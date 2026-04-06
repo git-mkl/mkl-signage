@@ -2,87 +2,43 @@
 <html lang="ro">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SuperLiga Dashboard - Signage</title>
+    <title>SuperLiga Dashboard</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div class="container">
-        <div class="column col-matches">
-            <div id="past-area"></div>
-        </div>
-
-        <div class="column col-central">
-            <div id="today-area"></div>
-            <div id="future-area"></div>
-        </div>
-
+        <div class="column col-matches"><div id="past-area"></div></div>
+        <div class="column col-central"><div id="today-area"></div><div id="future-area"></div></div>
         <div class="column col-table">
-            <div class="group-title">Clasament SuperLiga</div>
+            <div class="group-title league-header">
+                <img src="https://images.fotmob.com/image_resources/logo/leaguelogo/dark/189.png" class="league-logo">
+                Clasament SuperLiga
+            </div>
             <div class="table-card">
                 <table>
-                    <thead>
-                        <tr>
-                            <th>#</th>
-                            <th style="text-align:left">Echipă</th>
-                            <th>MJ</th>
-                            <th>V</th>
-                            <th>GD</th>
-                            <th>Pts</th>
-                        </tr>
-                    </thead>
-                    <tbody id="std-body">
-                        </tbody>
+                    <thead><tr><th>#</th><th style="text-align:left">Echipă</th><th>MJ</th><th>GD</th><th>Pts</th></tr></thead>
+                    <tbody id="std-body"></tbody>
                 </table>
             </div>
-            <div id="last-update" style="font-size: 0.7rem; color: #444; margin-top: 10px; text-align: right;"></div>
         </div>
     </div>
-
     <script>
         function updateUI() {
-            // Tizen 4.0 preferă XMLHttpRequest pentru fișiere locale/din repo
             var xhr = new XMLHttpRequest();
-            // Adăugăm un timestamp pentru a preveni cache-ul browserului TV
             xhr.open('GET', 'data/superliga.json?t=' + new Date().getTime(), true);
-            
             xhr.onreadystatechange = function () {
                 if (xhr.readyState === 4 && xhr.status === 200) {
-                    try {
-                        var d = JSON.parse(xhr.responseText);
-                        
-                        // 1. Randare coloane meciuri
-                        renderGroup('past-area', 'Rezultate Recente', d.past);
-                        renderGroup('today-area', 'Meciuri Azi / Live', d.today);
-                        renderGroup('future-area', 'Program Viitor', d.future);
-                        
-                        // 2. Randare Tabel Clasament
-                        var h = '';
-                        var st = d.standings || [];
-                        for (var i = 0; i < st.length; i++) {
-                            var s = st[i];
-                            var gdClass = s.gd > 0 ? 'pos' : (s.gd < 0 ? 'neg' : '');
-                            var gdSign = s.gd > 0 ? '+' : '';
-                            
-                            h += '<tr>' +
-                                '<td style="color:#666; font-weight:bold;">' + s.rank + '</td>' +
-                                '<td class="t-name">' + s.name + '</td>' +
-                                '<td>' + s.pj + '</td>' +
-                                '<td>' + s.v + '</td>' +
-                                '<td class="' + gdClass + '">' + gdSign + s.gd + '</td>' +
-                                '<td class="t-pts">' + s.pts + '</td>' +
-                            '</tr>';
-                        }
-                        document.getElementById('std-body').innerHTML = h;
-                        
-                        // 3. Afișare oră actualizare
-                        if(d.updatedAt) {
-                            document.getElementById('last-update').innerHTML = 'Actualizat: ' + d.updatedAt;
-                        }
-
-                    } catch (e) {
-                        console.error("Eroare parsare JSON:", e);
-                    }
+                    var d = JSON.parse(xhr.responseText);
+                    renderGroup('past-area', 'Rezultate', d.past);
+                    renderGroup('today-area', 'Meciuri Azi', d.today);
+                    renderGroup('future-area', 'Program', d.future);
+                    
+                    var h = '';
+                    (d.standings || []).forEach(function(s) {
+                        var logo = 'https://images.fotmob.com/image_resources/logo/teamlogo/' + s.id + '_xsmall.png';
+                        h += '<tr><td>' + s.rank + '</td><td class="t-name"><img src="' + logo + '" class="small-logo"> ' + s.name + '</td><td>' + s.pj + '</td><td>' + s.gd + '</td><td class="t-pts">' + s.pts + '</td></tr>';
+                    });
+                    document.getElementById('std-body').innerHTML = h;
                 }
             };
             xhr.send();
@@ -90,48 +46,18 @@
 
         function renderGroup(id, title, list) {
             var el = document.getElementById(id);
-            if (!list || list.length === 0) {
-                // Dacă nu sunt meciuri azi, putem ascunde secțiunea sau afișa un mesaj
-                if (id === 'today-area') {
-                    el.innerHTML = '<div class="group-title">' + title + '</div><div class="match-card" style="text-align:center; color:#555;">Nu sunt meciuri programate azi</div>';
-                } else {
-                    el.innerHTML = '';
-                }
-                return;
-            }
-
+            if (!list || list.length === 0) { el.innerHTML = ''; return; }
             var html = '<div class="group-title">' + title + '</div>';
-            for (var i = 0; i < list.length; i++) {
-                var m = list[i];
-                var scoreHome = m.home.score !== undefined ? m.home.score : '-';
-                var scoreAway = m.away.score !== undefined ? m.away.score : '-';
-                
-                // Status formatat pentru TV
-                var statusLabel = m.status;
-                if (m.status === 'FT') statusLabel = 'FINAL';
-                if (m.status === 'NS') statusLabel = m.time; // Arătăm ora dacă nu a început
-                if (m.status === 'LIVE') statusLabel = '<span style="color:#ff0000; b">● LIVE</span>';
-
-                html += '<div class="match-card">' +
-                    '<div class="m-status">' + statusLabel + ' <span style="float:right; font-weight:normal; font-size:0.7rem;">' + m.date + '</span></div>' +
-                    '<div class="team-row">' +
-                        '<span class="team-name">' + m.home.name + '</span>' +
-                        '<span class="score">' + scoreHome + '</span>' +
-                    '</div>' +
-                    '<div class="team-row">' +
-                        '<span class="team-name">' + m.away.name + '</span>' +
-                        '<span class="score">' + scoreAway + '</span>' +
-                    '</div>' +
-                '</div>';
-            }
+            list.forEach(function(m) {
+                var hLogo = 'https://images.fotmob.com/image_resources/logo/teamlogo/' + m.home.id + '_xsmall.png';
+                var aLogo = 'https://images.fotmob.com/image_resources/logo/teamlogo/' + m.away.id + '_xsmall.png';
+                html += '<div class="match-card"><div class="m-status">' + (m.status === 'FT' ? 'FINAL' : m.time) + '</div>' +
+                    '<div class="team-row"><img src="' + hLogo + '" class="small-logo"> <span class="team-name">' + m.home.name + '</span><span class="score">' + m.home.score + '</span></div>' +
+                    '<div class="team-row"><img src="' + aLogo + '" class="small-logo"> <span class="team-name">' + m.away.name + '</span><span class="score">' + m.away.score + '</span></div></div>';
+            });
             el.innerHTML = html;
         }
-
-        // Inițializare
-        updateUI();
-
-        // Refresh automat la fiecare 5 minute (300.000 ms)
-        setInterval(updateUI, 300000);
+        updateUI(); setInterval(updateUI, 300000);
     </script>
 </body>
 </html>
