@@ -1,29 +1,42 @@
-name: Update SuperLiga Data
+name: SuperLiga Data Sync (Smart Cron)
+
 on:
   schedule:
-    - cron: '*/30 * * * *'
-  workflow_dispatch:
+    # 1. ACTUALIZARE ZILNICĂ (Mentenanță / Siguranță)
+    # Rulează o dată pe zi, la ora 05:00 UTC (08:00 EEST / ora României)
+    # Preia orice modificare apărută peste noapte în programări
+    - cron: '0 5 * * *' 
+
+    # 2. ACTUALIZĂRI LIVE (Meciurile din Weekend + Luni)
+    # Rulează la fiecare 10 minute.
+    # Între orele 14:00 și 21:00 UTC (17:00 - 00:00 ora României).
+    # Zile: 0 (Duminică), 1 (Luni), 5 (Vineri), 6 (Sâmbătă).
+    - cron: '*/10 14-21 * * 0,1,5,6'
+
+  # Permitem rularea manuală din tab-ul Actions, dacă e nevoie (ex. pentru teste rapide)
+  workflow_dispatch: 
+
 jobs:
-  update:
+  build:
     runs-on: ubuntu-latest
-    env:
-      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
-    permissions:
-      contents: write
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
         with:
-          node-version: '24'
-      - name: Fetch Matches
-        run: node .github/scripts/fetch_matches.mjs
+          node-version: '18'
+
+      - name: Fetch Matches and Standings (LiveScore API)
         env:
           RAPIDAPI_KEY: ${{ secrets.RAPIDAPI_KEY }}
-      - name: Calculate Standings
-        run: node .github/scripts/fetch_standings.mjs
-      - name: Commit
+        run: node .github/scripts/fetch_matches.mjs
+
+      - name: Commit and Push changes
         run: |
-          git config --global user.name "github-actions[bot]"
-          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git config --global user.name "GitHub Action Bot"
+          git config --global user.email "action@github.com"
           git add data/superliga.json
-          git diff --quiet && git diff --staged --quiet || (git commit -m "Sync data [skip ci]" && git push)
+          # Comanda || exit 0 previne eroarea dacă nu există date noi de comis
+          git commit -m "Auto-update SuperLiga data via Smart Cron" || exit 0
+          git push
