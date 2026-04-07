@@ -2,7 +2,7 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    -webkit-user-select: none;
+    user-select: none;
 }
 
 body {
@@ -161,4 +161,4 @@ td {
 .pts-bold { font-size: 22px; font-weight: bold; color: #ffcc00; }
 
 .live-dot { color: #ff3e3e; animation: blink 1s infinite; }
-@-webkit-keyframes blink { 50% { opacity: 0.5; } }
+@keyframes blink { 50% { opacity: 0.5; } }
