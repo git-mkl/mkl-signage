@@ -73,18 +73,18 @@
     {
       "home": {
         "name": "Hermannstadt",
-        "score": "-",
+        "score": "0",
         "id": "864269"
       },
       "away": {
         "name": "FCV Farul Constanta",
-        "score": "-",
+        "score": "0",
         "id": "210132"
       },
-      "status": "NS",
+      "status": "LIVE",
       "phase": "Play-out",
       "date": "10 apr.",
-      "time": "19:00",
+      "time": "37'",
       "ts": 1775847600000
     }
   ],
@@ -337,19 +337,19 @@
     },
     {
       "rank": 4,
+      "name": "FCV Farul Constanta",
+      "id": "210132",
+      "pj": 4,
+      "gd": 1,
+      "pts": 24
+    },
+    {
+      "rank": 5,
       "name": "Otelul Galati",
       "id": "9736",
       "pj": 3,
       "gd": 0,
       "pts": 24
-    },
-    {
-      "rank": 5,
-      "name": "FCV Farul Constanta",
-      "id": "210132",
-      "pj": 3,
-      "gd": 1,
-      "pts": 23
     },
     {
       "rank": 6,
@@ -379,9 +379,9 @@
       "rank": 9,
       "name": "Hermannstadt",
       "id": "864269",
-      "pj": 3,
+      "pj": 4,
       "gd": 0,
-      "pts": 15
+      "pts": 16
     },
     {
       "rank": 10,
