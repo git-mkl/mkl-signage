@@ -69,8 +69,7 @@
       "ts": 1775410200000
     }
   ],
-  "today": [],
-  "future": [
+  "today": [
     {
       "home": {
         "name": "Hermannstadt",
@@ -87,7 +86,9 @@
       "date": "10 apr.",
       "time": "19:00",
       "ts": 1775847600000
-    },
+    }
+  ],
+  "future": [
     {
       "home": {
         "name": "UTA Arad",
@@ -240,6 +241,23 @@
       "date": "17 apr.",
       "time": "20:30",
       "ts": 1776457800000
+    },
+    {
+      "home": {
+        "name": "Miercurea Ciuc",
+        "score": "-",
+        "id": "583690"
+      },
+      "away": {
+        "name": "FC Unirea 2004 Slobozia",
+        "score": "-",
+        "id": "364411"
+      },
+      "status": "NS",
+      "phase": "Play-out",
+      "date": "18 apr.",
+      "time": "14:30",
+      "ts": 1776522600000
     }
   ],
   "standingsPlayoff": [
