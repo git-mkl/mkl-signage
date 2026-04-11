@@ -73,7 +73,7 @@
     {
       "home": {
         "name": "UTA Arad",
-        "score": "1",
+        "score": "3",
         "id": "584663"
       },
       "away": {
@@ -81,27 +81,27 @@
         "score": "1",
         "id": "188191"
       },
-      "status": "LIVE",
+      "status": "FT",
       "phase": "Play-out",
       "date": "11 apr.",
-      "time": "74'",
+      "time": "17:15",
       "ts": 1775927700000
     },
     {
       "home": {
         "name": "FCSB",
-        "score": "-",
+        "score": "1",
         "id": "9723"
       },
       "away": {
         "name": "Otelul Galati",
-        "score": "-",
+        "score": "0",
         "id": "9736"
       },
-      "status": "NS",
+      "status": "LIVE",
       "phase": "Play-out",
       "date": "11 apr.",
-      "time": "20:00",
+      "time": "20'",
       "ts": 1775937600000
     }
   ],
@@ -333,31 +333,31 @@
       "name": "UTA Arad",
       "id": "584663",
       "pj": 4,
-      "gd": 4,
-      "pts": 29
+      "gd": 6,
+      "pts": 31
     },
     {
       "rank": 2,
-      "name": "Botosani",
-      "id": "188191",
+      "name": "FCSB",
+      "id": "9723",
       "pj": 4,
-      "gd": -1,
-      "pts": 28
+      "gd": 1,
+      "pts": 30
     },
     {
       "rank": 3,
-      "name": "FCSB",
-      "id": "9723",
-      "pj": 3,
-      "gd": 0,
+      "name": "Botosani",
+      "id": "188191",
+      "pj": 4,
+      "gd": -3,
       "pts": 27
     },
     {
       "rank": 4,
       "name": "Otelul Galati",
       "id": "9736",
-      "pj": 3,
-      "gd": 0,
+      "pj": 4,
+      "gd": -1,
       "pts": 24
     },
     {
