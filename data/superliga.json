@@ -90,7 +90,7 @@
     {
       "home": {
         "name": "FCSB",
-        "score": "1",
+        "score": "4",
         "id": "9723"
       },
       "away": {
@@ -98,10 +98,10 @@
         "score": "0",
         "id": "9736"
       },
-      "status": "LIVE",
+      "status": "FT",
       "phase": "Play-out",
       "date": "11 apr.",
-      "time": "20'",
+      "time": "20:00",
       "ts": 1775937600000
     }
   ],
@@ -341,7 +341,7 @@
       "name": "FCSB",
       "id": "9723",
       "pj": 4,
-      "gd": 1,
+      "gd": 4,
       "pts": 30
     },
     {
@@ -357,7 +357,7 @@
       "name": "Otelul Galati",
       "id": "9736",
       "pj": 4,
-      "gd": -1,
+      "gd": -4,
       "pts": 24
     },
     {
