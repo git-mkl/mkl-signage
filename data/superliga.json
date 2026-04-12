@@ -73,18 +73,18 @@
     {
       "home": {
         "name": "FC Unirea 2004 Slobozia",
-        "score": "-",
+        "score": "1",
         "id": "364411"
       },
       "away": {
         "name": "Petrolul Ploiesti",
-        "score": "-",
+        "score": "0",
         "id": "188187"
       },
-      "status": "NS",
+      "status": "LIVE",
       "phase": "Play-out",
       "date": "12 apr.",
-      "time": "18:15",
+      "time": "38'",
       "ts": 1776017700000
     },
     {
@@ -370,6 +370,14 @@
     },
     {
       "rank": 6,
+      "name": "FC Unirea 2004 Slobozia",
+      "id": "364411",
+      "pj": 4,
+      "gd": 2,
+      "pts": 22
+    },
+    {
+      "rank": 7,
       "name": "Miercurea Ciuc",
       "id": "583690",
       "pj": 3,
@@ -377,19 +385,11 @@
       "pts": 20
     },
     {
-      "rank": 7,
-      "name": "FC Unirea 2004 Slobozia",
-      "id": "364411",
-      "pj": 3,
-      "gd": 1,
-      "pts": 19
-    },
-    {
       "rank": 8,
       "name": "Petrolul Ploiesti",
       "id": "188187",
-      "pj": 3,
-      "gd": -1,
+      "pj": 4,
+      "gd": -2,
       "pts": 19
     },
     {
