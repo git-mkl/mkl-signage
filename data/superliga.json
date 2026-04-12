@@ -90,18 +90,18 @@
     {
       "home": {
         "name": "CFR Cluj",
-        "score": "-",
+        "score": "1",
         "id": "9731"
       },
       "away": {
         "name": "Dinamo Bucuresti",
-        "score": "-",
+        "score": "1",
         "id": "10271"
       },
-      "status": "NS",
+      "status": "LIVE",
       "phase": "Play-off",
       "date": "12 apr.",
-      "time": "21:00",
+      "time": "90+2'",
       "ts": 1776027600000
     }
   ],
@@ -306,9 +306,9 @@
       "rank": 4,
       "name": "CFR Cluj",
       "id": "9731",
-      "pj": 3,
+      "pj": 4,
       "gd": -2,
-      "pts": 30
+      "pts": 31
     },
     {
       "rank": 5,
@@ -322,9 +322,9 @@
       "rank": 6,
       "name": "Dinamo Bucuresti",
       "id": "10271",
-      "pj": 3,
+      "pj": 4,
       "gd": -2,
-      "pts": 27
+      "pts": 28
     }
   ],
   "standingsPlayout": [
