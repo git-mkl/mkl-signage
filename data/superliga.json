@@ -78,13 +78,13 @@
       },
       "away": {
         "name": "Petrolul Ploiesti",
-        "score": "0",
+        "score": "2",
         "id": "188187"
       },
-      "status": "LIVE",
+      "status": "FT",
       "phase": "Play-out",
       "date": "12 apr.",
-      "time": "38'",
+      "time": "18:15",
       "ts": 1776017700000
     },
     {
@@ -370,10 +370,10 @@
     },
     {
       "rank": 6,
-      "name": "FC Unirea 2004 Slobozia",
-      "id": "364411",
+      "name": "Petrolul Ploiesti",
+      "id": "188187",
       "pj": 4,
-      "gd": 2,
+      "gd": 0,
       "pts": 22
     },
     {
@@ -386,10 +386,10 @@
     },
     {
       "rank": 8,
-      "name": "Petrolul Ploiesti",
-      "id": "188187",
+      "name": "FC Unirea 2004 Slobozia",
+      "id": "364411",
       "pj": 4,
-      "gd": -2,
+      "gd": 0,
       "pts": 19
     },
     {
