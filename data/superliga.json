@@ -73,15 +73,15 @@
     {
       "home": {
         "name": "FC Metaloglobus Bucuresti",
-        "score": "-",
+        "score": "0",
         "id": "404509"
       },
       "away": {
         "name": "Miercurea Ciuc",
-        "score": "-",
+        "score": "1",
         "id": "583690"
       },
-      "status": "NS",
+      "status": "FT",
       "phase": "Play-out",
       "date": "13 apr.",
       "time": "15:30",
@@ -90,15 +90,15 @@
     {
       "home": {
         "name": "FC Rapid 1923",
-        "score": "-",
+        "score": "0",
         "id": "9738"
       },
       "away": {
         "name": "ACS Champions FC Arges",
-        "score": "-",
+        "score": "0",
         "id": "9732"
       },
-      "status": "NS",
+      "status": "FT",
       "phase": "Play-off",
       "date": "13 apr.",
       "time": "18:30",
@@ -315,9 +315,9 @@
       "rank": 3,
       "name": "FC Rapid 1923",
       "id": "9738",
-      "pj": 3,
+      "pj": 4,
       "gd": -1,
-      "pts": 31
+      "pts": 32
     },
     {
       "rank": 4,
@@ -331,9 +331,9 @@
       "rank": 5,
       "name": "ACS Champions FC Arges",
       "id": "9732",
-      "pj": 3,
+      "pj": 4,
       "gd": 0,
-      "pts": 29
+      "pts": 30
     },
     {
       "rank": 6,
@@ -379,6 +379,14 @@
     },
     {
       "rank": 5,
+      "name": "Miercurea Ciuc",
+      "id": "583690",
+      "pj": 4,
+      "gd": 0,
+      "pts": 23
+    },
+    {
+      "rank": 6,
       "name": "FCV Farul Constanta",
       "id": "210132",
       "pj": 4,
@@ -386,20 +394,12 @@
       "pts": 23
     },
     {
-      "rank": 6,
+      "rank": 7,
       "name": "Petrolul Ploiesti",
       "id": "188187",
       "pj": 4,
       "gd": 0,
       "pts": 22
-    },
-    {
-      "rank": 7,
-      "name": "Miercurea Ciuc",
-      "id": "583690",
-      "pj": 3,
-      "gd": -1,
-      "pts": 20
     },
     {
       "rank": 8,
@@ -421,8 +421,8 @@
       "rank": 10,
       "name": "FC Metaloglobus Bucuresti",
       "id": "404509",
-      "pj": 3,
-      "gd": -3,
+      "pj": 4,
+      "gd": -4,
       "pts": 10
     }
   ]
