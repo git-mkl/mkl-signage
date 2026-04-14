@@ -2,90 +2,20 @@
   "past": [
     {
       "home": {
-        "name": "CFR Cluj",
-        "score": "1",
-        "id": "9731"
+        "name": "Universitatea Cluj",
+        "score": "4",
+        "id": "89022"
       },
       "away": {
-        "name": "Dinamo Bucuresti",
-        "score": "1",
-        "id": "10271"
+        "name": "CS Universitatea Craiova",
+        "score": "0",
+        "id": "480286"
       },
       "status": "FT",
       "phase": "Play-off",
-      "date": "12 apr.",
-      "time": "21:00",
-      "ts": 1776027600000
-    },
-    {
-      "home": {
-        "name": "FC Unirea 2004 Slobozia",
-        "score": "1",
-        "id": "364411"
-      },
-      "away": {
-        "name": "Petrolul Ploiesti",
-        "score": "2",
-        "id": "188187"
-      },
-      "status": "FT",
-      "phase": "Play-out",
-      "date": "12 apr.",
-      "time": "18:15",
-      "ts": 1776017700000
-    },
-    {
-      "home": {
-        "name": "FCSB",
-        "score": "4",
-        "id": "9723"
-      },
-      "away": {
-        "name": "Otelul Galati",
-        "score": "0",
-        "id": "9736"
-      },
-      "status": "FT",
-      "phase": "Play-out",
-      "date": "11 apr.",
-      "time": "20:00",
-      "ts": 1775937600000
-    },
-    {
-      "home": {
-        "name": "UTA Arad",
-        "score": "3",
-        "id": "584663"
-      },
-      "away": {
-        "name": "Botosani",
-        "score": "1",
-        "id": "188191"
-      },
-      "status": "FT",
-      "phase": "Play-out",
-      "date": "11 apr.",
-      "time": "17:15",
-      "ts": 1775927700000
-    }
-  ],
-  "today": [
-    {
-      "home": {
-        "name": "FC Metaloglobus Bucuresti",
-        "score": "0",
-        "id": "404509"
-      },
-      "away": {
-        "name": "Miercurea Ciuc",
-        "score": "1",
-        "id": "583690"
-      },
-      "status": "FT",
-      "phase": "Play-out",
       "date": "13 apr.",
-      "time": "15:30",
-      "ts": 1776094200000
+      "time": "21:30",
+      "ts": 1776115800000
     },
     {
       "home": {
@@ -106,22 +36,40 @@
     },
     {
       "home": {
-        "name": "Universitatea Cluj",
-        "score": "4",
-        "id": "89022"
+        "name": "FC Metaloglobus Bucuresti",
+        "score": "0",
+        "id": "404509"
       },
       "away": {
-        "name": "CS Universitatea Craiova",
-        "score": "0",
-        "id": "480286"
+        "name": "Miercurea Ciuc",
+        "score": "1",
+        "id": "583690"
+      },
+      "status": "FT",
+      "phase": "Play-out",
+      "date": "13 apr.",
+      "time": "15:30",
+      "ts": 1776094200000
+    },
+    {
+      "home": {
+        "name": "CFR Cluj",
+        "score": "1",
+        "id": "9731"
+      },
+      "away": {
+        "name": "Dinamo Bucuresti",
+        "score": "1",
+        "id": "10271"
       },
       "status": "FT",
       "phase": "Play-off",
-      "date": "13 apr.",
-      "time": "21:30",
-      "ts": 1776115800000
+      "date": "12 apr.",
+      "time": "21:00",
+      "ts": 1776027600000
     }
   ],
+  "today": [],
   "future": [
     {
       "home": {
