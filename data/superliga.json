@@ -73,15 +73,15 @@
     {
       "home": {
         "name": "Otelul Galati",
-        "score": "-",
+        "score": "1",
         "id": "9736"
       },
       "away": {
         "name": "UTA Arad",
-        "score": "-",
+        "score": "0",
         "id": "584663"
       },
-      "status": "NS",
+      "status": "FT",
       "phase": "Play-out",
       "date": "17 apr.",
       "time": "17:30",
@@ -332,8 +332,8 @@
       "rank": 1,
       "name": "UTA Arad",
       "id": "584663",
-      "pj": 4,
-      "gd": 6,
+      "pj": 5,
+      "gd": 5,
       "pts": 31
     },
     {
@@ -356,9 +356,9 @@
       "rank": 4,
       "name": "Otelul Galati",
       "id": "9736",
-      "pj": 4,
-      "gd": -4,
-      "pts": 24
+      "pj": 5,
+      "gd": -3,
+      "pts": 27
     },
     {
       "rank": 5,
