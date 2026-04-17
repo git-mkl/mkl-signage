@@ -69,8 +69,7 @@
       "ts": 1776027600000
     }
   ],
-  "today": [],
-  "future": [
+  "today": [
     {
       "home": {
         "name": "Otelul Galati",
@@ -104,7 +103,9 @@
       "date": "17 apr.",
       "time": "20:30",
       "ts": 1776457800000
-    },
+    }
+  ],
+  "future": [
     {
       "home": {
         "name": "Miercurea Ciuc",
@@ -240,6 +241,40 @@
       "date": "24 apr.",
       "time": "17:00",
       "ts": 1777050000000
+    },
+    {
+      "home": {
+        "name": "CFR Cluj",
+        "score": "-",
+        "id": "9731"
+      },
+      "away": {
+        "name": "Universitatea Cluj",
+        "score": "-",
+        "id": "89022"
+      },
+      "status": "NS",
+      "phase": "Play-off",
+      "date": "25 apr.",
+      "time": "17:00",
+      "ts": 1777136400000
+    },
+    {
+      "home": {
+        "name": "Botosani",
+        "score": "-",
+        "id": "188191"
+      },
+      "away": {
+        "name": "Otelul Galati",
+        "score": "-",
+        "id": "9736"
+      },
+      "status": "NS",
+      "phase": "Play-out",
+      "date": "25 apr.",
+      "time": "17:00",
+      "ts": 1777136400000
     }
   ],
   "standingsPlayoff": [
