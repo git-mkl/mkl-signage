@@ -90,15 +90,15 @@
     {
       "home": {
         "name": "ACS Champions FC Arges",
-        "score": "-",
+        "score": "0",
         "id": "9732"
       },
       "away": {
         "name": "CFR Cluj",
-        "score": "-",
+        "score": "1",
         "id": "9731"
       },
-      "status": "NS",
+      "status": "FT",
       "phase": "Play-off",
       "date": "17 apr.",
       "time": "20:30",
@@ -210,23 +210,6 @@
     },
     {
       "home": {
-        "name": "FCSB",
-        "score": "-",
-        "id": "9723"
-      },
-      "away": {
-        "name": "Petrolul Ploiesti",
-        "score": "-",
-        "id": "188187"
-      },
-      "status": "NS",
-      "phase": "Play-out",
-      "date": "24 apr.",
-      "time": "17:00",
-      "ts": 1777050000000
-    },
-    {
-      "home": {
         "name": "Hermannstadt",
         "score": "-",
         "id": "864269"
@@ -239,25 +222,25 @@
       "status": "NS",
       "phase": "Play-out",
       "date": "24 apr.",
-      "time": "17:00",
-      "ts": 1777050000000
+      "time": "17:30",
+      "ts": 1777051800000
     },
     {
       "home": {
-        "name": "CFR Cluj",
+        "name": "FCSB",
         "score": "-",
-        "id": "9731"
+        "id": "9723"
       },
       "away": {
-        "name": "Universitatea Cluj",
+        "name": "Petrolul Ploiesti",
         "score": "-",
-        "id": "89022"
+        "id": "188187"
       },
       "status": "NS",
-      "phase": "Play-off",
-      "date": "25 apr.",
-      "time": "17:00",
-      "ts": 1777136400000
+      "phase": "Play-out",
+      "date": "24 apr.",
+      "time": "20:30",
+      "ts": 1777062600000
     },
     {
       "home": {
@@ -273,8 +256,25 @@
       "status": "NS",
       "phase": "Play-out",
       "date": "25 apr.",
-      "time": "17:00",
-      "ts": 1777136400000
+      "time": "15:00",
+      "ts": 1777129200000
+    },
+    {
+      "home": {
+        "name": "CFR Cluj",
+        "score": "-",
+        "id": "9731"
+      },
+      "away": {
+        "name": "Universitatea Cluj",
+        "score": "-",
+        "id": "89022"
+      },
+      "status": "NS",
+      "phase": "Play-off",
+      "date": "25 apr.",
+      "time": "20:30",
+      "ts": 1777149000000
     }
   ],
   "standingsPlayoff": [
@@ -296,6 +296,14 @@
     },
     {
       "rank": 3,
+      "name": "CFR Cluj",
+      "id": "9731",
+      "pj": 5,
+      "gd": -1,
+      "pts": 34
+    },
+    {
+      "rank": 4,
       "name": "FC Rapid 1923",
       "id": "9738",
       "pj": 4,
@@ -303,19 +311,11 @@
       "pts": 32
     },
     {
-      "rank": 4,
-      "name": "CFR Cluj",
-      "id": "9731",
-      "pj": 4,
-      "gd": -2,
-      "pts": 31
-    },
-    {
       "rank": 5,
       "name": "ACS Champions FC Arges",
       "id": "9732",
-      "pj": 4,
-      "gd": 0,
+      "pj": 5,
+      "gd": -1,
       "pts": 30
     },
     {
