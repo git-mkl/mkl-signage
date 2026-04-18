@@ -73,15 +73,15 @@
     {
       "home": {
         "name": "Miercurea Ciuc",
-        "score": "-",
+        "score": "3",
         "id": "583690"
       },
       "away": {
         "name": "FC Unirea 2004 Slobozia",
-        "score": "-",
+        "score": "2",
         "id": "364411"
       },
-      "status": "NS",
+      "status": "FT",
       "phase": "Play-out",
       "date": "18 apr.",
       "time": "14:30",
@@ -364,9 +364,9 @@
       "rank": 5,
       "name": "Miercurea Ciuc",
       "id": "583690",
-      "pj": 4,
-      "gd": 0,
-      "pts": 23
+      "pj": 5,
+      "gd": 1,
+      "pts": 26
     },
     {
       "rank": 6,
@@ -388,8 +388,8 @@
       "rank": 8,
       "name": "FC Unirea 2004 Slobozia",
       "id": "364411",
-      "pj": 4,
-      "gd": 0,
+      "pj": 5,
+      "gd": -1,
       "pts": 19
     },
     {
