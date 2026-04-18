@@ -90,18 +90,18 @@
     {
       "home": {
         "name": "Dinamo Bucuresti",
-        "score": "-",
+        "score": "2",
         "id": "10271"
       },
       "away": {
         "name": "Universitatea Cluj",
-        "score": "-",
+        "score": "1",
         "id": "89022"
       },
-      "status": "NS",
+      "status": "LIVE",
       "phase": "Play-off",
       "date": "18 apr.",
-      "time": "21:00",
+      "time": "90+3'",
       "ts": 1776546000000
     }
   ],
@@ -282,8 +282,8 @@
       "rank": 1,
       "name": "Universitatea Cluj",
       "id": "89022",
-      "pj": 4,
-      "gd": 7,
+      "pj": 5,
+      "gd": 6,
       "pts": 39
     },
     {
@@ -312,19 +312,19 @@
     },
     {
       "rank": 5,
+      "name": "Dinamo Bucuresti",
+      "id": "10271",
+      "pj": 5,
+      "gd": -1,
+      "pts": 31
+    },
+    {
+      "rank": 6,
       "name": "ACS Champions FC Arges",
       "id": "9732",
       "pj": 5,
       "gd": -1,
       "pts": 30
-    },
-    {
-      "rank": 6,
-      "name": "Dinamo Bucuresti",
-      "id": "10271",
-      "pj": 4,
-      "gd": -2,
-      "pts": 28
     }
   ],
   "standingsPlayout": [
