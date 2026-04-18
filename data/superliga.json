@@ -2,6 +2,40 @@
   "past": [
     {
       "home": {
+        "name": "ACS Champions FC Arges",
+        "score": "0",
+        "id": "9732"
+      },
+      "away": {
+        "name": "CFR Cluj",
+        "score": "1",
+        "id": "9731"
+      },
+      "status": "FT",
+      "phase": "Play-off",
+      "date": "17 apr.",
+      "time": "20:30",
+      "ts": 1776457800000
+    },
+    {
+      "home": {
+        "name": "Otelul Galati",
+        "score": "1",
+        "id": "9736"
+      },
+      "away": {
+        "name": "UTA Arad",
+        "score": "0",
+        "id": "584663"
+      },
+      "status": "FT",
+      "phase": "Play-out",
+      "date": "17 apr.",
+      "time": "17:30",
+      "ts": 1776447000000
+    },
+    {
+      "home": {
         "name": "Universitatea Cluj",
         "score": "4",
         "id": "89022"
@@ -33,79 +67,9 @@
       "date": "13 apr.",
       "time": "18:30",
       "ts": 1776105000000
-    },
-    {
-      "home": {
-        "name": "FC Metaloglobus Bucuresti",
-        "score": "0",
-        "id": "404509"
-      },
-      "away": {
-        "name": "Miercurea Ciuc",
-        "score": "1",
-        "id": "583690"
-      },
-      "status": "FT",
-      "phase": "Play-out",
-      "date": "13 apr.",
-      "time": "15:30",
-      "ts": 1776094200000
-    },
-    {
-      "home": {
-        "name": "CFR Cluj",
-        "score": "1",
-        "id": "9731"
-      },
-      "away": {
-        "name": "Dinamo Bucuresti",
-        "score": "1",
-        "id": "10271"
-      },
-      "status": "FT",
-      "phase": "Play-off",
-      "date": "12 apr.",
-      "time": "21:00",
-      "ts": 1776027600000
     }
   ],
   "today": [
-    {
-      "home": {
-        "name": "Otelul Galati",
-        "score": "1",
-        "id": "9736"
-      },
-      "away": {
-        "name": "UTA Arad",
-        "score": "0",
-        "id": "584663"
-      },
-      "status": "FT",
-      "phase": "Play-out",
-      "date": "17 apr.",
-      "time": "17:30",
-      "ts": 1776447000000
-    },
-    {
-      "home": {
-        "name": "ACS Champions FC Arges",
-        "score": "0",
-        "id": "9732"
-      },
-      "away": {
-        "name": "CFR Cluj",
-        "score": "1",
-        "id": "9731"
-      },
-      "status": "FT",
-      "phase": "Play-off",
-      "date": "17 apr.",
-      "time": "20:30",
-      "ts": 1776457800000
-    }
-  ],
-  "future": [
     {
       "home": {
         "name": "Miercurea Ciuc",
@@ -139,7 +103,9 @@
       "date": "18 apr.",
       "time": "21:00",
       "ts": 1776546000000
-    },
+    }
+  ],
+  "future": [
     {
       "home": {
         "name": "Petrolul Ploiesti",
@@ -275,6 +241,40 @@
       "date": "25 apr.",
       "time": "20:30",
       "ts": 1777149000000
+    },
+    {
+      "home": {
+        "name": "UTA Arad",
+        "score": "-",
+        "id": "584663"
+      },
+      "away": {
+        "name": "FCV Farul Constanta",
+        "score": "-",
+        "id": "210132"
+      },
+      "status": "NS",
+      "phase": "Play-out",
+      "date": "26 apr.",
+      "time": "14:00",
+      "ts": 1777212000000
+    },
+    {
+      "home": {
+        "name": "Dinamo Bucuresti",
+        "score": "-",
+        "id": "10271"
+      },
+      "away": {
+        "name": "FC Rapid 1923",
+        "score": "-",
+        "id": "9738"
+      },
+      "status": "NS",
+      "phase": "Play-off",
+      "date": "26 apr.",
+      "time": "21:00",
+      "ts": 1777237200000
     }
   ],
   "standingsPlayoff": [
