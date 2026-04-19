@@ -78,13 +78,13 @@
       },
       "away": {
         "name": "Hermannstadt",
-        "score": "0",
+        "score": "1",
         "id": "864269"
       },
-      "status": "LIVE",
+      "status": "FT",
       "phase": "Play-out",
       "date": "19 apr.",
-      "time": "40'",
+      "time": "18:15",
       "ts": 1776622500000
     },
     {
@@ -370,14 +370,6 @@
     },
     {
       "rank": 6,
-      "name": "Petrolul Ploiesti",
-      "id": "188187",
-      "pj": 5,
-      "gd": 1,
-      "pts": 25
-    },
-    {
-      "rank": 7,
       "name": "FCV Farul Constanta",
       "id": "210132",
       "pj": 4,
@@ -385,20 +377,28 @@
       "pts": 23
     },
     {
+      "rank": 7,
+      "name": "Petrolul Ploiesti",
+      "id": "188187",
+      "pj": 5,
+      "gd": 0,
+      "pts": 23
+    },
+    {
       "rank": 8,
+      "name": "Hermannstadt",
+      "id": "864269",
+      "pj": 5,
+      "gd": 1,
+      "pts": 19
+    },
+    {
+      "rank": 9,
       "name": "FC Unirea 2004 Slobozia",
       "id": "364411",
       "pj": 5,
       "gd": -1,
       "pts": 19
-    },
-    {
-      "rank": 9,
-      "name": "Hermannstadt",
-      "id": "864269",
-      "pj": 5,
-      "gd": 0,
-      "pts": 18
     },
     {
       "rank": 10,
