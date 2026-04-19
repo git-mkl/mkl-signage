@@ -73,18 +73,18 @@
     {
       "home": {
         "name": "Petrolul Ploiesti",
-        "score": "-",
+        "score": "1",
         "id": "188187"
       },
       "away": {
         "name": "Hermannstadt",
-        "score": "-",
+        "score": "0",
         "id": "864269"
       },
-      "status": "NS",
+      "status": "LIVE",
       "phase": "Play-out",
       "date": "19 apr.",
-      "time": "18:15",
+      "time": "40'",
       "ts": 1776622500000
     },
     {
@@ -370,19 +370,19 @@
     },
     {
       "rank": 6,
+      "name": "Petrolul Ploiesti",
+      "id": "188187",
+      "pj": 5,
+      "gd": 1,
+      "pts": 25
+    },
+    {
+      "rank": 7,
       "name": "FCV Farul Constanta",
       "id": "210132",
       "pj": 4,
       "gd": 0,
       "pts": 23
-    },
-    {
-      "rank": 7,
-      "name": "Petrolul Ploiesti",
-      "id": "188187",
-      "pj": 4,
-      "gd": 0,
-      "pts": 22
     },
     {
       "rank": 8,
@@ -396,8 +396,8 @@
       "rank": 9,
       "name": "Hermannstadt",
       "id": "864269",
-      "pj": 4,
-      "gd": 1,
+      "pj": 5,
+      "gd": 0,
       "pts": 18
     },
     {
