@@ -90,15 +90,15 @@
     {
       "home": {
         "name": "CS Universitatea Craiova",
-        "score": "-",
+        "score": "1",
         "id": "480286"
       },
       "away": {
         "name": "FC Rapid 1923",
-        "score": "-",
+        "score": "0",
         "id": "9738"
       },
-      "status": "NS",
+      "status": "FT",
       "phase": "Play-off",
       "date": "19 apr.",
       "time": "21:00",
@@ -290,9 +290,9 @@
       "rank": 2,
       "name": "CS Universitatea Craiova",
       "id": "480286",
-      "pj": 4,
-      "gd": -2,
-      "pts": 36
+      "pj": 5,
+      "gd": -1,
+      "pts": 39
     },
     {
       "rank": 3,
@@ -306,8 +306,8 @@
       "rank": 4,
       "name": "FC Rapid 1923",
       "id": "9738",
-      "pj": 4,
-      "gd": -1,
+      "pj": 5,
+      "gd": -2,
       "pts": 32
     },
     {
