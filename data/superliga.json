@@ -2,6 +2,40 @@
   "past": [
     {
       "home": {
+        "name": "CS Universitatea Craiova",
+        "score": "1",
+        "id": "480286"
+      },
+      "away": {
+        "name": "FC Rapid 1923",
+        "score": "0",
+        "id": "9738"
+      },
+      "status": "FT",
+      "phase": "Play-off",
+      "date": "19 apr.",
+      "time": "21:00",
+      "ts": 1776632400000
+    },
+    {
+      "home": {
+        "name": "Petrolul Ploiesti",
+        "score": "1",
+        "id": "188187"
+      },
+      "away": {
+        "name": "Hermannstadt",
+        "score": "1",
+        "id": "864269"
+      },
+      "status": "FT",
+      "phase": "Play-out",
+      "date": "19 apr.",
+      "time": "18:15",
+      "ts": 1776622500000
+    },
+    {
+      "home": {
         "name": "Dinamo Bucuresti",
         "score": "2",
         "id": "10271"
@@ -33,79 +67,9 @@
       "date": "18 apr.",
       "time": "14:30",
       "ts": 1776522600000
-    },
-    {
-      "home": {
-        "name": "ACS Champions FC Arges",
-        "score": "0",
-        "id": "9732"
-      },
-      "away": {
-        "name": "CFR Cluj",
-        "score": "1",
-        "id": "9731"
-      },
-      "status": "FT",
-      "phase": "Play-off",
-      "date": "17 apr.",
-      "time": "20:30",
-      "ts": 1776457800000
-    },
-    {
-      "home": {
-        "name": "Otelul Galati",
-        "score": "1",
-        "id": "9736"
-      },
-      "away": {
-        "name": "UTA Arad",
-        "score": "0",
-        "id": "584663"
-      },
-      "status": "FT",
-      "phase": "Play-out",
-      "date": "17 apr.",
-      "time": "17:30",
-      "ts": 1776447000000
     }
   ],
   "today": [
-    {
-      "home": {
-        "name": "Petrolul Ploiesti",
-        "score": "1",
-        "id": "188187"
-      },
-      "away": {
-        "name": "Hermannstadt",
-        "score": "1",
-        "id": "864269"
-      },
-      "status": "FT",
-      "phase": "Play-out",
-      "date": "19 apr.",
-      "time": "18:15",
-      "ts": 1776622500000
-    },
-    {
-      "home": {
-        "name": "CS Universitatea Craiova",
-        "score": "1",
-        "id": "480286"
-      },
-      "away": {
-        "name": "FC Rapid 1923",
-        "score": "0",
-        "id": "9738"
-      },
-      "status": "FT",
-      "phase": "Play-off",
-      "date": "19 apr.",
-      "time": "21:00",
-      "ts": 1776632400000
-    }
-  ],
-  "future": [
     {
       "home": {
         "name": "Botosani",
@@ -139,7 +103,9 @@
       "date": "20 apr.",
       "time": "20:30",
       "ts": 1776717000000
-    },
+    }
+  ],
+  "future": [
     {
       "home": {
         "name": "Hermannstadt",
@@ -275,6 +241,40 @@
       "date": "27 apr.",
       "time": "20:30",
       "ts": 1777321800000
+    },
+    {
+      "home": {
+        "name": "CS Universitatea Craiova",
+        "score": "-",
+        "id": "480286"
+      },
+      "away": {
+        "name": "Dinamo Bucuresti",
+        "score": "-",
+        "id": "10271"
+      },
+      "status": "NS",
+      "phase": "Play-off",
+      "date": "2 mai",
+      "time": "17:00",
+      "ts": 1777741200000
+    },
+    {
+      "home": {
+        "name": "FC Rapid 1923",
+        "score": "-",
+        "id": "9738"
+      },
+      "away": {
+        "name": "CFR Cluj",
+        "score": "-",
+        "id": "9731"
+      },
+      "status": "NS",
+      "phase": "Play-off",
+      "date": "2 mai",
+      "time": "17:00",
+      "ts": 1777741200000
     }
   ],
   "standingsPlayoff": [
