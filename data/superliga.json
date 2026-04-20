@@ -73,15 +73,15 @@
     {
       "home": {
         "name": "Botosani",
-        "score": "-",
+        "score": "3",
         "id": "188191"
       },
       "away": {
         "name": "FC Metaloglobus Bucuresti",
-        "score": "-",
+        "score": "2",
         "id": "404509"
       },
-      "status": "NS",
+      "status": "FT",
       "phase": "Play-out",
       "date": "20 apr.",
       "time": "17:30",
@@ -90,18 +90,18 @@
     {
       "home": {
         "name": "FCV Farul Constanta",
-        "score": "-",
+        "score": "0",
         "id": "210132"
       },
       "away": {
         "name": "FCSB",
-        "score": "-",
+        "score": "0",
         "id": "9723"
       },
-      "status": "NS",
+      "status": "LIVE",
       "phase": "Play-out",
       "date": "20 apr.",
-      "time": "20:30",
+      "time": "7'",
       "ts": 1776717000000
     }
   ],
@@ -340,17 +340,17 @@
       "rank": 2,
       "name": "FCSB",
       "id": "9723",
-      "pj": 4,
+      "pj": 5,
       "gd": 4,
-      "pts": 30
+      "pts": 31
     },
     {
       "rank": 3,
       "name": "Botosani",
       "id": "188191",
-      "pj": 4,
-      "gd": -3,
-      "pts": 27
+      "pj": 5,
+      "gd": -2,
+      "pts": 30
     },
     {
       "rank": 4,
@@ -372,9 +372,9 @@
       "rank": 6,
       "name": "FCV Farul Constanta",
       "id": "210132",
-      "pj": 4,
+      "pj": 5,
       "gd": 0,
-      "pts": 23
+      "pts": 24
     },
     {
       "rank": 7,
@@ -404,8 +404,8 @@
       "rank": 10,
       "name": "FC Metaloglobus Bucuresti",
       "id": "404509",
-      "pj": 4,
-      "gd": -4,
+      "pj": 5,
+      "gd": -5,
       "pts": 10
     }
   ]
