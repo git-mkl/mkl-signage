@@ -90,18 +90,18 @@
     {
       "home": {
         "name": "FCV Farul Constanta",
-        "score": "0",
+        "score": "2",
         "id": "210132"
       },
       "away": {
         "name": "FCSB",
-        "score": "0",
+        "score": "3",
         "id": "9723"
       },
-      "status": "LIVE",
+      "status": "FT",
       "phase": "Play-out",
       "date": "20 apr.",
-      "time": "7'",
+      "time": "20:30",
       "ts": 1776717000000
     }
   ],
@@ -330,18 +330,18 @@
   "standingsPlayout": [
     {
       "rank": 1,
+      "name": "FCSB",
+      "id": "9723",
+      "pj": 5,
+      "gd": 5,
+      "pts": 33
+    },
+    {
+      "rank": 2,
       "name": "UTA Arad",
       "id": "584663",
       "pj": 5,
       "gd": 5,
-      "pts": 31
-    },
-    {
-      "rank": 2,
-      "name": "FCSB",
-      "id": "9723",
-      "pj": 5,
-      "gd": 4,
       "pts": 31
     },
     {
@@ -370,18 +370,18 @@
     },
     {
       "rank": 6,
-      "name": "FCV Farul Constanta",
-      "id": "210132",
-      "pj": 5,
-      "gd": 0,
-      "pts": 24
-    },
-    {
-      "rank": 7,
       "name": "Petrolul Ploiesti",
       "id": "188187",
       "pj": 5,
       "gd": 0,
+      "pts": 23
+    },
+    {
+      "rank": 7,
+      "name": "FCV Farul Constanta",
+      "id": "210132",
+      "pj": 5,
+      "gd": -1,
       "pts": 23
     },
     {
