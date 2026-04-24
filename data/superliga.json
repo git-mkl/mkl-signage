@@ -69,8 +69,7 @@
       "ts": 1776622500000
     }
   ],
-  "today": [],
-  "future": [
+  "today": [
     {
       "home": {
         "name": "Hermannstadt",
@@ -104,7 +103,9 @@
       "date": "24 apr.",
       "time": "20:30",
       "ts": 1777062600000
-    },
+    }
+  ],
+  "future": [
     {
       "home": {
         "name": "Botosani",
@@ -240,6 +241,40 @@
       "date": "2 mai",
       "time": "15:00",
       "ts": 1777734000000
+    },
+    {
+      "home": {
+        "name": "FCV Farul Constanta",
+        "score": "-",
+        "id": "210132"
+      },
+      "away": {
+        "name": "Botosani",
+        "score": "-",
+        "id": "188191"
+      },
+      "status": "NS",
+      "phase": "Play-out",
+      "date": "2 mai",
+      "time": "17:30",
+      "ts": 1777743000000
+    },
+    {
+      "home": {
+        "name": "Universitatea Cluj",
+        "score": "-",
+        "id": "89022"
+      },
+      "away": {
+        "name": "ACS Champions FC Arges",
+        "score": "-",
+        "id": "9732"
+      },
+      "status": "NS",
+      "phase": "Play-off",
+      "date": "2 mai",
+      "time": "20:30",
+      "ts": 1777753800000
     }
   ],
   "standingsPlayoff": [
