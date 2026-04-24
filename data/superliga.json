@@ -90,15 +90,15 @@
     {
       "home": {
         "name": "FCSB",
-        "score": "-",
+        "score": "3",
         "id": "9723"
       },
       "away": {
         "name": "Petrolul Ploiesti",
-        "score": "-",
+        "score": "1",
         "id": "188187"
       },
-      "status": "NS",
+      "status": "FT",
       "phase": "Play-out",
       "date": "24 apr.",
       "time": "20:30",
@@ -332,9 +332,9 @@
       "rank": 1,
       "name": "FCSB",
       "id": "9723",
-      "pj": 5,
-      "gd": 5,
-      "pts": 33
+      "pj": 6,
+      "gd": 7,
+      "pts": 36
     },
     {
       "rank": 2,
@@ -370,18 +370,18 @@
     },
     {
       "rank": 6,
-      "name": "Petrolul Ploiesti",
-      "id": "188187",
-      "pj": 5,
-      "gd": 0,
-      "pts": 23
-    },
-    {
-      "rank": 7,
       "name": "FCV Farul Constanta",
       "id": "210132",
       "pj": 5,
       "gd": -1,
+      "pts": 23
+    },
+    {
+      "rank": 7,
+      "name": "Petrolul Ploiesti",
+      "id": "188187",
+      "pj": 6,
+      "gd": -2,
       "pts": 23
     },
     {
