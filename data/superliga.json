@@ -73,15 +73,15 @@
     {
       "home": {
         "name": "Botosani",
-        "score": "-",
+        "score": "1",
         "id": "188191"
       },
       "away": {
         "name": "Otelul Galati",
-        "score": "-",
+        "score": "1",
         "id": "9736"
       },
-      "status": "NS",
+      "status": "FT",
       "phase": "Play-out",
       "date": "25 apr.",
       "time": "15:00",
@@ -348,24 +348,24 @@
       "rank": 3,
       "name": "Botosani",
       "id": "188191",
-      "pj": 5,
+      "pj": 6,
       "gd": -2,
-      "pts": 30
+      "pts": 31
     },
     {
       "rank": 4,
+      "name": "Otelul Galati",
+      "id": "9736",
+      "pj": 6,
+      "gd": -3,
+      "pts": 28
+    },
+    {
+      "rank": 5,
       "name": "Miercurea Ciuc",
       "id": "583690",
       "pj": 6,
       "gd": 1,
-      "pts": 27
-    },
-    {
-      "rank": 5,
-      "name": "Otelul Galati",
-      "id": "9736",
-      "pj": 5,
-      "gd": -3,
       "pts": 27
     },
     {
