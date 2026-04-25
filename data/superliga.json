@@ -90,7 +90,7 @@
     {
       "home": {
         "name": "CFR Cluj",
-        "score": "0",
+        "score": "1",
         "id": "9731"
       },
       "away": {
@@ -98,10 +98,10 @@
         "score": "0",
         "id": "89022"
       },
-      "status": "LIVE",
+      "status": "FT",
       "phase": "Play-off",
       "date": "25 apr.",
-      "time": "27'",
+      "time": "20:30",
       "ts": 1777149000000
     }
   ],
@@ -283,8 +283,8 @@
       "name": "Universitatea Cluj",
       "id": "89022",
       "pj": 6,
-      "gd": 6,
-      "pts": 40
+      "gd": 5,
+      "pts": 39
     },
     {
       "rank": 2,
@@ -299,8 +299,8 @@
       "name": "CFR Cluj",
       "id": "9731",
       "pj": 6,
-      "gd": -1,
-      "pts": 35
+      "gd": 0,
+      "pts": 37
     },
     {
       "rank": 4,
