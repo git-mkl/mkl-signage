@@ -2,6 +2,40 @@
   "past": [
     {
       "home": {
+        "name": "FCSB",
+        "score": "3",
+        "id": "9723"
+      },
+      "away": {
+        "name": "Petrolul Ploiesti",
+        "score": "1",
+        "id": "188187"
+      },
+      "status": "FT",
+      "phase": "Play-out",
+      "date": "24 apr.",
+      "time": "20:30",
+      "ts": 1777062600000
+    },
+    {
+      "home": {
+        "name": "Hermannstadt",
+        "score": "0",
+        "id": "864269"
+      },
+      "away": {
+        "name": "Miercurea Ciuc",
+        "score": "0",
+        "id": "583690"
+      },
+      "status": "FT",
+      "phase": "Play-out",
+      "date": "24 apr.",
+      "time": "17:30",
+      "ts": 1777051800000
+    },
+    {
+      "home": {
         "name": "FCV Farul Constanta",
         "score": "2",
         "id": "210132"
@@ -33,79 +67,9 @@
       "date": "20 apr.",
       "time": "17:30",
       "ts": 1776706200000
-    },
-    {
-      "home": {
-        "name": "CS Universitatea Craiova",
-        "score": "1",
-        "id": "480286"
-      },
-      "away": {
-        "name": "FC Rapid 1923",
-        "score": "0",
-        "id": "9738"
-      },
-      "status": "FT",
-      "phase": "Play-off",
-      "date": "19 apr.",
-      "time": "21:00",
-      "ts": 1776632400000
-    },
-    {
-      "home": {
-        "name": "Petrolul Ploiesti",
-        "score": "1",
-        "id": "188187"
-      },
-      "away": {
-        "name": "Hermannstadt",
-        "score": "1",
-        "id": "864269"
-      },
-      "status": "FT",
-      "phase": "Play-out",
-      "date": "19 apr.",
-      "time": "18:15",
-      "ts": 1776622500000
     }
   ],
   "today": [
-    {
-      "home": {
-        "name": "Hermannstadt",
-        "score": "0",
-        "id": "864269"
-      },
-      "away": {
-        "name": "Miercurea Ciuc",
-        "score": "0",
-        "id": "583690"
-      },
-      "status": "FT",
-      "phase": "Play-out",
-      "date": "24 apr.",
-      "time": "17:30",
-      "ts": 1777051800000
-    },
-    {
-      "home": {
-        "name": "FCSB",
-        "score": "3",
-        "id": "9723"
-      },
-      "away": {
-        "name": "Petrolul Ploiesti",
-        "score": "1",
-        "id": "188187"
-      },
-      "status": "FT",
-      "phase": "Play-out",
-      "date": "24 apr.",
-      "time": "20:30",
-      "ts": 1777062600000
-    }
-  ],
-  "future": [
     {
       "home": {
         "name": "Botosani",
@@ -139,7 +103,9 @@
       "date": "25 apr.",
       "time": "20:30",
       "ts": 1777149000000
-    },
+    }
+  ],
+  "future": [
     {
       "home": {
         "name": "UTA Arad",
@@ -275,6 +241,40 @@
       "date": "2 mai",
       "time": "20:30",
       "ts": 1777753800000
+    },
+    {
+      "home": {
+        "name": "Petrolul Ploiesti",
+        "score": "-",
+        "id": "188187"
+      },
+      "away": {
+        "name": "UTA Arad",
+        "score": "-",
+        "id": "584663"
+      },
+      "status": "NS",
+      "phase": "Play-out",
+      "date": "3 mai",
+      "time": "18:15",
+      "ts": 1777832100000
+    },
+    {
+      "home": {
+        "name": "CS Universitatea Craiova",
+        "score": "-",
+        "id": "480286"
+      },
+      "away": {
+        "name": "Dinamo Bucuresti",
+        "score": "-",
+        "id": "10271"
+      },
+      "status": "NS",
+      "phase": "Play-off",
+      "date": "3 mai",
+      "time": "21:00",
+      "ts": 1777842000000
     }
   ],
   "standingsPlayoff": [
