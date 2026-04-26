@@ -90,18 +90,18 @@
     {
       "home": {
         "name": "Dinamo Bucuresti",
-        "score": "-",
+        "score": "1",
         "id": "10271"
       },
       "away": {
         "name": "FC Rapid 1923",
-        "score": "-",
+        "score": "0",
         "id": "9738"
       },
-      "status": "NS",
+      "status": "LIVE",
       "phase": "Play-off",
       "date": "26 apr.",
-      "time": "21:00",
+      "time": "HT",
       "ts": 1777237200000
     }
   ],
@@ -304,19 +304,19 @@
     },
     {
       "rank": 4,
-      "name": "FC Rapid 1923",
-      "id": "9738",
-      "pj": 5,
-      "gd": -2,
-      "pts": 32
+      "name": "Dinamo Bucuresti",
+      "id": "10271",
+      "pj": 6,
+      "gd": 0,
+      "pts": 34
     },
     {
       "rank": 5,
-      "name": "Dinamo Bucuresti",
-      "id": "10271",
-      "pj": 5,
-      "gd": -1,
-      "pts": 31
+      "name": "FC Rapid 1923",
+      "id": "9738",
+      "pj": 6,
+      "gd": -3,
+      "pts": 32
     },
     {
       "rank": 6,
