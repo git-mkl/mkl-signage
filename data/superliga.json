@@ -73,15 +73,15 @@
     {
       "home": {
         "name": "UTA Arad",
-        "score": "-",
+        "score": "0",
         "id": "584663"
       },
       "away": {
         "name": "FCV Farul Constanta",
-        "score": "-",
+        "score": "0",
         "id": "210132"
       },
-      "status": "NS",
+      "status": "FT",
       "phase": "Play-out",
       "date": "26 apr.",
       "time": "14:00",
@@ -340,9 +340,9 @@
       "rank": 2,
       "name": "UTA Arad",
       "id": "584663",
-      "pj": 5,
+      "pj": 6,
       "gd": 5,
-      "pts": 31
+      "pts": 32
     },
     {
       "rank": 3,
@@ -372,9 +372,9 @@
       "rank": 6,
       "name": "FCV Farul Constanta",
       "id": "210132",
-      "pj": 5,
+      "pj": 6,
       "gd": -1,
-      "pts": 23
+      "pts": 24
     },
     {
       "rank": 7,
