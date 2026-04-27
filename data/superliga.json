@@ -90,18 +90,18 @@
     {
       "home": {
         "name": "ACS Champions FC Arges",
-        "score": "-",
+        "score": "0",
         "id": "9732"
       },
       "away": {
         "name": "CS Universitatea Craiova",
-        "score": "-",
+        "score": "1",
         "id": "480286"
       },
-      "status": "NS",
+      "status": "LIVE",
       "phase": "Play-off",
       "date": "27 apr.",
-      "time": "20:30",
+      "time": "51'",
       "ts": 1777321800000
     }
   ],
@@ -280,18 +280,18 @@
   "standingsPlayoff": [
     {
       "rank": 1,
+      "name": "CS Universitatea Craiova",
+      "id": "480286",
+      "pj": 6,
+      "gd": 0,
+      "pts": 42
+    },
+    {
+      "rank": 2,
       "name": "Universitatea Cluj",
       "id": "89022",
       "pj": 6,
       "gd": 5,
-      "pts": 39
-    },
-    {
-      "rank": 2,
-      "name": "CS Universitatea Craiova",
-      "id": "480286",
-      "pj": 5,
-      "gd": -1,
       "pts": 39
     },
     {
@@ -322,8 +322,8 @@
       "rank": 6,
       "name": "ACS Champions FC Arges",
       "id": "9732",
-      "pj": 5,
-      "gd": -1,
+      "pj": 6,
+      "gd": -2,
       "pts": 30
     }
   ],
