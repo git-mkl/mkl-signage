@@ -73,18 +73,18 @@
     {
       "home": {
         "name": "FC Metaloglobus Bucuresti",
-        "score": "-",
+        "score": "0",
         "id": "404509"
       },
       "away": {
         "name": "FC Unirea 2004 Slobozia",
-        "score": "-",
+        "score": "1",
         "id": "364411"
       },
-      "status": "NS",
+      "status": "LIVE",
       "phase": "Play-out",
       "date": "27 apr.",
-      "time": "17:30",
+      "time": "62'",
       "ts": 1777311000000
     },
     {
@@ -386,6 +386,14 @@
     },
     {
       "rank": 8,
+      "name": "FC Unirea 2004 Slobozia",
+      "id": "364411",
+      "pj": 6,
+      "gd": 0,
+      "pts": 22
+    },
+    {
+      "rank": 9,
       "name": "Hermannstadt",
       "id": "864269",
       "pj": 6,
@@ -393,19 +401,11 @@
       "pts": 20
     },
     {
-      "rank": 9,
-      "name": "FC Unirea 2004 Slobozia",
-      "id": "364411",
-      "pj": 5,
-      "gd": -1,
-      "pts": 19
-    },
-    {
       "rank": 10,
       "name": "FC Metaloglobus Bucuresti",
       "id": "404509",
-      "pj": 5,
-      "gd": -5,
+      "pj": 6,
+      "gd": -6,
       "pts": 10
     }
   ]
