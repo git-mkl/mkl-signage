@@ -69,8 +69,7 @@
       "ts": 1777212000000
     }
   ],
-  "today": [],
-  "future": [
+  "today": [
     {
       "home": {
         "name": "Miercurea Ciuc",
@@ -87,7 +86,9 @@
       "date": "1 mai",
       "time": "20:30",
       "ts": 1777667400000
-    },
+    }
+  ],
+  "future": [
     {
       "home": {
         "name": "Otelul Galati",
@@ -240,6 +241,23 @@
       "date": "8 mai",
       "time": "21:00",
       "ts": 1778274000000
+    },
+    {
+      "home": {
+        "name": "Otelul Galati",
+        "score": "-",
+        "id": "9736"
+      },
+      "away": {
+        "name": "FCV Farul Constanta",
+        "score": "-",
+        "id": "210132"
+      },
+      "status": "NS",
+      "phase": "Play-out",
+      "date": "9 mai",
+      "time": "18:00",
+      "ts": 1778349600000
     }
   ],
   "standingsPlayoff": [
