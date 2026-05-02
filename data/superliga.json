@@ -95,13 +95,13 @@
       },
       "away": {
         "name": "Botosani",
-        "score": "0",
+        "score": "1",
         "id": "188191"
       },
       "status": "LIVE",
       "phase": "Play-out",
       "date": "2 mai",
-      "time": "16'",
+      "time": "46'",
       "ts": 1777743000000
     },
     {
@@ -355,18 +355,18 @@
     },
     {
       "rank": 2,
+      "name": "Botosani",
+      "id": "188191",
+      "pj": 7,
+      "gd": -1,
+      "pts": 34
+    },
+    {
+      "rank": 3,
       "name": "UTA Arad",
       "id": "584663",
       "pj": 6,
       "gd": 5,
-      "pts": 32
-    },
-    {
-      "rank": 3,
-      "name": "Botosani",
-      "id": "188191",
-      "pj": 7,
-      "gd": -2,
       "pts": 32
     },
     {
@@ -390,8 +390,8 @@
       "name": "FCV Farul Constanta",
       "id": "210132",
       "pj": 7,
-      "gd": -1,
-      "pts": 25
+      "gd": -2,
+      "pts": 24
     },
     {
       "rank": 7,
