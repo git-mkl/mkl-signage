@@ -73,15 +73,15 @@
     {
       "home": {
         "name": "Otelul Galati",
-        "score": "-",
+        "score": "2",
         "id": "9736"
       },
       "away": {
         "name": "FC Metaloglobus Bucuresti",
-        "score": "-",
+        "score": "2",
         "id": "404509"
       },
-      "status": "NS",
+      "status": "FT",
       "phase": "Play-out",
       "date": "2 mai",
       "time": "15:00",
@@ -90,18 +90,18 @@
     {
       "home": {
         "name": "FCV Farul Constanta",
-        "score": "-",
+        "score": "0",
         "id": "210132"
       },
       "away": {
         "name": "Botosani",
-        "score": "-",
+        "score": "0",
         "id": "188191"
       },
-      "status": "NS",
+      "status": "LIVE",
       "phase": "Play-out",
       "date": "2 mai",
-      "time": "17:30",
+      "time": "16'",
       "ts": 1777743000000
     },
     {
@@ -365,9 +365,9 @@
       "rank": 3,
       "name": "Botosani",
       "id": "188191",
-      "pj": 6,
+      "pj": 7,
       "gd": -2,
-      "pts": 31
+      "pts": 32
     },
     {
       "rank": 4,
@@ -381,17 +381,17 @@
       "rank": 5,
       "name": "Otelul Galati",
       "id": "9736",
-      "pj": 6,
+      "pj": 7,
       "gd": -3,
-      "pts": 28
+      "pts": 29
     },
     {
       "rank": 6,
       "name": "FCV Farul Constanta",
       "id": "210132",
-      "pj": 6,
+      "pj": 7,
       "gd": -1,
-      "pts": 24
+      "pts": 25
     },
     {
       "rank": 7,
@@ -421,9 +421,9 @@
       "rank": 10,
       "name": "FC Metaloglobus Bucuresti",
       "id": "404509",
-      "pj": 6,
+      "pj": 7,
       "gd": -5,
-      "pts": 11
+      "pts": 12
     }
   ]
 }
