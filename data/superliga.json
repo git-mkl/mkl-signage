@@ -107,18 +107,18 @@
     {
       "home": {
         "name": "Universitatea Cluj",
-        "score": "-",
+        "score": "0",
         "id": "89022"
       },
       "away": {
         "name": "ACS Champions FC Arges",
-        "score": "-",
+        "score": "0",
         "id": "9732"
       },
-      "status": "NS",
+      "status": "LIVE",
       "phase": "Play-off",
       "date": "2 mai",
-      "time": "20:30",
+      "time": "38'",
       "ts": 1777753800000
     }
   ],
@@ -307,9 +307,9 @@
       "rank": 2,
       "name": "Universitatea Cluj",
       "id": "89022",
-      "pj": 6,
+      "pj": 7,
       "gd": 5,
-      "pts": 39
+      "pts": 40
     },
     {
       "rank": 3,
@@ -339,9 +339,9 @@
       "rank": 6,
       "name": "ACS Champions FC Arges",
       "id": "9732",
-      "pj": 6,
+      "pj": 7,
       "gd": -2,
-      "pts": 30
+      "pts": 31
     }
   ],
   "standingsPlayout": [
