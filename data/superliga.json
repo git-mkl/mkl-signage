@@ -107,7 +107,7 @@
     {
       "home": {
         "name": "Universitatea Cluj",
-        "score": "0",
+        "score": "1",
         "id": "89022"
       },
       "away": {
@@ -115,10 +115,10 @@
         "score": "0",
         "id": "9732"
       },
-      "status": "LIVE",
+      "status": "FT",
       "phase": "Play-off",
       "date": "2 mai",
-      "time": "38'",
+      "time": "20:30",
       "ts": 1777753800000
     }
   ],
@@ -297,19 +297,19 @@
   "standingsPlayoff": [
     {
       "rank": 1,
+      "name": "Universitatea Cluj",
+      "id": "89022",
+      "pj": 7,
+      "gd": 6,
+      "pts": 42
+    },
+    {
+      "rank": 2,
       "name": "CS Universitatea Craiova",
       "id": "480286",
       "pj": 6,
       "gd": 0,
       "pts": 42
-    },
-    {
-      "rank": 2,
-      "name": "Universitatea Cluj",
-      "id": "89022",
-      "pj": 7,
-      "gd": 5,
-      "pts": 40
     },
     {
       "rank": 3,
@@ -340,8 +340,8 @@
       "name": "ACS Champions FC Arges",
       "id": "9732",
       "pj": 7,
-      "gd": -2,
-      "pts": 31
+      "gd": -3,
+      "pts": 30
     }
   ],
   "standingsPlayout": [
