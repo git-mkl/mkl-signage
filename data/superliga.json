@@ -90,18 +90,18 @@
     {
       "home": {
         "name": "CS Universitatea Craiova",
-        "score": "-",
+        "score": "0",
         "id": "480286"
       },
       "away": {
         "name": "Dinamo Bucuresti",
-        "score": "-",
+        "score": "0",
         "id": "10271"
       },
-      "status": "NS",
+      "status": "LIVE",
       "phase": "Play-off",
       "date": "3 mai",
-      "time": "21:00",
+      "time": "30'",
       "ts": 1777842000000
     }
   ],
@@ -280,18 +280,18 @@
   "standingsPlayoff": [
     {
       "rank": 1,
+      "name": "CS Universitatea Craiova",
+      "id": "480286",
+      "pj": 7,
+      "gd": 0,
+      "pts": 43
+    },
+    {
+      "rank": 2,
       "name": "Universitatea Cluj",
       "id": "89022",
       "pj": 7,
       "gd": 6,
-      "pts": 42
-    },
-    {
-      "rank": 2,
-      "name": "CS Universitatea Craiova",
-      "id": "480286",
-      "pj": 6,
-      "gd": 0,
       "pts": 42
     },
     {
@@ -306,9 +306,9 @@
       "rank": 4,
       "name": "Dinamo Bucuresti",
       "id": "10271",
-      "pj": 6,
+      "pj": 7,
       "gd": 1,
-      "pts": 34
+      "pts": 35
     },
     {
       "rank": 5,
