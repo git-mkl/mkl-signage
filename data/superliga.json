@@ -90,18 +90,18 @@
     {
       "home": {
         "name": "CS Universitatea Craiova",
-        "score": "0",
+        "score": "1",
         "id": "480286"
       },
       "away": {
         "name": "Dinamo Bucuresti",
-        "score": "0",
+        "score": "1",
         "id": "10271"
       },
       "status": "LIVE",
       "phase": "Play-off",
       "date": "3 mai",
-      "time": "30'",
+      "time": "76'",
       "ts": 1777842000000
     }
   ],
