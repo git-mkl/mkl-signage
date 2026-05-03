@@ -73,18 +73,18 @@
     {
       "home": {
         "name": "Petrolul Ploiesti",
-        "score": "-",
+        "score": "0",
         "id": "188187"
       },
       "away": {
         "name": "UTA Arad",
-        "score": "-",
+        "score": "1",
         "id": "584663"
       },
-      "status": "NS",
+      "status": "LIVE",
       "phase": "Play-out",
       "date": "3 mai",
-      "time": "18:15",
+      "time": "18'",
       "ts": 1777832100000
     },
     {
@@ -340,9 +340,9 @@
       "rank": 2,
       "name": "UTA Arad",
       "id": "584663",
-      "pj": 6,
-      "gd": 5,
-      "pts": 32
+      "pj": 7,
+      "gd": 6,
+      "pts": 35
     },
     {
       "rank": 3,
@@ -380,8 +380,8 @@
       "rank": 7,
       "name": "Petrolul Ploiesti",
       "id": "188187",
-      "pj": 6,
-      "gd": -2,
+      "pj": 7,
+      "gd": -3,
       "pts": 23
     },
     {
