@@ -90,18 +90,18 @@
     {
       "home": {
         "name": "FC Rapid 1923",
-        "score": "0",
+        "score": "1",
         "id": "9738"
       },
       "away": {
         "name": "CFR Cluj",
-        "score": "0",
+        "score": "2",
         "id": "9731"
       },
       "status": "LIVE",
       "phase": "Play-off",
       "date": "4 mai",
-      "time": "18'",
+      "time": "77'",
       "ts": 1777926600000
     }
   ],
@@ -299,8 +299,8 @@
       "name": "CFR Cluj",
       "id": "9731",
       "pj": 7,
-      "gd": 0,
-      "pts": 38
+      "gd": 1,
+      "pts": 40
     },
     {
       "rank": 4,
@@ -315,8 +315,8 @@
       "name": "FC Rapid 1923",
       "id": "9738",
       "pj": 7,
-      "gd": -4,
-      "pts": 33
+      "gd": -5,
+      "pts": 32
     },
     {
       "rank": 6,
