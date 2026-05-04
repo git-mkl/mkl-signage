@@ -78,30 +78,30 @@
       },
       "away": {
         "name": "Hermannstadt",
-        "score": "0",
+        "score": "2",
         "id": "864269"
       },
-      "status": "LIVE",
+      "status": "FT",
       "phase": "Play-out",
       "date": "4 mai",
-      "time": "73'",
+      "time": "17:30",
       "ts": 1777915800000
     },
     {
       "home": {
         "name": "FC Rapid 1923",
-        "score": "-",
+        "score": "0",
         "id": "9738"
       },
       "away": {
         "name": "CFR Cluj",
-        "score": "-",
+        "score": "0",
         "id": "9731"
       },
-      "status": "NS",
+      "status": "LIVE",
       "phase": "Play-off",
       "date": "4 mai",
-      "time": "20:30",
+      "time": "18'",
       "ts": 1777926600000
     }
   ],
@@ -298,9 +298,9 @@
       "rank": 3,
       "name": "CFR Cluj",
       "id": "9731",
-      "pj": 6,
+      "pj": 7,
       "gd": 0,
-      "pts": 37
+      "pts": 38
     },
     {
       "rank": 4,
@@ -314,9 +314,9 @@
       "rank": 5,
       "name": "FC Rapid 1923",
       "id": "9738",
-      "pj": 6,
+      "pj": 7,
       "gd": -4,
-      "pts": 32
+      "pts": 33
     },
     {
       "rank": 6,
@@ -386,19 +386,19 @@
     },
     {
       "rank": 8,
-      "name": "FC Unirea 2004 Slobozia",
-      "id": "364411",
-      "pj": 7,
-      "gd": 1,
-      "pts": 23
-    },
-    {
-      "rank": 9,
       "name": "Hermannstadt",
       "id": "864269",
       "pj": 7,
+      "gd": 1,
+      "pts": 21
+    },
+    {
+      "rank": 9,
+      "name": "FC Unirea 2004 Slobozia",
+      "id": "364411",
+      "pj": 7,
       "gd": -1,
-      "pts": 20
+      "pts": 21
     },
     {
       "rank": 10,
