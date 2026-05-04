@@ -73,18 +73,18 @@
     {
       "home": {
         "name": "FC Unirea 2004 Slobozia",
-        "score": "-",
+        "score": "2",
         "id": "364411"
       },
       "away": {
         "name": "Hermannstadt",
-        "score": "-",
+        "score": "0",
         "id": "864269"
       },
-      "status": "NS",
+      "status": "LIVE",
       "phase": "Play-out",
       "date": "4 mai",
-      "time": "17:30",
+      "time": "73'",
       "ts": 1777915800000
     },
     {
@@ -386,17 +386,17 @@
     },
     {
       "rank": 8,
-      "name": "Hermannstadt",
-      "id": "864269",
-      "pj": 6,
+      "name": "FC Unirea 2004 Slobozia",
+      "id": "364411",
+      "pj": 7,
       "gd": 1,
-      "pts": 20
+      "pts": 23
     },
     {
       "rank": 9,
-      "name": "FC Unirea 2004 Slobozia",
-      "id": "364411",
-      "pj": 6,
+      "name": "Hermannstadt",
+      "id": "864269",
+      "pj": 7,
       "gd": -1,
       "pts": 20
     },
