@@ -73,7 +73,7 @@
     {
       "home": {
         "name": "UTA Arad",
-        "score": "0",
+        "score": "1",
         "id": "584663"
       },
       "away": {
@@ -84,7 +84,7 @@
       "status": "LIVE",
       "phase": "Play-out",
       "date": "8 mai",
-      "time": "21'",
+      "time": "90+2'",
       "ts": 1778263200000
     },
     {
@@ -341,8 +341,8 @@
       "name": "UTA Arad",
       "id": "584663",
       "pj": 8,
-      "gd": 5,
-      "pts": 34
+      "gd": 6,
+      "pts": 36
     },
     {
       "rank": 3,
@@ -357,8 +357,8 @@
       "name": "Miercurea Ciuc",
       "id": "583690",
       "pj": 8,
-      "gd": 2,
-      "pts": 31
+      "gd": 1,
+      "pts": 30
     },
     {
       "rank": 5,
