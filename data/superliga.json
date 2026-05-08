@@ -81,27 +81,27 @@
         "score": "0",
         "id": "583690"
       },
-      "status": "LIVE",
+      "status": "FT",
       "phase": "Play-out",
       "date": "8 mai",
-      "time": "90+2'",
+      "time": "18:00",
       "ts": 1778263200000
     },
     {
       "home": {
         "name": "CFR Cluj",
-        "score": "-",
+        "score": "0",
         "id": "9731"
       },
       "away": {
         "name": "CS Universitatea Craiova",
-        "score": "-",
+        "score": "0",
         "id": "480286"
       },
-      "status": "NS",
+      "status": "LIVE",
       "phase": "Play-off",
       "date": "8 mai",
-      "time": "21:00",
+      "time": "8'",
       "ts": 1778274000000
     }
   ],
@@ -282,9 +282,9 @@
       "rank": 1,
       "name": "CS Universitatea Craiova",
       "id": "480286",
-      "pj": 7,
+      "pj": 8,
       "gd": 1,
-      "pts": 45
+      "pts": 46
     },
     {
       "rank": 2,
@@ -298,9 +298,9 @@
       "rank": 3,
       "name": "CFR Cluj",
       "id": "9731",
-      "pj": 7,
+      "pj": 8,
       "gd": 1,
-      "pts": 40
+      "pts": 41
     },
     {
       "rank": 4,
