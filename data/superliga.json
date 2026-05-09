@@ -90,18 +90,18 @@
     {
       "home": {
         "name": "Universitatea Cluj",
-        "score": "-",
+        "score": "1",
         "id": "89022"
       },
       "away": {
         "name": "FC Rapid 1923",
-        "score": "-",
+        "score": "0",
         "id": "9738"
       },
-      "status": "NS",
+      "status": "LIVE",
       "phase": "Play-off",
       "date": "9 mai",
-      "time": "21:00",
+      "time": "HT",
       "ts": 1778360400000
     }
   ],
@@ -290,9 +290,9 @@
       "rank": 2,
       "name": "Universitatea Cluj",
       "id": "89022",
-      "pj": 7,
-      "gd": 6,
-      "pts": 42
+      "pj": 8,
+      "gd": 7,
+      "pts": 45
     },
     {
       "rank": 3,
@@ -314,8 +314,8 @@
       "rank": 5,
       "name": "FC Rapid 1923",
       "id": "9738",
-      "pj": 7,
-      "gd": -5,
+      "pj": 8,
+      "gd": -6,
       "pts": 32
     },
     {
