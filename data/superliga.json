@@ -81,10 +81,10 @@
         "score": "2",
         "id": "210132"
       },
-      "status": "LIVE",
+      "status": "FT",
       "phase": "Play-out",
       "date": "9 mai",
-      "time": "90+1'",
+      "time": "18:00",
       "ts": 1778349600000
     },
     {
@@ -346,17 +346,17 @@
     },
     {
       "rank": 3,
-      "name": "Otelul Galati",
-      "id": "9736",
-      "pj": 8,
+      "name": "Botosani",
+      "id": "188191",
+      "pj": 7,
       "gd": -2,
       "pts": 32
     },
     {
       "rank": 4,
-      "name": "Botosani",
-      "id": "188191",
-      "pj": 7,
+      "name": "Otelul Galati",
+      "id": "9736",
+      "pj": 8,
       "gd": -2,
       "pts": 32
     },
