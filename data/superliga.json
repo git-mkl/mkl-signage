@@ -90,18 +90,18 @@
     {
       "home": {
         "name": "Dinamo Bucuresti",
-        "score": "-",
+        "score": "1",
         "id": "10271"
       },
       "away": {
         "name": "ACS Champions FC Arges",
-        "score": "-",
+        "score": "0",
         "id": "9732"
       },
-      "status": "NS",
+      "status": "LIVE",
       "phase": "Play-off",
       "date": "10 mai",
-      "time": "19:00",
+      "time": "HT",
       "ts": 1778439600000
     }
   ],
@@ -306,9 +306,9 @@
       "rank": 4,
       "name": "Dinamo Bucuresti",
       "id": "10271",
-      "pj": 7,
-      "gd": 0,
-      "pts": 34
+      "pj": 8,
+      "gd": 1,
+      "pts": 37
     },
     {
       "rank": 5,
@@ -322,8 +322,8 @@
       "rank": 6,
       "name": "ACS Champions FC Arges",
       "id": "9732",
-      "pj": 7,
-      "gd": -3,
+      "pj": 8,
+      "gd": -4,
       "pts": 30
     }
   ],
