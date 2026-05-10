@@ -90,18 +90,18 @@
     {
       "home": {
         "name": "Dinamo Bucuresti",
-        "score": "1",
+        "score": "2",
         "id": "10271"
       },
       "away": {
         "name": "ACS Champions FC Arges",
-        "score": "0",
+        "score": "1",
         "id": "9732"
       },
       "status": "LIVE",
       "phase": "Play-off",
       "date": "10 mai",
-      "time": "HT",
+      "time": "90+2'",
       "ts": 1778439600000
     }
   ],
