@@ -90,6 +90,23 @@
     },
     {
       "home": {
+        "name": "Miercurea Ciuc",
+        "score": "-",
+        "id": "583690"
+      },
+      "away": {
+        "name": "Botosani",
+        "score": "-",
+        "id": "188191"
+      },
+      "status": "NS",
+      "phase": "Play-out",
+      "date": "16 mai",
+      "time": "18:30",
+      "ts": 1778956200000
+    },
+    {
+      "home": {
         "name": "Dinamo Bucuresti",
         "score": "-",
         "id": "10271"
@@ -104,23 +121,6 @@
       "date": "16 mai",
       "time": "21:00",
       "ts": 1778965200000
-    },
-    {
-      "home": {
-        "name": "Miercurea Ciuc",
-        "score": "-",
-        "id": "583690"
-      },
-      "away": {
-        "name": "Botosani",
-        "score": "-",
-        "id": "188191"
-      },
-      "status": "NS",
-      "phase": "Play-out",
-      "date": "17 mai",
-      "time": "17:30",
-      "ts": 1779039000000
     },
     {
       "home": {
