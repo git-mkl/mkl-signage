@@ -73,18 +73,18 @@
     {
       "home": {
         "name": "ACS Champions FC Arges",
-        "score": "0",
+        "score": "2",
         "id": "9732"
       },
       "away": {
         "name": "FC Rapid 1923",
-        "score": "0",
+        "score": "2",
         "id": "9738"
       },
-      "status": "LIVE",
+      "status": "FT",
       "phase": "Play-off",
       "date": "15 mai",
-      "time": "19'",
+      "time": "20:30",
       "ts": 1778877000000
     }
   ],
