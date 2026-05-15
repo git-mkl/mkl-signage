@@ -69,8 +69,7 @@
       "ts": 1778428800000
     }
   ],
-  "today": [],
-  "future": [
+  "today": [
     {
       "home": {
         "name": "ACS Champions FC Arges",
@@ -87,7 +86,9 @@
       "date": "15 mai",
       "time": "20:30",
       "ts": 1778877000000
-    },
+    }
+  ],
+  "future": [
     {
       "home": {
         "name": "Miercurea Ciuc",
@@ -234,6 +235,23 @@
         "name": "CS Universitatea Craiova",
         "score": "-",
         "id": "480286"
+      },
+      "status": "NS",
+      "phase": "Play-off",
+      "date": "23 mai",
+      "time": "17:00",
+      "ts": 1779555600000
+    },
+    {
+      "home": {
+        "name": "Universitatea Cluj",
+        "score": "-",
+        "id": "89022"
+      },
+      "away": {
+        "name": "Dinamo Bucuresti",
+        "score": "-",
+        "id": "10271"
       },
       "status": "NS",
       "phase": "Play-off",
