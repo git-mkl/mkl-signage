@@ -73,18 +73,18 @@
     {
       "home": {
         "name": "ACS Champions FC Arges",
-        "score": "-",
+        "score": "0",
         "id": "9732"
       },
       "away": {
         "name": "FC Rapid 1923",
-        "score": "-",
+        "score": "0",
         "id": "9738"
       },
-      "status": "NS",
+      "status": "LIVE",
       "phase": "Play-off",
       "date": "15 mai",
-      "time": "20:30",
+      "time": "19'",
       "ts": 1778877000000
     }
   ],
@@ -297,17 +297,17 @@
       "rank": 5,
       "name": "FC Rapid 1923",
       "id": "9738",
-      "pj": 8,
+      "pj": 9,
       "gd": -6,
-      "pts": 32
+      "pts": 33
     },
     {
       "rank": 6,
       "name": "ACS Champions FC Arges",
       "id": "9732",
-      "pj": 8,
+      "pj": 9,
       "gd": -4,
-      "pts": 30
+      "pts": 31
     }
   ],
   "standingsPlayout": [
