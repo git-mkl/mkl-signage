@@ -73,7 +73,7 @@
     {
       "home": {
         "name": "Miercurea Ciuc",
-        "score": "0",
+        "score": "2",
         "id": "583690"
       },
       "away": {
@@ -84,7 +84,7 @@
       "status": "LIVE",
       "phase": "Play-out",
       "date": "16 mai",
-      "time": "28'",
+      "time": "80'",
       "ts": 1778956200000
     },
     {
@@ -312,27 +312,27 @@
     },
     {
       "rank": 3,
-      "name": "Botosani",
-      "id": "188191",
+      "name": "Miercurea Ciuc",
+      "id": "583690",
       "pj": 9,
-      "gd": -2,
-      "pts": 34
+      "gd": 3,
+      "pts": 33
     },
     {
       "rank": 4,
+      "name": "Botosani",
+      "id": "188191",
+      "pj": 9,
+      "gd": -4,
+      "pts": 33
+    },
+    {
+      "rank": 5,
       "name": "Otelul Galati",
       "id": "9736",
       "pj": 8,
       "gd": -2,
       "pts": 32
-    },
-    {
-      "rank": 5,
-      "name": "Miercurea Ciuc",
-      "id": "583690",
-      "pj": 9,
-      "gd": 1,
-      "pts": 31
     },
     {
       "rank": 6,
