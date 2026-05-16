@@ -2,6 +2,23 @@
   "past": [
     {
       "home": {
+        "name": "ACS Champions FC Arges",
+        "score": "2",
+        "id": "9732"
+      },
+      "away": {
+        "name": "FC Rapid 1923",
+        "score": "2",
+        "id": "9738"
+      },
+      "status": "FT",
+      "phase": "Play-off",
+      "date": "15 mai",
+      "time": "20:30",
+      "ts": 1778877000000
+    },
+    {
+      "home": {
         "name": "FCSB",
         "score": "0",
         "id": "9723"
@@ -50,45 +67,9 @@
       "date": "10 mai",
       "time": "19:00",
       "ts": 1778439600000
-    },
-    {
-      "home": {
-        "name": "Botosani",
-        "score": "1",
-        "id": "188191"
-      },
-      "away": {
-        "name": "Petrolul Ploiesti",
-        "score": "1",
-        "id": "188187"
-      },
-      "status": "FT",
-      "phase": "Play-out",
-      "date": "10 mai",
-      "time": "16:00",
-      "ts": 1778428800000
     }
   ],
   "today": [
-    {
-      "home": {
-        "name": "ACS Champions FC Arges",
-        "score": "2",
-        "id": "9732"
-      },
-      "away": {
-        "name": "FC Rapid 1923",
-        "score": "2",
-        "id": "9738"
-      },
-      "status": "FT",
-      "phase": "Play-off",
-      "date": "15 mai",
-      "time": "20:30",
-      "ts": 1778877000000
-    }
-  ],
-  "future": [
     {
       "home": {
         "name": "Miercurea Ciuc",
@@ -122,7 +103,9 @@
       "date": "16 mai",
       "time": "21:00",
       "ts": 1778965200000
-    },
+    }
+  ],
+  "future": [
     {
       "home": {
         "name": "CS Universitatea Craiova",
