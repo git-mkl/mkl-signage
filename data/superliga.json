@@ -2,6 +2,40 @@
   "past": [
     {
       "home": {
+        "name": "Dinamo Bucuresti",
+        "score": "0",
+        "id": "10271"
+      },
+      "away": {
+        "name": "CFR Cluj",
+        "score": "0",
+        "id": "9731"
+      },
+      "status": "FT",
+      "phase": "Play-off",
+      "date": "16 mai",
+      "time": "21:00",
+      "ts": 1778965200000
+    },
+    {
+      "home": {
+        "name": "Miercurea Ciuc",
+        "score": "2",
+        "id": "583690"
+      },
+      "away": {
+        "name": "Botosani",
+        "score": "0",
+        "id": "188191"
+      },
+      "status": "FT",
+      "phase": "Play-out",
+      "date": "16 mai",
+      "time": "18:30",
+      "ts": 1778956200000
+    },
+    {
+      "home": {
         "name": "ACS Champions FC Arges",
         "score": "2",
         "id": "9732"
@@ -33,79 +67,9 @@
       "date": "11 mai",
       "time": "21:00",
       "ts": 1778533200000
-    },
-    {
-      "home": {
-        "name": "FC Metaloglobus Bucuresti",
-        "score": "2",
-        "id": "404509"
-      },
-      "away": {
-        "name": "Hermannstadt",
-        "score": "2",
-        "id": "864269"
-      },
-      "status": "FT",
-      "phase": "Play-out",
-      "date": "11 mai",
-      "time": "18:00",
-      "ts": 1778522400000
-    },
-    {
-      "home": {
-        "name": "Dinamo Bucuresti",
-        "score": "2",
-        "id": "10271"
-      },
-      "away": {
-        "name": "ACS Champions FC Arges",
-        "score": "1",
-        "id": "9732"
-      },
-      "status": "FT",
-      "phase": "Play-off",
-      "date": "10 mai",
-      "time": "19:00",
-      "ts": 1778439600000
     }
   ],
   "today": [
-    {
-      "home": {
-        "name": "Miercurea Ciuc",
-        "score": "2",
-        "id": "583690"
-      },
-      "away": {
-        "name": "Botosani",
-        "score": "0",
-        "id": "188191"
-      },
-      "status": "FT",
-      "phase": "Play-out",
-      "date": "16 mai",
-      "time": "18:30",
-      "ts": 1778956200000
-    },
-    {
-      "home": {
-        "name": "Dinamo Bucuresti",
-        "score": "0",
-        "id": "10271"
-      },
-      "away": {
-        "name": "CFR Cluj",
-        "score": "0",
-        "id": "9731"
-      },
-      "status": "FT",
-      "phase": "Play-off",
-      "date": "16 mai",
-      "time": "21:00",
-      "ts": 1778965200000
-    }
-  ],
-  "future": [
     {
       "home": {
         "name": "CS Universitatea Craiova",
@@ -122,7 +86,9 @@
       "date": "17 mai",
       "time": "20:30",
       "ts": 1779049800000
-    },
+    }
+  ],
+  "future": [
     {
       "home": {
         "name": "FC Unirea 2004 Slobozia",
