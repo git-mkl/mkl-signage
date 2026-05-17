@@ -73,18 +73,18 @@
     {
       "home": {
         "name": "CS Universitatea Craiova",
-        "score": "-",
+        "score": "2",
         "id": "480286"
       },
       "away": {
         "name": "Universitatea Cluj",
-        "score": "-",
+        "score": "0",
         "id": "89022"
       },
-      "status": "NS",
+      "status": "LIVE",
       "phase": "Play-off",
       "date": "17 mai",
-      "time": "20:30",
+      "time": "43'",
       "ts": 1779049800000
     }
   ],
@@ -214,16 +214,16 @@
       "rank": 1,
       "name": "CS Universitatea Craiova",
       "id": "480286",
-      "pj": 8,
-      "gd": 1,
-      "pts": 46
+      "pj": 9,
+      "gd": 3,
+      "pts": 49
     },
     {
       "rank": 2,
       "name": "Universitatea Cluj",
       "id": "89022",
-      "pj": 8,
-      "gd": 7,
+      "pj": 9,
+      "gd": 5,
       "pts": 45
     },
     {
