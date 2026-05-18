@@ -153,26 +153,9 @@
       },
       "status": "NS",
       "phase": "Play-off",
-      "date": "23 mai",
+      "date": "22 mai",
       "time": "20:30",
-      "ts": 1779568200000
-    },
-    {
-      "home": {
-        "name": "FC Rapid 1923",
-        "score": "-",
-        "id": "9738"
-      },
-      "away": {
-        "name": "CS Universitatea Craiova",
-        "score": "-",
-        "id": "480286"
-      },
-      "status": "NS",
-      "phase": "Play-off",
-      "date": "23 mai",
-      "time": "20:30",
-      "ts": 1779568200000
+      "ts": 1779481800000
     },
     {
       "home": {
@@ -190,6 +173,23 @@
       "date": "23 mai",
       "time": "20:30",
       "ts": 1779568200000
+    },
+    {
+      "home": {
+        "name": "FC Rapid 1923",
+        "score": "-",
+        "id": "9738"
+      },
+      "away": {
+        "name": "CS Universitatea Craiova",
+        "score": "-",
+        "id": "480286"
+      },
+      "status": "NS",
+      "phase": "Play-off",
+      "date": "25 mai",
+      "time": "20:30",
+      "ts": 1779741000000
     }
   ],
   "standingsPlayoff": [
