@@ -78,13 +78,13 @@
       },
       "away": {
         "name": "UTA Arad",
-        "score": "0",
+        "score": "1",
         "id": "584663"
       },
-      "status": "LIVE",
+      "status": "FT",
       "phase": "Play-out",
       "date": "18 mai",
-      "time": "HT",
+      "time": "20:30",
       "ts": 1779136200000
     },
     {
@@ -95,19 +95,19 @@
       },
       "away": {
         "name": "FC Metaloglobus Bucuresti",
-        "score": "0",
+        "score": "1",
         "id": "404509"
       },
-      "status": "LIVE",
+      "status": "FT",
       "phase": "Play-out",
       "date": "18 mai",
-      "time": "HT",
+      "time": "20:30",
       "ts": 1779136200000
     },
     {
       "home": {
         "name": "Hermannstadt",
-        "score": "1",
+        "score": "2",
         "id": "864269"
       },
       "away": {
@@ -115,10 +115,10 @@
         "score": "0",
         "id": "9723"
       },
-      "status": "LIVE",
+      "status": "FT",
       "phase": "Play-out",
       "date": "18 mai",
-      "time": "HT",
+      "time": "20:30",
       "ts": 1779136200000
     },
     {
@@ -129,13 +129,13 @@
       },
       "away": {
         "name": "Otelul Galati",
-        "score": "3",
+        "score": "5",
         "id": "9736"
       },
-      "status": "LIVE",
+      "status": "FT",
       "phase": "Play-out",
       "date": "18 mai",
-      "time": "HT",
+      "time": "20:30",
       "ts": 1779136200000
     }
   ],
@@ -248,15 +248,15 @@
       "name": "UTA Arad",
       "id": "584663",
       "pj": 9,
-      "gd": 6,
-      "pts": 37
+      "gd": 7,
+      "pts": 39
     },
     {
       "rank": 2,
       "name": "FCSB",
       "id": "9723",
       "pj": 9,
-      "gd": 5,
+      "gd": 4,
       "pts": 37
     },
     {
@@ -264,7 +264,7 @@
       "name": "Otelul Galati",
       "id": "9736",
       "pj": 9,
-      "gd": 0,
+      "gd": 2,
       "pts": 35
     },
     {
@@ -285,18 +285,18 @@
     },
     {
       "rank": 6,
-      "name": "FCV Farul Constanta",
-      "id": "210132",
-      "pj": 9,
-      "gd": -2,
-      "pts": 26
-    },
-    {
-      "rank": 7,
       "name": "Hermannstadt",
       "id": "864269",
       "pj": 9,
-      "gd": 2,
+      "gd": 3,
+      "pts": 25
+    },
+    {
+      "rank": 7,
+      "name": "FCV Farul Constanta",
+      "id": "210132",
+      "pj": 9,
+      "gd": -3,
       "pts": 25
     },
     {
@@ -304,7 +304,7 @@
       "name": "Petrolul Ploiesti",
       "id": "188187",
       "pj": 9,
-      "gd": -4,
+      "gd": -6,
       "pts": 25
     },
     {
@@ -312,16 +312,16 @@
       "name": "FC Unirea 2004 Slobozia",
       "id": "364411",
       "pj": 9,
-      "gd": -1,
-      "pts": 23
+      "gd": -2,
+      "pts": 22
     },
     {
       "rank": 10,
       "name": "FC Metaloglobus Bucuresti",
       "id": "404509",
       "pj": 9,
-      "gd": -5,
-      "pts": 14
+      "gd": -4,
+      "pts": 16
     }
   ]
 }
