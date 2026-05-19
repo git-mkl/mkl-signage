@@ -2,76 +2,6 @@
   "past": [
     {
       "home": {
-        "name": "CS Universitatea Craiova",
-        "score": "5",
-        "id": "480286"
-      },
-      "away": {
-        "name": "Universitatea Cluj",
-        "score": "0",
-        "id": "89022"
-      },
-      "status": "FT",
-      "phase": "Play-off",
-      "date": "17 mai",
-      "time": "20:30",
-      "ts": 1779049800000
-    },
-    {
-      "home": {
-        "name": "Dinamo Bucuresti",
-        "score": "0",
-        "id": "10271"
-      },
-      "away": {
-        "name": "CFR Cluj",
-        "score": "0",
-        "id": "9731"
-      },
-      "status": "FT",
-      "phase": "Play-off",
-      "date": "16 mai",
-      "time": "21:00",
-      "ts": 1778965200000
-    },
-    {
-      "home": {
-        "name": "Miercurea Ciuc",
-        "score": "2",
-        "id": "583690"
-      },
-      "away": {
-        "name": "Botosani",
-        "score": "0",
-        "id": "188191"
-      },
-      "status": "FT",
-      "phase": "Play-out",
-      "date": "16 mai",
-      "time": "18:30",
-      "ts": 1778956200000
-    },
-    {
-      "home": {
-        "name": "ACS Champions FC Arges",
-        "score": "2",
-        "id": "9732"
-      },
-      "away": {
-        "name": "FC Rapid 1923",
-        "score": "2",
-        "id": "9738"
-      },
-      "status": "FT",
-      "phase": "Play-off",
-      "date": "15 mai",
-      "time": "20:30",
-      "ts": 1778877000000
-    }
-  ],
-  "today": [
-    {
-      "home": {
         "name": "FC Unirea 2004 Slobozia",
         "score": "0",
         "id": "364411"
@@ -139,6 +69,7 @@
       "ts": 1779136200000
     }
   ],
+  "today": [],
   "future": [
     {
       "home": {
