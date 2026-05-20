@@ -224,18 +224,18 @@
     },
     {
       "rank": 7,
-      "name": "FCV Farul Constanta",
-      "id": "210132",
-      "pj": 9,
-      "gd": -3,
-      "pts": 25
-    },
-    {
-      "rank": 8,
       "name": "Petrolul Ploiesti",
       "id": "188187",
       "pj": 9,
       "gd": -6,
+      "pts": 25
+    },
+    {
+      "rank": 8,
+      "name": "FCV Farul Constanta",
+      "id": "210132",
+      "pj": 9,
+      "gd": -3,
       "pts": 25
     },
     {
