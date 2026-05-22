@@ -73,18 +73,18 @@
     {
       "home": {
         "name": "CFR Cluj",
-        "score": "0",
+        "score": "1",
         "id": "9731"
       },
       "away": {
         "name": "ACS Champions FC Arges",
-        "score": "0",
+        "score": "1",
         "id": "9732"
       },
-      "status": "LIVE",
+      "status": "FT",
       "phase": "Play-off",
       "date": "22 mai",
-      "time": "41'",
+      "time": "20:30",
       "ts": 1779481800000
     }
   ],
