@@ -2,6 +2,23 @@
   "past": [
     {
       "home": {
+        "name": "CFR Cluj",
+        "score": "1",
+        "id": "9731"
+      },
+      "away": {
+        "name": "ACS Champions FC Arges",
+        "score": "1",
+        "id": "9732"
+      },
+      "status": "FT",
+      "phase": "Play-off",
+      "date": "22 mai",
+      "time": "20:30",
+      "ts": 1779481800000
+    },
+    {
+      "home": {
         "name": "FC Unirea 2004 Slobozia",
         "score": "0",
         "id": "364411"
@@ -50,45 +67,9 @@
       "date": "18 mai",
       "time": "20:30",
       "ts": 1779136200000
-    },
-    {
-      "home": {
-        "name": "Petrolul Ploiesti",
-        "score": "1",
-        "id": "188187"
-      },
-      "away": {
-        "name": "Otelul Galati",
-        "score": "5",
-        "id": "9736"
-      },
-      "status": "FT",
-      "phase": "Play-out",
-      "date": "18 mai",
-      "time": "20:30",
-      "ts": 1779136200000
     }
   ],
   "today": [
-    {
-      "home": {
-        "name": "CFR Cluj",
-        "score": "1",
-        "id": "9731"
-      },
-      "away": {
-        "name": "ACS Champions FC Arges",
-        "score": "1",
-        "id": "9732"
-      },
-      "status": "FT",
-      "phase": "Play-off",
-      "date": "22 mai",
-      "time": "20:30",
-      "ts": 1779481800000
-    }
-  ],
-  "future": [
     {
       "home": {
         "name": "Universitatea Cluj",
@@ -105,7 +86,9 @@
       "date": "23 mai",
       "time": "20:30",
       "ts": 1779568200000
-    },
+    }
+  ],
+  "future": [
     {
       "home": {
         "name": "FC Rapid 1923",
