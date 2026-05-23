@@ -73,18 +73,18 @@
     {
       "home": {
         "name": "Universitatea Cluj",
-        "score": "-",
+        "score": "1",
         "id": "89022"
       },
       "away": {
         "name": "Dinamo Bucuresti",
-        "score": "-",
+        "score": "0",
         "id": "10271"
       },
-      "status": "NS",
+      "status": "LIVE",
       "phase": "Play-off",
       "date": "23 mai",
-      "time": "20:30",
+      "time": "HT",
       "ts": 1779568200000
     }
   ],
@@ -120,9 +120,9 @@
       "rank": 2,
       "name": "Universitatea Cluj",
       "id": "89022",
-      "pj": 9,
-      "gd": 2,
-      "pts": 45
+      "pj": 10,
+      "gd": 3,
+      "pts": 48
     },
     {
       "rank": 3,
@@ -136,8 +136,8 @@
       "rank": 4,
       "name": "Dinamo Bucuresti",
       "id": "10271",
-      "pj": 9,
-      "gd": 1,
+      "pj": 10,
+      "gd": 0,
       "pts": 38
     },
     {
