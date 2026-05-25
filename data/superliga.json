@@ -69,8 +69,7 @@
       "ts": 1779136200000
     }
   ],
-  "today": [],
-  "future": [
+  "today": [
     {
       "home": {
         "name": "FC Rapid 1923",
@@ -89,6 +88,7 @@
       "ts": 1779741000000
     }
   ],
+  "future": [],
   "standingsPlayoff": [
     {
       "rank": 1,
