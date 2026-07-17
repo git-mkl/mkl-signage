@@ -1,7 +1,206 @@
 {
-  "past": [],
+  "past": [
+    {
+      "home": {
+        "name": "FC Rapid 1923",
+        "score": "0",
+        "id": "9738"
+      },
+      "away": {
+        "name": "CS Universitatea Craiova",
+        "score": "0",
+        "id": "480286"
+      },
+      "status": "FT",
+      "phase": "Play-off",
+      "date": "25 mai",
+      "time": "20:30",
+      "ts": 1779741000000
+    },
+    {
+      "home": {
+        "name": "Universitatea Cluj",
+        "score": "1",
+        "id": "89022"
+      },
+      "away": {
+        "name": "Dinamo Bucuresti",
+        "score": "1",
+        "id": "10271"
+      },
+      "status": "FT",
+      "phase": "Play-off",
+      "date": "23 mai",
+      "time": "20:30",
+      "ts": 1779568200000
+    },
+    {
+      "home": {
+        "name": "CFR Cluj",
+        "score": "1",
+        "id": "9731"
+      },
+      "away": {
+        "name": "ACS Champions FC Arges",
+        "score": "1",
+        "id": "9732"
+      },
+      "status": "FT",
+      "phase": "Play-off",
+      "date": "22 mai",
+      "time": "20:30",
+      "ts": 1779481800000
+    },
+    {
+      "home": {
+        "name": "FC Unirea 2004 Slobozia",
+        "score": "0",
+        "id": "364411"
+      },
+      "away": {
+        "name": "UTA Arad",
+        "score": "1",
+        "id": "584663"
+      },
+      "status": "FT",
+      "phase": "Play-out",
+      "date": "18 mai",
+      "time": "20:30",
+      "ts": 1779136200000
+    }
+  ],
   "today": [],
   "future": [],
-  "standingsPlayoff": [],
-  "standingsPlayout": []
+  "standingsPlayoff": [
+    {
+      "rank": 1,
+      "name": "CS Universitatea Craiova",
+      "id": "480286",
+      "pj": 10,
+      "gd": 6,
+      "pts": 50
+    },
+    {
+      "rank": 2,
+      "name": "Universitatea Cluj",
+      "id": "89022",
+      "pj": 10,
+      "gd": 2,
+      "pts": 46
+    },
+    {
+      "rank": 3,
+      "name": "CFR Cluj",
+      "id": "9731",
+      "pj": 10,
+      "gd": 1,
+      "pts": 43
+    },
+    {
+      "rank": 4,
+      "name": "Dinamo Bucuresti",
+      "id": "10271",
+      "pj": 10,
+      "gd": 1,
+      "pts": 39
+    },
+    {
+      "rank": 5,
+      "name": "FC Rapid 1923",
+      "id": "9738",
+      "pj": 10,
+      "gd": -6,
+      "pts": 34
+    },
+    {
+      "rank": 6,
+      "name": "ACS Champions FC Arges",
+      "id": "9732",
+      "pj": 10,
+      "gd": -4,
+      "pts": 32
+    }
+  ],
+  "standingsPlayout": [
+    {
+      "rank": 1,
+      "name": "UTA Arad",
+      "id": "584663",
+      "pj": 9,
+      "gd": 7,
+      "pts": 39
+    },
+    {
+      "rank": 2,
+      "name": "FCSB",
+      "id": "9723",
+      "pj": 9,
+      "gd": 4,
+      "pts": 37
+    },
+    {
+      "rank": 3,
+      "name": "Otelul Galati",
+      "id": "9736",
+      "pj": 9,
+      "gd": 2,
+      "pts": 35
+    },
+    {
+      "rank": 4,
+      "name": "Miercurea Ciuc",
+      "id": "583690",
+      "pj": 9,
+      "gd": 3,
+      "pts": 33
+    },
+    {
+      "rank": 5,
+      "name": "Botosani",
+      "id": "188191",
+      "pj": 9,
+      "gd": -4,
+      "pts": 33
+    },
+    {
+      "rank": 6,
+      "name": "Hermannstadt",
+      "id": "864269",
+      "pj": 9,
+      "gd": 3,
+      "pts": 25
+    },
+    {
+      "rank": 7,
+      "name": "Petrolul Ploiesti",
+      "id": "188187",
+      "pj": 9,
+      "gd": -6,
+      "pts": 25
+    },
+    {
+      "rank": 8,
+      "name": "FCV Farul Constanta",
+      "id": "210132",
+      "pj": 9,
+      "gd": -3,
+      "pts": 25
+    },
+    {
+      "rank": 9,
+      "name": "FC Unirea 2004 Slobozia",
+      "id": "364411",
+      "pj": 9,
+      "gd": -2,
+      "pts": 22
+    },
+    {
+      "rank": 10,
+      "name": "FC Metaloglobus Bucuresti",
+      "id": "404509",
+      "pj": 9,
+      "gd": -4,
+      "pts": 16
+    }
+  ]
 }
